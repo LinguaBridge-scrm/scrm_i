@@ -143,6 +143,11 @@ const Table = useTable({
 			minWidth: 120
 		},
 		{
+			prop: 'tenantId',
+			label: t('租户ID'),
+			minWidth: 100
+		},
+		{
 			prop: 'remark',
 			label: t('备注'),
 			minWidth: 200,
@@ -257,6 +262,18 @@ const Upsert = useUpsert({
 			span: 12,
 			component: {
 				name: 'el-input'
+			}
+		},
+		{
+			prop: 'tenantId',
+			label: t('租户ID'),
+			span: 12,
+			component: {
+				name: 'el-input-number',
+				props: {
+					min: 1,
+					controlsPosition: 'right'
+				}
 			}
 		},
 		{

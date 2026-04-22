@@ -1,0 +1,246 @@
+<template>
+	<cl-crud ref="Crud">
+		<cl-row>
+			<!-- 刷新按钮 -->
+			<cl-refresh-btn />
+			<!-- 新增按钮 -->
+			<cl-add-btn />
+			<!-- 删除按钮 -->
+			<cl-multi-delete-btn />
+			<cl-flex1 />
+			<!-- 条件搜索 -->
+			<cl-search ref="Search" />
+		</cl-row>
+
+		<cl-row>
+			<!-- 数据表格 -->
+			<cl-table ref="Table" />
+		</cl-row>
+
+		<cl-row>
+			<cl-flex1 />
+			<!-- 分页控件 -->
+			<cl-pagination />
+		</cl-row>
+
+		<!-- 新增、编辑 -->
+		<cl-upsert ref="Upsert" />
+	</cl-crud>
+</template>
+
+<script lang="ts" setup>
+defineOptions({
+	name: 'customer-message'
+});
+
+import { useCrud, useTable, useUpsert, useSearch } from '@cool-vue/crud';
+import { useCool } from '/@/cool';
+import { useI18n } from 'vue-i18n';
+import { reactive } from 'vue';
+
+const { service } = useCool();
+const { t } = useI18n();
+
+// 选项
+const options = reactive({
+	platform: [
+		{ label: t('TG'), value: 0 },
+		{ label: t('WhatsApp'), value: 1 },
+		{ label: t('其他'), value: 2 }
+	],
+	messageType: [
+		{ label: t('文本'), value: 0 },
+		{ label: t('媒体'), value: 1 },
+		{ label: t('交互'), value: 2 }
+	],
+	isException: [
+		{ label: t('否'), value: 0, type: 'danger' },
+		{ label: t('是'), value: 1, type: 'success' }
+	]
+});
+
+// cl-upsert
+const Upsert = useUpsert({
+	items: [
+		{
+			label: t('用户名'),
+			prop: 'username',
+			component: {
+				name: 'el-input',
+				props: { type: 'textarea',}
+			},
+			span: 12,
+			required: true
+		},
+		{
+			label: t('平台类型'),
+			prop: 'platform',
+			component: { name: 'el-radio-group', options: options.platform },
+			value: 0,
+			required: true
+		},
+		{
+			label: t('消息类型'),
+			prop: 'messageType',
+			component: { name: 'el-radio-group', options: options.messageType },
+			value: 0,
+			required: true
+		},
+		{
+			label: t('消息属性'),
+			prop: 'attribute',
+			component: { name: 'el-input', props: { clearable: true } },
+			span: 12
+		},
+		{
+			label: t('消息行为'),
+			prop: 'action',
+			component: { name: 'el-input', props: { clearable: true } },
+			span: 12
+		},
+		{
+			label: t('文本内容'),
+			prop: 'content',
+			component: {
+				name: 'el-input',
+				props: { type: 'textarea', rows: 4 }
+			}
+		},
+		{ label: t('图片'), prop: 'image', component: { name: 'cl-upload' } },
+		{
+			label: t('视频'),
+			prop: 'video',
+			component: { name: 'cl-upload', props: { type: 'file', limit: 1 } }
+		},
+		{
+			label: t('对象昵称'),
+			prop: 'targetNickName',
+			component: { name: 'el-input', props: { clearable: true } },
+			span: 12
+		},
+		{
+			label: t('选择对象'),
+			prop: 'targetId',
+			component: { name: 'el-input', props: { clearable: true } },
+			span: 12
+		},
+		{
+			label: t('对象手机号'),
+			prop: 'targetPhone',
+			component: { name: 'el-input', props: { clearable: true } },
+			span: 12
+		},
+		{
+			label: t('发送者昵称'),
+			prop: 'senderNickName',
+			component: { name: 'el-input', props: { clearable: true } },
+			span: 12
+		},
+		{
+			label: t('选择发送者'),
+			prop: 'senderId',
+			component: { name: 'el-input', props: { clearable: true } },
+			span: 12
+		},
+		{
+			label: t('发送者手机号'),
+			prop: 'senderPhone',
+			component: { name: 'el-input', props: { clearable: true } },
+			span: 12
+		},
+		{
+			label: t('是否异常'),
+			prop: 'isException',
+			component: { name: 'el-radio-group', options: options.isException },
+			value: 0,
+			required: true
+		}
+	]
+});
+
+// cl-table
+const Table = useTable({
+	columns: [
+		{ type: 'selection' },
+		{ label: t('用户名'), prop: 'username', minWidth: 140 },
+		{
+			label: t('平台类型'),
+			prop: 'platform',
+			minWidth: 120,
+			dict: options.platform
+		},
+		{
+			label: t('消息类型'),
+			prop: 'messageType',
+			minWidth: 120,
+			dict: options.messageType
+		},
+		{ label: t('消息属性'), prop: 'attribute', minWidth: 140 },
+		{ label: t('消息行为'), prop: 'action', minWidth: 140 },
+		{
+			label: t('文本内容'),
+			prop: 'content',
+			showOverflowTooltip: true,
+			minWidth: 200
+		},
+		{
+			label: t('图片'),
+			prop: 'image',
+			minWidth: 100,
+			component: { name: 'cl-image', props: { size: 60 } }
+		},
+		{
+			label: t('视频'),
+			prop: 'video',
+			minWidth: 120,
+			component: { name: 'cl-link' }
+		},
+		{ label: t('对象昵称'), prop: 'targetNickName', minWidth: 140 },
+		{ label: t('对象ID'), prop: 'targetId', minWidth: 140 },
+		{ label: t('对象手机号'), prop: 'targetPhone', minWidth: 140 },
+		{ label: t('发送者昵称'), prop: 'senderNickName', minWidth: 140 },
+		{ label: t('发送者ID'), prop: 'senderId', minWidth: 140 },
+		{ label: t('发送者手机号'), prop: 'senderPhone', minWidth: 140 },
+		{
+			label: t('是否异常'),
+			prop: 'isException',
+			minWidth: 100,
+			component: { name: 'cl-switch' },
+			dict: options.isException
+		},
+		{
+			label: t('创建时间'),
+			prop: 'createTime',
+			minWidth: 170,
+			sortable: 'desc',
+			component: { name: 'cl-date-text' }
+		},
+		{
+			label: t('更新时间'),
+			prop: 'updateTime',
+			minWidth: 170,
+			sortable: 'custom',
+			component: { name: 'cl-date-text' }
+		},
+		{ type: 'op', buttons: ['edit', 'delete'] }
+	]
+});
+
+// cl-search
+const Search = useSearch();
+
+// cl-crud
+const Crud = useCrud(
+	{
+		service: service.customer.message
+	},
+	app => {
+		app.refresh();
+	}
+);
+
+// 刷新
+function refresh(params?: any) {
+	Crud.value?.refresh(params);
+}
+</script>

@@ -9,7 +9,7 @@
 				<span>{{ app.info.name }}</span>
 			</div>
 
-			<p class="desc">{{ $t('快速开发后台权限管理系统') }}</p>
+			<p class="desc">{{ $t('为您提供多平台的实时翻译，聚合，AI接管，客户追踪，内容监控') }}</p>
 
 			<div class="form">
 				<el-form label-position="top" class="form" :disabled="saving">
@@ -66,7 +66,7 @@
 			<cl-svg name="bg"></cl-svg>
 		</div>
 
-		<a href="https://cool-js.com" class="copyright"> Copyright © COOL </a>
+<!--		<a href="https://cool-js.com" class="copyright"> Copyright © COOL </a>-->
 	</div>
 </template>
 
