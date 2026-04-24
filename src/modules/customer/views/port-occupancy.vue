@@ -16,7 +16,7 @@
 		</cl-row>
 
 		<cl-dialog v-model="detailVisible" :title="t('端口详情')" width="600px">
-			<el-descriptions :column="2" border>
+			<el-descriptions v-loading="detailLoading" :column="2" border>
 				<el-descriptions-item :label="t('租户')">
 					{{ detailData.tenantName || '-' }}
 				</el-descriptions-item>
@@ -115,14 +115,50 @@ function formatJson(data: any) {
 }
 
 const detailVisible = ref(false);
+const detailLoading = ref(false);
 const detailData = ref<any>({});
 
-function showDetail(row: any) {
-	detailData.value = row;
+function recordId(row: any) {
+	return row?.id || row?.a_id;
+}
+
+function opRow(options: any) {
+	return options?.scope?.row || options?.row || {};
+}
+
+async function showDetail(row: any) {
 	detailVisible.value = true;
+	detailLoading.value = true;
+	detailData.value = { ...row };
+
+	try {
+		const id = recordId(row);
+		if (!id) {
+			return;
+		}
+		const info = await service.customer.portOccupancy.info({ id });
+
+		detailData.value = {
+			...row,
+			...info,
+			tenantName: info.tenantName || row.tenantName,
+			userName: info.userName || row.userName
+		};
+	} catch (err: any) {
+		detailVisible.value = false;
+		ElMessage.error(err?.message || t('获取端口详情失败'));
+	} finally {
+		detailLoading.value = false;
+	}
 }
 
 async function forceReclaim(row: any) {
+	const id = recordId(row);
+	if (!id && (!row?.userId || !row?.clientId || !row?.pageId)) {
+		ElMessage.error(t('端口占用记录不存在'));
+		return;
+	}
+
 	try {
 		await ElMessageBox.confirm(
 			t('确认强制回收该端口？此操作将立即释放该端口占用。'),
@@ -138,8 +174,8 @@ async function forceReclaim(row: any) {
 			url: '/force-reclaim',
 			method: 'POST',
 			data: {
+				id,
 				userId: row.userId,
-				tenantId: row.tenantId,
 				clientId: row.clientId,
 				pageId: row.pageId,
 				reclaimSession: false,
@@ -149,8 +185,10 @@ async function forceReclaim(row: any) {
 
 		ElMessage.success(t('回收成功'));
 		Crud.value?.refresh();
-	} catch {
-		//
+	} catch (err: any) {
+		if (err !== 'cancel' && err !== 'close') {
+			ElMessage.error(err?.message || t('回收失败'));
+		}
 	}
 }
 
@@ -230,18 +268,20 @@ const Table = useTable({
 				{
 					label: t('详情'),
 					type: 'primary',
-					onClick({ row }: any) {
-						showDetail(row);
+					onClick(options: any) {
+						showDetail(opRow(options));
 					}
 				},
 				{
 					label: t('回收'),
 					type: 'danger',
-					show({ row }: any) {
+					show(options: any) {
+						const row = opRow(options);
+
 						return row.status === 1;
 					},
-					onClick({ row }: any) {
-						forceReclaim(row);
+					onClick(options: any) {
+						forceReclaim(opRow(options));
 					}
 				}
 			]

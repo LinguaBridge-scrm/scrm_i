@@ -73,14 +73,14 @@ const Upsert = useUpsert({
 			};
 		},
 		{
-			label: t("选择电报"),
+			label: t("接收ID"),
 			prop: "tgId",
 			component: { name: "el-input", props: { clearable: true } },
 			span: 12,
 			required: true,
 		},
 		{
-			label: t("密钥"),
+			label: t("Bot密钥"),
 			prop: "secretKey",
 			component: { name: "el-input", props: { clearable: true } },
 			span: 12,
@@ -109,8 +109,8 @@ const Table = useTable({
 	columns: [
 		{ type: "selection" },
 		{ label: t("租户"), prop: "tenantName", minWidth: 120 },
-		{ label: t("电报ID"), prop: "tgId", minWidth: 140 },
-		{ label: t("密钥"), prop: "secretKey", minWidth: 140 },
+		{ label: t("接收ID"), prop: "tgId", minWidth: 140 },
+		{ label: t("Bot密钥"), prop: "secretKey", minWidth: 140 },
 		{
 			label: t("状态"),
 			prop: "status",
