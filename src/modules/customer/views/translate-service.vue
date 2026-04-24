@@ -30,7 +30,7 @@
 
 <script lang="ts" setup>
 defineOptions({
-	name: "customer-port",
+	name: "customer-translate-service",
 });
 
 import { useCrud, useTable, useUpsert, useSearch } from "@cool-vue/crud";
@@ -47,16 +47,16 @@ const isTenantAdmin = computed(() => !!user.info?.tenantId);
 // 选项
 const options = reactive({
 	status: [
-		{ label: t("已失效"), value: 0 },
-		{ label: t("生效中"), value: 1 },
-		{ label: t("已过期"), value: 2 },
-	],
-	payChannels: [
-		{ label: t("系统赠送"), value: 0 },
-		{ label: t("Tron"), value: 1 },
-		{ label: t("Eth"), value: 2 },
+		{ label: t("禁用"), value: 0, type: "danger" },
+		{ label: t("启用"), value: 1, type: "success" },
 	],
 });
+
+function maskSecret(value?: string) {
+	if (!value) return "-";
+	if (value.length <= 8) return value;
+	return `${value.slice(0, 4)}****${value.slice(-4)}`;
+}
 
 // cl-upsert
 const Upsert = useUpsert({
@@ -79,51 +79,45 @@ const Upsert = useUpsert({
 			};
 		},
 		{
-			label: t("数量"),
-			prop: "count",
-			hook: "number",
-			component: { name: "el-input-number", props: { min: 0 } },
+			label: t("服务类型"),
+			prop: "serviceType",
+			component: { name: "el-input", props: { clearable: true } },
 			span: 12,
 			required: true,
 		},
 		{
-			label: t("价格"),
-			prop: "price",
-			hook: "number",
-			component: { name: "el-input-number", props: { min: 0 } },
+			label: t("AK"),
+			prop: "ak",
+			component: { name: "el-input", props: { clearable: true } },
 			span: 12,
-			required: true,
 		},
 		{
-			label: t("日期范围"),
-			prop: "date",
+			label: t("SK"),
+			prop: "sk",
 			component: {
-				name: "el-date-picker",
-				props: {
-					type: "daterange",
-					valueFormat: "YYYY-MM-DD 00:00:00",
-					defaultTime: [
-						"2000-01-31T16:00:00.000Z",
-						"2000-02-01T15:59:59.000Z",
-					],
-				},
+				name: "el-input",
+				props: { clearable: true, showPassword: true },
 			},
 			span: 12,
-			hook: "datetimeRange",
 		},
 		{
-			label: t("状态"),
+			label: t("API地址"),
+			prop: "apiUrl",
+			component: { name: "el-input", props: { clearable: true } },
+			span: 12,
+			required: true,
+		},
+		{
+			label: t("翻译模型"),
+			prop: "model",
+			component: { name: "el-input", props: { clearable: true } },
+			span: 12,
+		},
+		{
+			label: t("启用状态"),
 			prop: "status",
 			component: { name: "el-radio-group", options: options.status },
 			value: 1,
-			required: true,
-		},
-		{
-			label: t("支付渠道"),
-			prop: "payChannels",
-			value: 0,
-			component: { name: "el-radio-group", options: options.payChannels },
-			span: 12,
 			required: true,
 		},
 	],
@@ -134,52 +128,38 @@ const Table = useTable({
 	columns: [
 		{ type: "selection" },
 		{ label: t("租户"), prop: "tenantName", minWidth: 120 },
-		{ label: t("数量"), prop: "count", minWidth: 140, sortable: "custom" },
+		{ label: t("服务类型"), prop: "serviceType", minWidth: 120 },
 		{
-			label: t("价格"),
-			prop: "price",
-			minWidth: 140,
-			sortable: "custom",
-			formatter(row) {
-				return `$${Number(row.price || 0).toFixed(2)}`;
-			},
+			label: t("AK"),
+			prop: "ak",
+			minWidth: 160,
+			showOverflowTooltip: true,
+			formatter: ({ ak }) => maskSecret(ak),
 		},
 		{
-			label: t("生效时间"),
-			prop: "startDate",
-			minWidth: 140,
-			sortable: "custom",
-			component: {
-				name: "cl-date-text",
-				props: { format: "YYYY-MM-DD" },
-			},
+			label: t("SK"),
+			prop: "sk",
+			minWidth: 160,
+			showOverflowTooltip: true,
+			formatter: ({ sk }) => maskSecret(sk),
 		},
 		{
-			label: t("到期时间"),
-			prop: "endDate",
-			minWidth: 140,
-			sortable: "custom",
-			component: {
-				name: "cl-date-text",
-				props: { format: "YYYY-MM-DD" },
-			},
+			label: t("API地址"),
+			prop: "apiUrl",
+			minWidth: 220,
+			showOverflowTooltip: true,
 		},
 		{
-			label: t("状态"),
+			label: t("翻译模型"),
+			prop: "model",
+			minWidth: 140,
+			showOverflowTooltip: true,
+		},
+		{
+			label: t("启用状态"),
 			prop: "status",
 			minWidth: 120,
 			dict: options.status,
-		},
-		{
-			label: t("支付渠道"),
-			prop: "payChannels",
-			minWidth: 180,
-			formatter(row) {
-				const value = Array.isArray(row.payChannels)
-					? row.payChannels[0]
-					: row.payChannels;
-				return options.payChannels.find(e => e.value === value)?.label || "-";
-			},
 		},
 		{
 			label: t("创建时间"),
@@ -205,7 +185,7 @@ const Search = useSearch();
 // cl-crud
 const Crud = useCrud(
 	{
-		service: service.customer.port,
+		service: service.customer.translateService,
 	},
 	(app) => {
 		app.refresh();

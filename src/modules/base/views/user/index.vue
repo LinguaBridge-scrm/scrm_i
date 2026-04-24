@@ -144,8 +144,16 @@ const Table = useTable({
 		},
 		{
 			prop: 'tenantId',
-			label: t('租户ID'),
+			label: t('租户ID2'),
 			minWidth: 100
+		},
+		{
+			prop: 'balance',
+			label: t('余额'),
+			minWidth: 120,
+			formatter(row) {
+				return Number(row.balance || 0).toFixed(2);
+			}
 		},
 		{
 			prop: 'remark',
@@ -272,6 +280,21 @@ const Upsert = useUpsert({
 				name: 'el-input-number',
 				props: {
 					min: 1,
+					controlsPosition: 'right'
+				}
+			}
+		},
+		{
+			prop: 'balance',
+			label: t('余额'),
+			value: 0,
+			span: 12,
+			component: {
+				name: 'el-input-number',
+				props: {
+					min: 0,
+					precision: 2,
+					step: 0.01,
 					controlsPosition: 'right'
 				}
 			}

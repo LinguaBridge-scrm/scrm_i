@@ -57,7 +57,7 @@ const Upsert = useUpsert({
 		{
 			label: t("选择用户"),
 			prop: "userId",
-			component: { vm: UserSelect },
+			component: { name: "customer-user-select", vm: UserSelect },
 			span: 12,
 			required: true,
 		},
@@ -107,6 +107,7 @@ const Upsert = useUpsert({
 const Table = useTable({
 	columns: [
 		{ type: "selection" },
+		{ label: t("租户"), prop: "tenantName", minWidth: 120 },
 		{ label: t("用户名"), prop: "username", minWidth: 140 },
 		{
 			label: t("翻译服务"),

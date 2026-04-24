@@ -35,12 +35,14 @@ defineOptions({
 
 import { useCrud, useTable, useUpsert, useSearch } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
+import { useBase } from "/@/modules/base";
 import { useI18n } from "vue-i18n";
-import { reactive } from "vue";
-import UserSelect from "/$/customer/components/user-select.vue";
+import { computed, reactive } from "vue";
 
 const { service } = useCool();
+const { user } = useBase();
 const { t } = useI18n();
+const isTenantAdmin = computed(() => !!user.info?.tenantId);
 
 // 选项
 const options = reactive({
@@ -49,11 +51,33 @@ const options = reactive({
 		{ label: t("生效中"), value: 1 },
 		{ label: t("已耗尽"), value: 2 },
 	],
+	payChannels: [
+		{ label: t("系统赠送"), value: 0 },
+		{ label: t("Tron"), value: 1 },
+		{ label: t("Eth"), value: 2 },
+	],
 });
 
 // cl-upsert
 const Upsert = useUpsert({
 	items: [
+		() => {
+			return {
+				label: t("租户"),
+				prop: "tenantId",
+				hidden: isTenantAdmin.value,
+				component: {
+					name: "cl-user-select",
+					props: {
+						labelKey: "username",
+						placeholder: t("请选择租户"),
+						immediate: true,
+					},
+				},
+				span: 12,
+				required: !isTenantAdmin.value,
+			};
+		},
 
 		{
 			label: t("数量"),
@@ -98,7 +122,8 @@ const Upsert = useUpsert({
 		{
 			label: t("支付渠道"),
 			prop: "payChannels",
-			component: { name: "el-input", props: { clearable: true } },
+			value: 0,
+			component: { name: "el-radio-group", options: options.payChannels },
 			span: 12,
 			required: true,
 		},
@@ -109,8 +134,17 @@ const Upsert = useUpsert({
 const Table = useTable({
 	columns: [
 		{ type: "selection" },
+		{ label: t("租户"), prop: "tenantName", minWidth: 120 },
 		{ label: t("数量"), prop: "count", minWidth: 140, sortable: "custom" },
-		{ label: t("价格"), prop: "price", minWidth: 140, sortable: "custom" },
+		{
+			label: t("价格"),
+			prop: "price",
+			minWidth: 140,
+			sortable: "custom",
+			formatter(row) {
+				return `$${Number(row.price || 0).toFixed(2)}`;
+			},
+		},
 		{
 			label: t("生效时间"),
 			prop: "startDate",
@@ -133,7 +167,17 @@ const Table = useTable({
 			minWidth: 120,
 			dict: options.status,
 		},
-		{ label: t("支付渠道"), prop: "payChannels", minWidth: 120 },
+		{
+			label: t("支付渠道"),
+			prop: "payChannels",
+			minWidth: 180,
+			formatter(row) {
+				const value = Array.isArray(row.payChannels)
+					? row.payChannels[0]
+					: row.payChannels;
+				return options.payChannels.find(e => e.value === value)?.label || "-";
+			},
+		},
 		{
 			label: t("创建时间"),
 			prop: "createTime",

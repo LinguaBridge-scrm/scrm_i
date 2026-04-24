@@ -35,11 +35,14 @@ defineOptions({
 
 import { useCrud, useTable, useUpsert, useSearch } from '@cool-vue/crud';
 import { useCool } from '/@/cool';
+import { useBase } from '/@/modules/base';
 import { useI18n } from 'vue-i18n';
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 
 const { service } = useCool();
+const { user } = useBase();
 const { t } = useI18n();
+const isTenantAdmin = computed(() => !!user.info?.tenantId);
 
 // 选项
 const options = reactive({
@@ -62,6 +65,23 @@ const options = reactive({
 // cl-upsert
 const Upsert = useUpsert({
 	items: [
+		() => {
+			return {
+				label: t('租户'),
+				prop: 'tenantId',
+				hidden: isTenantAdmin.value,
+				component: {
+					name: 'cl-user-select',
+					props: {
+						labelKey: 'username',
+						placeholder: t('请选择租户'),
+						immediate: true,
+					},
+				},
+				span: 12,
+				required: !isTenantAdmin.value,
+			};
+		},
 		{
 			label: t('用户名'),
 			prop: 'username',
@@ -162,6 +182,7 @@ const Upsert = useUpsert({
 const Table = useTable({
 	columns: [
 		{ type: 'selection' },
+		{ label: t('租户'), prop: 'tenantName', minWidth: 120 },
 		{ label: t('用户名'), prop: 'username', minWidth: 140 },
 		{
 			label: t('平台类型'),

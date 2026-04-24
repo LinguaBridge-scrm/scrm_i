@@ -35,12 +35,14 @@ defineOptions({
 
 import { useCrud, useTable, useUpsert, useSearch } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
+import { useBase } from "/@/modules/base";
 import { useI18n } from "vue-i18n";
-import { reactive } from "vue";
-import UserSelect from "/$/customer/components/user-select.vue";
+import { computed, reactive } from "vue";
 
 const { service } = useCool();
+const { user } = useBase();
 const { t } = useI18n();
+const isTenantAdmin = computed(() => !!user.info?.tenantId);
 
 // 选项
 const options = reactive({
@@ -51,15 +53,31 @@ const options = reactive({
 	],
 	channel: [
 		{ label: t("系统赠送"), value: 0 },
-		{ label: t("微信"), value: 1 },
-		{ label: t("支付宝"), value: 2 },
-		{ label: t("USDT"), value: 3 },
+		{ label: t("Tron"), value: 1 },
+		{ label: t("Eth"), value: 2 },
 	],
 });
 
 // cl-upsert
 const Upsert = useUpsert({
 	items: [
+		() => {
+			return {
+				label: t("租户"),
+				prop: "tenantId",
+				hidden: isTenantAdmin.value,
+				component: {
+					name: "cl-user-select",
+					props: {
+						labelKey: "username",
+						placeholder: t("请选择租户"),
+						immediate: true,
+					},
+				},
+				span: 12,
+				required: !isTenantAdmin.value,
+			};
+		},
 		{
 			label: t("类型"),
 			prop: "type",
@@ -71,7 +89,10 @@ const Upsert = useUpsert({
 			label: t("金额"),
 			prop: "amount",
 			hook: "number",
-			component: { name: "el-input-number", props: { min: 0 } },
+			component: {
+				name: "el-input-number",
+				props: { min: 0, precision: 2, step: 0.01, stepStrictly: true },
+			},
 			span: 12,
 			required: true,
 		},
@@ -79,7 +100,7 @@ const Upsert = useUpsert({
 			label: t("渠道"),
 			prop: "channel",
 			component: { name: "el-radio-group", options: options.channel },
-			value: 1,
+			value: 0,
 			required: true,
 		},
 		{
@@ -97,8 +118,17 @@ const Upsert = useUpsert({
 const Table = useTable({
 	columns: [
 		{ type: "selection" },
+		{ label: t("租户"), prop: "tenantName", minWidth: 120 },
 		{ label: t("类型"), prop: "type", minWidth: 120, dict: options.type },
-		{ label: t("金额"), prop: "amount", minWidth: 140, sortable: "custom" },
+		{
+			label: t("金额"),
+			prop: "amount",
+			minWidth: 140,
+			sortable: "custom",
+			formatter(row) {
+				return `$${Number(row.amount || 0).toFixed(2)}`;
+			},
+		},
 		{
 			label: t("渠道"),
 			prop: "channel",

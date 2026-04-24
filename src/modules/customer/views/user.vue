@@ -35,11 +35,15 @@ defineOptions({
 
 import { useCrud, useTable, useUpsert, useSearch } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
+import { useBase } from "/@/modules/base";
 import { useI18n } from "vue-i18n";
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
+import dayjs from "dayjs";
 
 const { service } = useCool();
+const { user } = useBase();
 const { t } = useI18n();
+const isTenantUser = computed(() => !!user.info?.tenantId);
 
 // 选项
 const options = reactive({
@@ -65,6 +69,10 @@ const options = reactive({
 	],
 });
 
+function getCurrentDateTime() {
+	return dayjs().format("YYYY-MM-DD HH:mm:ss");
+}
+
 // cl-upsert
 const Upsert = useUpsert({
 	items: [
@@ -82,21 +90,39 @@ const Upsert = useUpsert({
 			span: 12,
 			required: true,
 		},
-		{
+		() => {
+			return {
 			label: t("消耗字符数"),
 			prop: "consumedCharacters",
 			hook: "number",
-			component: { name: "el-input-number", props: { min: 0 } },
+			value: 0,
+			component: {
+				name: "el-input-number",
+				props: {
+					min: 0,
+					disabled: isTenantUser.value,
+				},
+			},
 			span: 12,
 			required: true,
+			};
 		},
-		{
-			label: t("占用端口数"),
+		() => {
+			return {
+			label: t("占用端口"),
 			prop: "occupiedPorts",
 			hook: "number",
-			component: { name: "el-input-number", props: { min: 0 } },
+			value: 0,
+			component: {
+				name: "el-input-number",
+				props: {
+					min: 0,
+					disabled: isTenantUser.value,
+				},
+			},
 			span: 12,
 			required: true,
+			};
 		},
 		{
 			label: t("状态"),
@@ -106,7 +132,7 @@ const Upsert = useUpsert({
 			required: true,
 		},
 		{
-			label: t("钱包监控开关"),
+			label: t("钱包监控"),
 			prop: "walletMonitorStatus",
 			component: {
 				name: "el-radio-group",
@@ -116,7 +142,7 @@ const Upsert = useUpsert({
 			required: true,
 		},
 		{
-			label: t("关键词监控开关"),
+			label: t("关键词监控"),
 			prop: "keywordMonitorStatus",
 			component: {
 				name: "el-radio-group",
@@ -154,29 +180,43 @@ const Upsert = useUpsert({
 			},
 		},
 		{
-			label: t("登录信息"),
+			label: t("最后登录信息"),
 			prop: "loginInfo",
 			component: {
 				name: "el-input",
-				props: { type: "textarea", rows: 4 },
+				props: { type: "textarea", rows: 4, disabled: true },
 			},
 		},
 		{
 			label: t("最后登录时间"),
 			prop: "lastLoginTime",
+			value: getCurrentDateTime(),
 			component: {
 				name: "el-date-picker",
-				props: { type: "datetime", valueFormat: "YYYY-MM-DD HH:mm:ss" },
+				props: {
+					type: "datetime",
+					valueFormat: "YYYY-MM-DD HH:mm:ss",
+					disabled: true,
+				},
 			},
 			span: 12,
 		},
 	],
+
+	onOpened(data) {
+		if (Upsert.value?.mode == "add") {
+			data.consumedCharacters = 0;
+			data.occupiedPorts = 0;
+			data.lastLoginTime = data.lastLoginTime || getCurrentDateTime();
+		}
+	},
 });
 
 // cl-table
 const Table = useTable({
 	columns: [
 		{ type: "selection" },
+		{ label: t("租户"), prop: "tenantName", minWidth: 120 },
 		{ label: t("用户名"), prop: "username", minWidth: 140 },
 		{ label: t("密码"), prop: "password", minWidth: 140 },
 		{
@@ -198,14 +238,14 @@ const Table = useTable({
 			dict: options.status,
 		},
 		{
-			label: t("钱包监控开关"),
+			label: t("钱包监控"),
 			prop: "walletMonitorStatus",
 			minWidth: 100,
 			component: { name: "cl-switch" },
 			dict: options.walletMonitorStatus,
 		},
 		{
-			label: t("关键词监控开关"),
+			label: t("关键词监控"),
 			prop: "keywordMonitorStatus",
 			minWidth: 100,
 			component: { name: "cl-switch" },
@@ -232,10 +272,10 @@ const Table = useTable({
 			minWidth: 200,
 		},
 		{
-			label: t("登录信息"),
+			label: t("最后登录信息"),
 			prop: "loginInfo",
 			showOverflowTooltip: true,
-			minWidth: 200,
+			minWidth: 220,
 		},
 		{
 			label: t("最后登录时间"),
