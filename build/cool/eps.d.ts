@@ -336,6 +336,11 @@ declare namespace Eps {
 		balance?: number;
 
 		/**
+		 * 计费模式
+		 */
+		billingMode?: number;
+
+		/**
 		 * socketId
 		 */
 		socketId?: string;
@@ -495,6 +500,68 @@ declare namespace Eps {
 		 * 正则开关
 		 */
 		isRegex?: number;
+
+		/**
+		 * 状态
+		 */
+		status?: number;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface CustomerMaterialEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 组织用户名
+		 */
+		orgUsername?: string;
+
+		/**
+		 * 组织用户ID
+		 */
+		orgUserId?: number;
+
+		/**
+		 * 素材标题
+		 */
+		title?: string;
+
+		/**
+		 * 素材类型
+		 */
+		type?: number;
+
+		/**
+		 * 素材地址列表
+		 */
+		urls?: any;
+
+		/**
+		 * 封面地址
+		 */
+		cover?: string;
 
 		/**
 		 * 状态
@@ -969,32 +1036,17 @@ declare namespace Eps {
 		id?: number;
 
 		/**
-		 * 组织用户名
-		 */
-		orgUsername?: string;
-
-		/**
-		 * 组织用户ID
-		 */
-		orgUserId?: number;
-
-		/**
-		 * 服务类型
+		 * 服务类型 openai-OpenAI兼容大模型 google-Google翻译
 		 */
 		serviceType?: string;
 
 		/**
-		 * AK
+		 * API Key
 		 */
 		ak?: string;
 
 		/**
-		 * SK
-		 */
-		sk?: string;
-
-		/**
-		 * API地址
+		 * OpenAI兼容API地址
 		 */
 		apiUrl?: string;
 
@@ -1002,6 +1054,11 @@ declare namespace Eps {
 		 * 翻译模型
 		 */
 		model?: string;
+
+		/**
+		 * 大模型翻译提示词
+		 */
+		prompt?: string;
 
 		/**
 		 * 启用状态
@@ -1046,9 +1103,14 @@ declare namespace Eps {
 		userId?: number;
 
 		/**
-		 * 翻译服务
+		 * 翻译服务类型
 		 */
-		service?: number;
+		serviceType?: string;
+
+		/**
+		 * 翻译服务配置ID
+		 */
+		translateServiceId?: number;
 
 		/**
 		 * 原文
@@ -1069,6 +1131,11 @@ declare namespace Eps {
 		 * 目标语言
 		 */
 		targetLang?: string;
+
+		/**
+		 * 消耗字符数
+		 */
+		characterCount?: number;
 
 		/**
 		 * 创建时间
@@ -1156,6 +1223,11 @@ declare namespace Eps {
 		 * 拦截开关
 		 */
 		interceptStatus?: number;
+
+		/**
+		 * 素材库开关
+		 */
+		materialLibraryStatus?: number;
 
 		/**
 		 * 备注
@@ -1925,6 +1997,71 @@ declare namespace Eps {
 		list: BaseSysUserEntity[];
 	}
 
+	interface CustomerBillPageResponse {
+		pagination: PagePagination;
+		list: CustomerBillEntity[];
+	}
+
+	interface CustomerCharacterPageResponse {
+		pagination: PagePagination;
+		list: CustomerCharacterEntity[];
+	}
+
+	interface CustomerKeywordPageResponse {
+		pagination: PagePagination;
+		list: CustomerKeywordEntity[];
+	}
+
+	interface CustomerMessagePageResponse {
+		pagination: PagePagination;
+		list: CustomerMessageEntity[];
+	}
+
+	interface CustomerMonitorPageResponse {
+		pagination: PagePagination;
+		list: CustomerMonitorEntity[];
+	}
+
+	interface CustomerPortOccupancyPageResponse {
+		pagination: PagePagination;
+		list: CustomerPortOccupancyEntity[];
+	}
+
+	interface CustomerPortPageResponse {
+		pagination: PagePagination;
+		list: CustomerPortEntity[];
+	}
+
+	interface CustomerRuntimeSessionPageResponse {
+		pagination: PagePagination;
+		list: CustomerRuntimeSessionEntity[];
+	}
+
+	interface CustomerTranslateServicePageResponse {
+		pagination: PagePagination;
+		list: CustomerTranslateServiceEntity[];
+	}
+
+	interface CustomerTranslationPageResponse {
+		pagination: PagePagination;
+		list: CustomerTranslationEntity[];
+	}
+
+	interface CustomerUserPageResponse {
+		pagination: PagePagination;
+		list: CustomerUserEntity[];
+	}
+
+	interface CustomerWhitelistPageResponse {
+		pagination: PagePagination;
+		list: CustomerWhitelistEntity[];
+	}
+
+	interface CustomerMaterialPageResponse {
+		pagination: PagePagination;
+		list: CustomerMaterialEntity[];
+	}
+
 	interface DemoGoodsPageResponse {
 		pagination: PagePagination;
 		list: DemoGoodsEntity[];
@@ -1973,66 +2110,6 @@ declare namespace Eps {
 	interface UserInfoPageResponse {
 		pagination: PagePagination;
 		list: UserInfoEntity[];
-	}
-
-	interface CustomerBillPageResponse {
-		pagination: PagePagination;
-		list: CustomerBillEntity[];
-	}
-
-	interface CustomerCharacterPageResponse {
-		pagination: PagePagination;
-		list: CustomerCharacterEntity[];
-	}
-
-	interface CustomerKeywordPageResponse {
-		pagination: PagePagination;
-		list: CustomerKeywordEntity[];
-	}
-
-	interface CustomerMessagePageResponse {
-		pagination: PagePagination;
-		list: CustomerMessageEntity[];
-	}
-
-	interface CustomerMonitorPageResponse {
-		pagination: PagePagination;
-		list: CustomerMonitorEntity[];
-	}
-
-	interface CustomerPortPageResponse {
-		pagination: PagePagination;
-		list: CustomerPortEntity[];
-	}
-
-	interface CustomerTranslationPageResponse {
-		pagination: PagePagination;
-		list: CustomerTranslationEntity[];
-	}
-
-	interface CustomerUserPageResponse {
-		pagination: PagePagination;
-		list: CustomerUserEntity[];
-	}
-
-	interface CustomerWhitelistPageResponse {
-		pagination: PagePagination;
-		list: CustomerWhitelistEntity[];
-	}
-
-	interface CustomerPortOccupancyPageResponse {
-		pagination: PagePagination;
-		list: CustomerPortOccupancyEntity[];
-	}
-
-	interface CustomerRuntimeSessionPageResponse {
-		pagination: PagePagination;
-		list: CustomerRuntimeSessionEntity[];
-	}
-
-	interface CustomerTranslateServicePageResponse {
-		pagination: PagePagination;
-		list: CustomerTranslateServiceEntity[];
 	}
 
 	interface BaseCoding {
@@ -2512,6 +2589,738 @@ declare namespace Eps {
 			delete: boolean;
 			update: boolean;
 			move: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerBill {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerBillEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerBillEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerBillPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerCharacter {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerCharacterEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerCharacterEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerCharacterPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerDashboard {
+		/**
+		 * 租户资源看板汇总
+		 */
+		summary(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { summary: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { summary: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerKeyword {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerKeywordEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerKeywordEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerKeywordPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerMessage {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerMessageEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerMessageEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerMessagePageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerMonitor {
+		/**
+		 * 测试发送Telegram消息
+		 */
+		testsend(data?: any): Promise<any>;
+
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerMonitorEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerMonitorEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerMonitorPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			testsend: string;
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			testsend: boolean;
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerPortOccupancy {
+		/**
+		 * 强制回收端口
+		 */
+		forcereclaim(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerPortOccupancyEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerPortOccupancyEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerPortOccupancyPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { forcereclaim: string; info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { forcereclaim: boolean; info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerPort {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerPortEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerPortEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerPortPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerRuntimeSession {
+		/**
+		 * 强制下线会话
+		 */
+		forceoffline(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerRuntimeSessionEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerRuntimeSessionEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerRuntimeSessionPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { forceoffline: string; info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { forceoffline: boolean; info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerTranslateService {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerTranslateServiceEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerTranslateServiceEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerTranslateServicePageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerTranslation {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerTranslationEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerTranslationEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerTranslationPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerUser {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerUserEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerUserEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerUserPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerWhitelist {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerWhitelistEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerWhitelistEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerWhitelistPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerMaterial {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerMaterialEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerMaterialEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerMaterialPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
 			info: boolean;
 			list: boolean;
 			page: boolean;
@@ -3143,673 +3952,6 @@ declare namespace Eps {
 		request: Request;
 	}
 
-	interface CustomerBill {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerBillEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerBillEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerBillPageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerCharacter {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerCharacterEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerCharacterEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerCharacterPageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerKeyword {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerKeywordEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerKeywordEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerKeywordPageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerMessage {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerMessageEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerMessageEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerMessagePageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerMonitor {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerMonitorEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerMonitorEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerMonitorPageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerPort {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerPortEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerPortEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerPortPageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerTranslation {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerTranslationEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerTranslationEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerTranslationPageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerUser {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerUserEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerUserEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerUserPageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerWhitelist {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerWhitelistEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerWhitelistEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerWhitelistPageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerPortOccupancy {
-		/**
-		 * 强制回收端口
-		 */
-		forcereclaim(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerPortOccupancyEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerPortOccupancyEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerPortOccupancyPageResponse>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { forcereclaim: string; info: string; list: string; page: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: { forcereclaim: boolean; info: boolean; list: boolean; page: boolean };
-
-		request: Request;
-	}
-
-	interface CustomerRuntimeSession {
-		/**
-		 * 强制下线会话
-		 */
-		forceoffline(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerRuntimeSessionEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerRuntimeSessionEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerRuntimeSessionPageResponse>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { forceoffline: string; info: string; list: string; page: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: { forceoffline: boolean; info: boolean; list: boolean; page: boolean };
-
-		request: Request;
-	}
-
-	interface CustomerTranslateService {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerTranslateServiceEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerTranslateServiceEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerTranslateServicePageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerDashboard {
-		/**
-		 * 租户资源看板汇总
-		 */
-		summary(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { summary: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: { summary: boolean };
-
-		request: Request;
-	}
-
 	interface RequestOptions {
 		url: string;
 		method?: "OPTIONS" | "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "TRACE" | "CONNECT";
@@ -3840,6 +3982,22 @@ declare namespace Eps {
 				user: BaseSysUser;
 			};
 		};
+		customer: {
+			bill: CustomerBill;
+			character: CustomerCharacter;
+			dashboard: CustomerDashboard;
+			keyword: CustomerKeyword;
+			message: CustomerMessage;
+			monitor: CustomerMonitor;
+			portOccupancy: CustomerPortOccupancy;
+			port: CustomerPort;
+			runtimeSession: CustomerRuntimeSession;
+			translateService: CustomerTranslateService;
+			translation: CustomerTranslation;
+			user: CustomerUser;
+			whitelist: CustomerWhitelist;
+			material: CustomerMaterial;
+		};
 		demo: { goods: DemoGoods; tenant: DemoTenant };
 		dict: { info: DictInfo; type: DictType };
 		plugin: { info: PluginInfo };
@@ -3847,20 +4005,5 @@ declare namespace Eps {
 		space: { info: SpaceInfo; type: SpaceType };
 		task: { info: TaskInfo };
 		user: { address: UserAddress; info: UserInfo };
-		customer: {
-			bill: CustomerBill;
-			character: CustomerCharacter;
-			keyword: CustomerKeyword;
-			message: CustomerMessage;
-			monitor: CustomerMonitor;
-			port: CustomerPort;
-			translation: CustomerTranslation;
-			user: CustomerUser;
-			whitelist: CustomerWhitelist;
-			portOccupancy: CustomerPortOccupancy;
-			runtimeSession: CustomerRuntimeSession;
-			translateService: CustomerTranslateService;
-			dashboard: CustomerDashboard;
-		};
 	};
 }

@@ -77,6 +77,19 @@ const { ViewGroup } = useViewGroup({
 	title: t('用户列表')
 });
 
+const options = {
+	billingMode: [
+		{
+			label: t('端口计费'),
+			value: 0
+		},
+		{
+			label: t('字符计费'),
+			value: 1
+		}
+	]
+};
+
 // cl-crud
 const Crud = useCrud({
 	service: service.base.sys.user
@@ -137,16 +150,11 @@ const Table = useTable({
 				name: 'cl-switch'
 			}
 		},
-		{
-			prop: 'phone',
-			label: t('手机号码'),
-			minWidth: 120
-		},
-		{
-			prop: 'tenantId',
-			label: t('租户ID2'),
-			minWidth: 100
-		},
+			{
+				prop: 'tenantId',
+				label: t('租户ID'),
+				minWidth: 100
+			},
 		{
 			prop: 'balance',
 			label: t('余额'),
@@ -154,6 +162,12 @@ const Table = useTable({
 			formatter(row) {
 				return Number(row.balance || 0).toFixed(2);
 			}
+		},
+		{
+			prop: 'billingMode',
+			label: t('计费模式'),
+			minWidth: 120,
+			dict: options.billingMode
 		},
 		{
 			prop: 'remark',
@@ -297,6 +311,16 @@ const Upsert = useUpsert({
 					step: 0.01,
 					controlsPosition: 'right'
 				}
+			}
+		},
+		{
+			prop: 'billingMode',
+			label: t('计费模式'),
+			value: 0,
+			span: 12,
+			component: {
+				name: 'el-radio-group',
+				options: options.billingMode
 			}
 		},
 		{

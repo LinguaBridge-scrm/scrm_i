@@ -38,6 +38,7 @@ import { useCool } from "/@/cool";
 import { useBase } from "/@/modules/base";
 import { useI18n } from "vue-i18n";
 import { computed, reactive } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 const { service } = useCool();
 const { user } = useBase();
@@ -110,7 +111,12 @@ const Table = useTable({
 		{ type: "selection" },
 		{ label: t("租户"), prop: "tenantName", minWidth: 120 },
 		{ label: t("接收ID"), prop: "tgId", minWidth: 140 },
-		{ label: t("Bot密钥"), prop: "secretKey", minWidth: 140 },
+		{
+			label: t("Bot密钥"),
+			prop: "secretKey",
+			width: 160,
+			showOverflowTooltip: true,
+		},
 		{
 			label: t("状态"),
 			prop: "status",
@@ -137,7 +143,21 @@ const Table = useTable({
 			sortable: "custom",
 			component: { name: "cl-date-text" },
 		},
-		{ type: "op", buttons: ["edit", "delete"] },
+		{
+			type: "op",
+			width: 220,
+			buttons: [
+				{
+					label: t("测试发送"),
+					type: "primary",
+					onClick(options: any) {
+						testSend(opRow(options));
+					},
+				},
+				"edit",
+				"delete",
+			],
+		},
 	],
 });
 
@@ -157,5 +177,47 @@ const Crud = useCrud(
 // 刷新
 function refresh(params?: any) {
 	Crud.value?.refresh(params);
+}
+
+function opRow(options: any) {
+	return options?.scope?.row || options?.row || {};
+}
+
+async function testSend(row: Eps.CustomerMonitorEntity) {
+	if (!row?.id) {
+		ElMessage.error(t("监控配置不存在"));
+		return;
+	}
+
+	try {
+		const { value } = await ElMessageBox.prompt(
+			t("请输入要发送到当前电报ID的测试消息"),
+			t("测试发送"),
+			{
+				confirmButtonText: t("发送"),
+				cancelButtonText: t("取消"),
+				inputValue: t("这是一条Telegram机器人测试消息"),
+				inputType: "textarea",
+				inputValidator(value) {
+					return !!value?.trim() || t("请输入测试消息");
+				},
+			},
+		);
+
+		await service.customer.monitor.request({
+			url: "/test-send",
+			method: "POST",
+			data: {
+				id: row.id,
+				message: value,
+			},
+		});
+
+		ElMessage.success(t("发送成功"));
+	} catch (err: any) {
+		if (err !== "cancel" && err !== "close") {
+			ElMessage.error(err?.message || t("发送失败"));
+		}
+	}
 }
 </script>

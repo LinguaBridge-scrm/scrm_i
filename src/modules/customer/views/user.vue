@@ -30,15 +30,15 @@
 
 <script lang="ts" setup>
 defineOptions({
-	name: "customer-user",
+	name: 'customer-user'
 });
 
-import { useCrud, useTable, useUpsert, useSearch } from "@cool-vue/crud";
-import { useCool } from "/@/cool";
-import { useBase } from "/@/modules/base";
-import { useI18n } from "vue-i18n";
-import { computed, reactive } from "vue";
-import dayjs from "dayjs";
+import { useCrud, useTable, useUpsert, useSearch } from '@cool-vue/crud';
+import { useCool } from '/@/cool';
+import { useBase } from '/@/modules/base';
+import { useI18n } from 'vue-i18n';
+import { computed, reactive } from 'vue';
+import dayjs from 'dayjs';
 
 const { service } = useCool();
 const { user } = useBase();
@@ -48,258 +48,279 @@ const isTenantUser = computed(() => !!user.info?.tenantId);
 // 选项
 const options = reactive({
 	status: [
-		{ label: t("禁用"), value: 0, type: "danger" },
-		{ label: t("启用"), value: 1, type: "success" },
+		{ label: t('禁用'), value: 0, type: 'danger' },
+		{ label: t('启用'), value: 1, type: 'success' }
 	],
 	walletMonitorStatus: [
-		{ label: t("关"), value: 0, type: "danger" },
-		{ label: t("开"), value: 1, type: "success" },
+		{ label: t('关'), value: 0, type: 'danger' },
+		{ label: t('开'), value: 1, type: 'success' }
 	],
 	keywordMonitorStatus: [
-		{ label: t("关"), value: 0, type: "danger" },
-		{ label: t("开"), value: 1, type: "success" },
+		{ label: t('关'), value: 0, type: 'danger' },
+		{ label: t('开'), value: 1, type: 'success' }
 	],
 	globalStatus: [
-		{ label: t("关"), value: 0, type: "danger" },
-		{ label: t("开"), value: 1, type: "success" },
+		{ label: t('关'), value: 0, type: 'danger' },
+		{ label: t('开'), value: 1, type: 'success' }
 	],
 	interceptStatus: [
-		{ label: t("关"), value: 0, type: "danger" },
-		{ label: t("开"), value: 1, type: "success" },
+		{ label: t('关'), value: 0, type: 'danger' },
+		{ label: t('开'), value: 1, type: 'success' }
 	],
+	materialLibraryStatus: [
+		{ label: t('关'), value: 0, type: 'danger' },
+		{ label: t('开'), value: 1, type: 'success' }
+	]
 });
 
 function getCurrentDateTime() {
-	return dayjs().format("YYYY-MM-DD HH:mm:ss");
+	return dayjs().format('YYYY-MM-DD HH:mm:ss');
 }
 
 // cl-upsert
 const Upsert = useUpsert({
 	items: [
 		{
-			label: t("用户名"),
-			prop: "username",
-			component: { name: "el-input", props: { clearable: true } },
+			label: t('用户名'),
+			prop: 'username',
+			component: { name: 'el-input', props: { clearable: true } },
 			span: 12,
-			required: true,
+			required: true
 		},
 		{
-			label: t("密码"),
-			prop: "password",
-			component: { name: "el-input", props: { clearable: true } },
+			label: t('密码'),
+			prop: 'password',
+			component: { name: 'el-input', props: { clearable: true } },
 			span: 12,
-			required: true,
+			required: true
 		},
 		() => {
 			return {
-			label: t("消耗字符数"),
-			prop: "consumedCharacters",
-			hook: "number",
-			value: 0,
-			component: {
-				name: "el-input-number",
-				props: {
-					min: 0,
-					disabled: isTenantUser.value,
+				label: t('消耗字符数'),
+				prop: 'consumedCharacters',
+				hook: 'number',
+				value: 0,
+				component: {
+					name: 'el-input-number',
+					props: {
+						min: 0,
+						disabled: isTenantUser.value
+					}
 				},
-			},
-			span: 12,
-			required: true,
+				span: 12,
+				required: true
 			};
 		},
 		() => {
 			return {
-			label: t("占用端口"),
-			prop: "occupiedPorts",
-			hook: "number",
-			value: 0,
-			component: {
-				name: "el-input-number",
-				props: {
-					min: 0,
-					disabled: isTenantUser.value,
+				label: t('占用端口'),
+				prop: 'occupiedPorts',
+				hook: 'number',
+				value: 0,
+				component: {
+					name: 'el-input-number',
+					props: {
+						min: 0,
+						disabled: isTenantUser.value
+					}
 				},
-			},
-			span: 12,
-			required: true,
+				span: 12,
+				required: true
 			};
 		},
 		{
-			label: t("状态"),
-			prop: "status",
-			component: { name: "el-radio-group", options: options.status },
+			label: t('状态'),
+			prop: 'status',
+			component: { name: 'el-radio-group', options: options.status },
 			value: 1,
-			required: true,
+			required: true
 		},
 		{
-			label: t("钱包监控"),
-			prop: "walletMonitorStatus",
+			label: t('钱包监控'),
+			prop: 'walletMonitorStatus',
 			component: {
-				name: "el-radio-group",
-				options: options.walletMonitorStatus,
+				name: 'el-radio-group',
+				options: options.walletMonitorStatus
 			},
 			value: 0,
-			required: true,
+			required: true
 		},
 		{
-			label: t("关键词监控"),
-			prop: "keywordMonitorStatus",
+			label: t('关键词监控'),
+			prop: 'keywordMonitorStatus',
 			component: {
-				name: "el-radio-group",
-				options: options.keywordMonitorStatus,
+				name: 'el-radio-group',
+				options: options.keywordMonitorStatus
 			},
 			value: 0,
-			required: true,
+			required: true
 		},
 		{
-			label: t("全局开关"),
-			prop: "globalStatus",
+			label: t('全局开关'),
+			prop: 'globalStatus',
 			component: {
-				name: "el-radio-group",
-				options: options.globalStatus,
+				name: 'el-radio-group',
+				options: options.globalStatus
 			},
 			value: 0,
-			required: true,
+			required: true
 		},
 		{
-			label: t("拦截开关"),
-			prop: "interceptStatus",
+			label: t('拦截开关'),
+			prop: 'interceptStatus',
 			component: {
-				name: "el-radio-group",
-				options: options.interceptStatus,
+				name: 'el-radio-group',
+				options: options.interceptStatus
 			},
 			value: 0,
-			required: true,
+			required: true
 		},
 		{
-			label: t("备注"),
-			prop: "remark",
+			label: t('素材库'),
+			prop: 'materialLibraryStatus',
 			component: {
-				name: "el-input",
-				props: { type: "textarea", rows: 4 },
+				name: 'el-radio-group',
+				options: options.materialLibraryStatus
 			},
+			value: 0,
+			required: true
 		},
 		{
-			label: t("最后登录信息"),
-			prop: "loginInfo",
+			label: t('备注'),
+			prop: 'remark',
 			component: {
-				name: "el-input",
-				props: { type: "textarea", rows: 4, disabled: true },
-			},
+				name: 'el-input',
+				props: { type: 'textarea', rows: 4 }
+			}
 		},
 		{
-			label: t("最后登录时间"),
-			prop: "lastLoginTime",
+			label: t('最后登录信息'),
+			prop: 'loginInfo',
+			component: {
+				name: 'el-input',
+				props: { type: 'textarea', rows: 4, disabled: true }
+			}
+		},
+		{
+			label: t('最后登录时间'),
+			prop: 'lastLoginTime',
 			value: getCurrentDateTime(),
 			component: {
-				name: "el-date-picker",
+				name: 'el-date-picker',
 				props: {
-					type: "datetime",
-					valueFormat: "YYYY-MM-DD HH:mm:ss",
-					disabled: true,
-				},
+					type: 'datetime',
+					valueFormat: 'YYYY-MM-DD HH:mm:ss',
+					disabled: true
+				}
 			},
-			span: 12,
-		},
+			span: 12
+		}
 	],
 
 	onOpened(data) {
-		if (Upsert.value?.mode == "add") {
+		if (Upsert.value?.mode == 'add') {
 			data.consumedCharacters = 0;
 			data.occupiedPorts = 0;
 			data.lastLoginTime = data.lastLoginTime || getCurrentDateTime();
 		}
-	},
+	}
 });
 
 // cl-table
 const Table = useTable({
 	columns: [
-		{ type: "selection" },
-		{ label: t("租户"), prop: "tenantName", minWidth: 120 },
-		{ label: t("用户名"), prop: "username", minWidth: 140 },
-		{ label: t("密码"), prop: "password", minWidth: 140 },
+		{ type: 'selection' },
+		{ label: t('租户'), prop: 'tenantName', minWidth: 120 },
+		{ label: t('用户名'), prop: 'username', minWidth: 140 },
+		{ label: t('密码'), prop: 'password', minWidth: 140 },
 		{
-			label: t("消耗字符数"),
-			prop: "consumedCharacters",
+			label: t('消耗字符数'),
+			prop: 'consumedCharacters',
 			minWidth: 140,
-			sortable: "custom",
+			sortable: 'custom'
 		},
 		{
-			label: t("占用端口数"),
-			prop: "occupiedPorts",
+			label: t('占用端口数'),
+			prop: 'occupiedPorts',
 			minWidth: 140,
-			sortable: "custom",
+			sortable: 'custom'
 		},
 		{
-			label: t("状态"),
-			prop: "status",
+			label: t('状态'),
+			prop: 'status',
 			minWidth: 120,
-			dict: options.status,
+			dict: options.status
 		},
 		{
-			label: t("钱包监控"),
-			prop: "walletMonitorStatus",
+			label: t('钱包监控'),
+			prop: 'walletMonitorStatus',
 			minWidth: 100,
-			component: { name: "cl-switch" },
-			dict: options.walletMonitorStatus,
+			component: { name: 'cl-switch' },
+			dict: options.walletMonitorStatus
 		},
 		{
-			label: t("关键词监控"),
-			prop: "keywordMonitorStatus",
+			label: t('关键词监控'),
+			prop: 'keywordMonitorStatus',
 			minWidth: 100,
-			component: { name: "cl-switch" },
-			dict: options.keywordMonitorStatus,
+			component: { name: 'cl-switch' },
+			dict: options.keywordMonitorStatus
 		},
 		{
-			label: t("全局开关"),
-			prop: "globalStatus",
+			label: t('全局开关'),
+			prop: 'globalStatus',
 			minWidth: 100,
-			component: { name: "cl-switch" },
-			dict: options.globalStatus,
+			component: { name: 'cl-switch' },
+			dict: options.globalStatus
 		},
 		{
-			label: t("拦截开关"),
-			prop: "interceptStatus",
+			label: t('拦截开关'),
+			prop: 'interceptStatus',
 			minWidth: 100,
-			component: { name: "cl-switch" },
-			dict: options.interceptStatus,
+			component: { name: 'cl-switch' },
+			dict: options.interceptStatus
 		},
 		{
-			label: t("备注"),
-			prop: "remark",
+			label: t('素材库'),
+			prop: 'materialLibraryStatus',
+			minWidth: 100,
+			component: { name: 'cl-switch' },
+			dict: options.materialLibraryStatus
+		},
+		{
+			label: t('备注'),
+			prop: 'remark',
 			showOverflowTooltip: true,
-			minWidth: 200,
+			minWidth: 200
 		},
 		{
-			label: t("最后登录信息"),
-			prop: "loginInfo",
+			label: t('最后登录信息'),
+			prop: 'loginInfo',
 			showOverflowTooltip: true,
-			minWidth: 220,
+			minWidth: 220
 		},
 		{
-			label: t("最后登录时间"),
-			prop: "lastLoginTime",
+			label: t('最后登录时间'),
+			prop: 'lastLoginTime',
 			minWidth: 170,
-			sortable: "custom",
-			component: { name: "cl-date-text" },
+			sortable: 'custom',
+			component: { name: 'cl-date-text' }
 		},
 		{
-			label: t("创建时间"),
-			prop: "createTime",
+			label: t('创建时间'),
+			prop: 'createTime',
 			minWidth: 170,
-			sortable: "desc",
-			component: { name: "cl-date-text" },
+			sortable: 'desc',
+			component: { name: 'cl-date-text' }
 		},
 		{
-			label: t("更新时间"),
-			prop: "updateTime",
+			label: t('更新时间'),
+			prop: 'updateTime',
 			minWidth: 170,
-			sortable: "custom",
-			component: { name: "cl-date-text" },
+			sortable: 'custom',
+			component: { name: 'cl-date-text' }
 		},
-		{ type: "op", buttons: ["edit", "delete"] },
-	],
+		{ type: 'op', buttons: ['edit', 'delete'] }
+	]
 });
 
 // cl-search
@@ -308,11 +329,11 @@ const Search = useSearch();
 // cl-crud
 const Crud = useCrud(
 	{
-		service: service.customer.user,
+		service: service.customer.user
 	},
-	(app) => {
+	app => {
 		app.refresh();
-	},
+	}
 );
 
 // 刷新

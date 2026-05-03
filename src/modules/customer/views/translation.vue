@@ -44,10 +44,9 @@ const { t } = useI18n();
 
 // 选项
 const options = reactive({
-	service: [
-		{ label: t("Google"), value: 0 },
-		{ label: t("Deepl"), value: 1 },
-		{ label: t("Baidu"), value: 2 },
+	serviceType: [
+		{ label: t("Google翻译"), value: "google", type: "primary" },
+		{ label: t("OpenAI兼容大模型"), value: "openai", type: "success" },
 	],
 });
 
@@ -62,11 +61,20 @@ const Upsert = useUpsert({
 			required: true,
 		},
 		{
-			label: t("翻译服务"),
-			prop: "service",
-			component: { name: "el-radio-group", options: options.service },
-			value: 0,
+			label: t("服务类型"),
+			prop: "serviceType",
+			component: { name: "el-radio-group", options: options.serviceType },
+			value: "google",
 			required: true,
+		},
+		{
+			label: t("服务配置ID"),
+			prop: "translateServiceId",
+			component: {
+				name: "el-input-number",
+				props: { min: 0, controlsPosition: "right" },
+			},
+			span: 12,
 		},
 		{
 			label: t("原文"),
@@ -100,6 +108,16 @@ const Upsert = useUpsert({
 			span: 12,
 			required: true,
 		},
+		{
+			label: t("消耗字符数"),
+			prop: "characterCount",
+			component: {
+				name: "el-input-number",
+				props: { min: 0, controlsPosition: "right" },
+			},
+			value: 0,
+			span: 12,
+		},
 	],
 });
 
@@ -110,10 +128,15 @@ const Table = useTable({
 		{ label: t("租户"), prop: "tenantName", minWidth: 120 },
 		{ label: t("用户名"), prop: "username", minWidth: 140 },
 		{
-			label: t("翻译服务"),
-			prop: "service",
+			label: t("服务类型"),
+			prop: "serviceType",
+			minWidth: 150,
+			dict: options.serviceType,
+		},
+		{
+			label: t("服务配置ID"),
+			prop: "translateServiceId",
 			minWidth: 120,
-			dict: options.service,
 		},
 		{
 			label: t("原文"),
@@ -129,6 +152,7 @@ const Table = useTable({
 		},
 		{ label: t("源语言"), prop: "sourceLang", minWidth: 120 },
 		{ label: t("目标语言"), prop: "targetLang", minWidth: 120 },
+		{ label: t("消耗字符数"), prop: "characterCount", minWidth: 120 },
 		{
 			label: t("创建时间"),
 			prop: "createTime",
@@ -148,7 +172,15 @@ const Table = useTable({
 });
 
 // cl-search
-const Search = useSearch();
+const Search = useSearch({
+	items: [
+		{
+			label: t("服务类型"),
+			prop: "serviceType",
+			component: { name: "el-select", options: options.serviceType },
+		},
+	],
+});
 
 // cl-crud
 const Crud = useCrud(
