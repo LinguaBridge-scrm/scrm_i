@@ -589,6 +589,158 @@ declare namespace Eps {
 		[key: string]: any;
 	}
 
+	interface CustomerMessageDetectionEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 组织用户名
+		 */
+		orgUsername?: string;
+
+		/**
+		 * 组织用户ID
+		 */
+		orgUserId?: number;
+
+		/**
+		 * 用户ID
+		 */
+		userId?: number;
+
+		/**
+		 * 用户名
+		 */
+		username?: string;
+
+		/**
+		 * 平台
+		 */
+		platform?: string;
+
+		/**
+		 * 消息类型
+		 */
+		messageType?: string;
+
+		/**
+		 * 消息内容
+		 */
+		content?: string;
+
+		/**
+		 * 钱包监控开关
+		 */
+		walletMonitorStatus?: number;
+
+		/**
+		 * 关键词监控开关
+		 */
+		keywordMonitorStatus?: number;
+
+		/**
+		 * 拦截开关
+		 */
+		interceptStatus?: number;
+
+		/**
+		 * 是否检测到钱包地址
+		 */
+		walletDetected?: number;
+
+		/**
+		 * 是否命中钱包监控
+		 */
+		walletMatched?: number;
+
+		/**
+		 * 是否命中关键词
+		 */
+		keywordMatched?: number;
+
+		/**
+		 * 是否匹配
+		 */
+		matched?: number;
+
+		/**
+		 * 是否拦截
+		 */
+		intercepted?: number;
+
+		/**
+		 * 钱包地址列表
+		 */
+		walletAddresses?: any;
+
+		/**
+		 * 命中关键词列表
+		 */
+		matchedKeywords?: any;
+
+		/**
+		 * 无效正则关键词列表
+		 */
+		invalidRegexKeywords?: any;
+
+		/**
+		 * 命中类型
+		 */
+		hitTypes?: any;
+
+		/**
+		 * 客户端ID
+		 */
+		clientId?: string;
+
+		/**
+		 * 页面ID
+		 */
+		pageId?: string;
+
+		/**
+		 * 关联网页ID
+		 */
+		webpageId?: string;
+
+		/**
+		 * 对象ID
+		 */
+		targetId?: string;
+
+		/**
+		 * 发送者ID
+		 */
+		senderId?: string;
+
+		/**
+		 * 附加元数据
+		 */
+		meta?: any;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 用户名
+		 */
+		customerUsername?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
 	interface CustomerMessageEntity {
 		/**
 		 * ID
@@ -2062,6 +2214,11 @@ declare namespace Eps {
 		list: CustomerMaterialEntity[];
 	}
 
+	interface CustomerMessageDetectionPageResponse {
+		pagination: PagePagination;
+		list: CustomerMessageDetectionEntity[];
+	}
+
 	interface DemoGoodsPageResponse {
 		pagination: PagePagination;
 		list: DemoGoodsEntity[];
@@ -3330,6 +3487,40 @@ declare namespace Eps {
 		request: Request;
 	}
 
+	interface CustomerMessageDetection {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerMessageDetectionEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerMessageDetectionEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerMessageDetectionPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { delete: string; info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { delete: boolean; info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
 	interface DemoGoods {
 		/**
 		 * 删除
@@ -3997,6 +4188,7 @@ declare namespace Eps {
 			user: CustomerUser;
 			whitelist: CustomerWhitelist;
 			material: CustomerMaterial;
+			messageDetection: CustomerMessageDetection;
 		};
 		demo: { goods: DemoGoods; tenant: DemoTenant };
 		dict: { info: DictInfo; type: DictType };
