@@ -171,6 +171,7 @@ const Table = useTable({
 			label: t('启用状态'),
 			prop: 'status',
 			minWidth: 120,
+			component: { name: 'cl-switch' },
 			dict: options.status
 		},
 		{

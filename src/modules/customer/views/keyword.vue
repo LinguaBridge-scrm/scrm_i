@@ -69,11 +69,11 @@ const Upsert = useUpsert({
 					props: {
 						labelKey: 'username',
 						placeholder: t('请选择租户'),
-						immediate: true,
-					},
+						immediate: true
+					}
 				},
 				span: 12,
-				required: !isTenantAdmin.value,
+				required: !isTenantAdmin.value
 			};
 		},
 		{
@@ -132,6 +132,7 @@ const Table = useTable({
 			label: t('状态'),
 			prop: 'status',
 			minWidth: 120,
+			component: { name: 'cl-switch' },
 			dict: options.status
 		},
 		{

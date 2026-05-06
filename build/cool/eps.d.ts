@@ -475,6 +475,282 @@ declare namespace Eps {
 		[key: string]: any;
 	}
 
+	interface CustomerCryptoRechargeOrderEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 订单号
+		 */
+		orderNo?: string;
+
+		/**
+		 * 组织用户名
+		 */
+		orgUsername?: string;
+
+		/**
+		 * 组织用户ID
+		 */
+		orgUserId?: number;
+
+		/**
+		 * 钱包ID
+		 */
+		walletId?: number;
+
+		/**
+		 * 链类型 eth-以太坊 tron-波场
+		 */
+		chain?: string;
+
+		/**
+		 * 币种
+		 */
+		currency?: string;
+
+		/**
+		 * 收款地址
+		 */
+		address?: string;
+
+		/**
+		 * 充值基础金额
+		 */
+		baseAmount?: number;
+
+		/**
+		 * 随机尾数
+		 */
+		randomTail?: number;
+
+		/**
+		 * 实际支付金额
+		 */
+		payAmount?: number;
+
+		/**
+		 * 状态
+		 */
+		status?: number;
+
+		/**
+		 * 交易哈希
+		 */
+		txHash?: string;
+
+		/**
+		 * 付款地址
+		 */
+		fromAddress?: string;
+
+		/**
+		 * 区块高度
+		 */
+		blockNumber?: number;
+
+		/**
+		 * 确认数
+		 */
+		confirmations?: number;
+
+		/**
+		 * 过期时间
+		 */
+		expireTime?: Date;
+
+		/**
+		 * 支付时间
+		 */
+		paidTime?: Date;
+
+		/**
+		 * 确认时间
+		 */
+		confirmTime?: Date;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 用户名
+		 */
+		tenantName?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface CustomerCryptoRechargeTxEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 钱包ID
+		 */
+		walletId?: number;
+
+		/**
+		 * 链类型 eth-以太坊 tron-波场
+		 */
+		chain?: string;
+
+		/**
+		 * 币种
+		 */
+		currency?: string;
+
+		/**
+		 * 交易哈希
+		 */
+		txHash?: string;
+
+		/**
+		 * 日志序号
+		 */
+		logIndex?: number;
+
+		/**
+		 * 付款地址
+		 */
+		fromAddress?: string;
+
+		/**
+		 * 收款地址
+		 */
+		toAddress?: string;
+
+		/**
+		 * 链上金额
+		 */
+		amount?: number;
+
+		/**
+		 * 区块高度
+		 */
+		blockNumber?: number;
+
+		/**
+		 * 确认数
+		 */
+		confirmations?: number;
+
+		/**
+		 * 匹配订单ID
+		 */
+		matchedOrderId?: number;
+
+		/**
+		 * 状态
+		 */
+		status?: number;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface CustomerCryptoWalletEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 链类型 eth-以太坊 tron-波场
+		 */
+		chain?: string;
+
+		/**
+		 * 币种
+		 */
+		currency?: string;
+
+		/**
+		 * 收款地址
+		 */
+		address?: string;
+
+		/**
+		 * RPC地址
+		 */
+		rpcUrl?: string;
+
+		/**
+		 * USDT合约地址
+		 */
+		tokenContract?: string;
+
+		/**
+		 * 币种精度
+		 */
+		decimals?: number;
+
+		/**
+		 * 确认块数
+		 */
+		confirmationBlocks?: number;
+
+		/**
+		 * 上次扫描区块
+		 */
+		lastScannedBlock?: number;
+
+		/**
+		 * 状态
+		 */
+		status?: number;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
 	interface CustomerKeywordEntity {
 		/**
 		 * ID
@@ -1047,6 +1323,170 @@ declare namespace Eps {
 		 * 支付渠道
 		 */
 		payChannels?: any;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface CustomerPricePackageEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 套餐名称
+		 */
+		name?: string;
+
+		/**
+		 * 资源类型
+		 */
+		resourceType?: number;
+
+		/**
+		 * 数量
+		 */
+		count?: number;
+
+		/**
+		 * 价格
+		 */
+		price?: number;
+
+		/**
+		 * 有效期天数
+		 */
+		durationDays?: number;
+
+		/**
+		 * 状态
+		 */
+		status?: number;
+
+		/**
+		 * 排序
+		 */
+		sort?: number;
+
+		/**
+		 * 支付渠道
+		 */
+		payChannels?: any;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface CustomerPurchaseOrderEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 订单号
+		 */
+		orderNo?: string;
+
+		/**
+		 * 组织用户名
+		 */
+		orgUsername?: string;
+
+		/**
+		 * 组织用户ID
+		 */
+		orgUserId?: number;
+
+		/**
+		 * 套餐ID
+		 */
+		packageId?: number;
+
+		/**
+		 * 套餐名称
+		 */
+		packageName?: string;
+
+		/**
+		 * 资源类型
+		 */
+		resourceType?: number;
+
+		/**
+		 * 数量
+		 */
+		count?: number;
+
+		/**
+		 * 套餐价格
+		 */
+		price?: number;
+
+		/**
+		 * 订单金额
+		 */
+		amount?: number;
+
+		/**
+		 * 状态
+		 */
+		status?: number;
+
+		/**
+		 * 支付渠道
+		 */
+		payChannel?: number;
+
+		/**
+		 * 支付时间
+		 */
+		paidTime?: Date;
+
+		/**
+		 * 发放记录ID
+		 */
+		grantRecordId?: number;
+
+		/**
+		 * 发放时间
+		 */
+		grantTime?: Date;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
 
 		/**
 		 * 创建时间
@@ -2159,9 +2599,34 @@ declare namespace Eps {
 		list: CustomerCharacterEntity[];
 	}
 
+	interface CustomerCryptoRechargeOrderPageResponse {
+		pagination: PagePagination;
+		list: CustomerCryptoRechargeOrderEntity[];
+	}
+
+	interface CustomerCryptoRechargeTxPageResponse {
+		pagination: PagePagination;
+		list: CustomerCryptoRechargeTxEntity[];
+	}
+
+	interface CustomerCryptoWalletPageResponse {
+		pagination: PagePagination;
+		list: CustomerCryptoWalletEntity[];
+	}
+
 	interface CustomerKeywordPageResponse {
 		pagination: PagePagination;
 		list: CustomerKeywordEntity[];
+	}
+
+	interface CustomerMaterialPageResponse {
+		pagination: PagePagination;
+		list: CustomerMaterialEntity[];
+	}
+
+	interface CustomerMessageDetectionPageResponse {
+		pagination: PagePagination;
+		list: CustomerMessageDetectionEntity[];
 	}
 
 	interface CustomerMessagePageResponse {
@@ -2182,6 +2647,16 @@ declare namespace Eps {
 	interface CustomerPortPageResponse {
 		pagination: PagePagination;
 		list: CustomerPortEntity[];
+	}
+
+	interface CustomerPricePackagePageResponse {
+		pagination: PagePagination;
+		list: CustomerPricePackageEntity[];
+	}
+
+	interface CustomerPurchaseOrderPageResponse {
+		pagination: PagePagination;
+		list: CustomerPurchaseOrderEntity[];
 	}
 
 	interface CustomerRuntimeSessionPageResponse {
@@ -2207,16 +2682,6 @@ declare namespace Eps {
 	interface CustomerWhitelistPageResponse {
 		pagination: PagePagination;
 		list: CustomerWhitelistEntity[];
-	}
-
-	interface CustomerMaterialPageResponse {
-		pagination: PagePagination;
-		list: CustomerMaterialEntity[];
-	}
-
-	interface CustomerMessageDetectionPageResponse {
-		pagination: PagePagination;
-		list: CustomerMessageDetectionEntity[];
 	}
 
 	interface DemoGoodsPageResponse {
@@ -2871,6 +3336,156 @@ declare namespace Eps {
 		request: Request;
 	}
 
+	interface CustomerCryptoRechargeOrder {
+		/**
+		 * 手动扫描充值订单
+		 */
+		scan(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerCryptoRechargeOrderEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerCryptoRechargeOrderEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerCryptoRechargeOrderPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { scan: string; info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { scan: boolean; info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerCryptoRechargeTx {
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerCryptoRechargeTxEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerCryptoRechargeTxEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerCryptoRechargeTxPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerCryptoRecharge {
+		/**
+		 * 创建租户充值订单
+		 */
+		create(data?: any): Promise<any>;
+
+		/**
+		 * 我的充值订单分页
+		 */
+		myPage(data?: any): Promise<any>;
+
+		/**
+		 * 我的充值订单详情
+		 */
+		myInfo(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { create: string; myPage: string; myInfo: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { create: boolean; myPage: boolean; myInfo: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerCryptoWallet {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerCryptoWalletEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerCryptoWalletEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerCryptoWalletPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
 	interface CustomerDashboard {
 		/**
 		 * 租户资源看板汇总
@@ -2944,6 +3559,98 @@ declare namespace Eps {
 			page: boolean;
 			add: boolean;
 		};
+
+		request: Request;
+	}
+
+	interface CustomerMaterial {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerMaterialEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerMaterialEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerMaterialPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerMessageDetection {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerMessageDetectionEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerMessageDetectionEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerMessageDetectionPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { delete: string; info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { delete: boolean; info: boolean; list: boolean; page: boolean };
 
 		request: Request;
 	}
@@ -3159,6 +3866,127 @@ declare namespace Eps {
 			page: boolean;
 			add: boolean;
 		};
+
+		request: Request;
+	}
+
+	interface CustomerPricePackage {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerPricePackageEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerPricePackageEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerPricePackagePageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerPurchaseOrder {
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerPurchaseOrderEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerPurchaseOrderEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerPurchaseOrderPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerPurchase {
+		/**
+		 * 启用套餐列表
+		 */
+		packages(data?: any): Promise<any>;
+
+		/**
+		 * 余额购买套餐
+		 */
+		create(data?: any): Promise<any>;
+
+		/**
+		 * 我的购买订单分页
+		 */
+		myPage(data?: any): Promise<any>;
+
+		/**
+		 * 我的购买订单详情
+		 */
+		myInfo(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { packages: string; create: string; myPage: string; myInfo: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { packages: boolean; create: boolean; myPage: boolean; myInfo: boolean };
 
 		request: Request;
 	}
@@ -3425,98 +4253,6 @@ declare namespace Eps {
 			page: boolean;
 			add: boolean;
 		};
-
-		request: Request;
-	}
-
-	interface CustomerMaterial {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerMaterialEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerMaterialEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerMaterialPageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerMessageDetection {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerMessageDetectionEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerMessageDetectionEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerMessageDetectionPageResponse>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { delete: string; info: string; list: string; page: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: { delete: boolean; info: boolean; list: boolean; page: boolean };
 
 		request: Request;
 	}
@@ -4176,19 +4912,26 @@ declare namespace Eps {
 		customer: {
 			bill: CustomerBill;
 			character: CustomerCharacter;
+			cryptoRechargeOrder: CustomerCryptoRechargeOrder;
+			cryptoRechargeTx: CustomerCryptoRechargeTx;
+			cryptoRecharge: CustomerCryptoRecharge;
+			cryptoWallet: CustomerCryptoWallet;
 			dashboard: CustomerDashboard;
 			keyword: CustomerKeyword;
+			material: CustomerMaterial;
+			messageDetection: CustomerMessageDetection;
 			message: CustomerMessage;
 			monitor: CustomerMonitor;
 			portOccupancy: CustomerPortOccupancy;
 			port: CustomerPort;
+			pricePackage: CustomerPricePackage;
+			purchaseOrder: CustomerPurchaseOrder;
+			purchase: CustomerPurchase;
 			runtimeSession: CustomerRuntimeSession;
 			translateService: CustomerTranslateService;
 			translation: CustomerTranslation;
 			user: CustomerUser;
 			whitelist: CustomerWhitelist;
-			material: CustomerMaterial;
-			messageDetection: CustomerMessageDetection;
 		};
 		demo: { goods: DemoGoods; tenant: DemoTenant };
 		dict: { info: DictInfo; type: DictType };

@@ -30,14 +30,14 @@
 
 <script lang="ts" setup>
 defineOptions({
-	name: "customer-whitelist",
+	name: 'customer-whitelist'
 });
 
-import { useCrud, useTable, useUpsert, useSearch } from "@cool-vue/crud";
-import { useCool } from "/@/cool";
-import { useBase } from "/@/modules/base";
-import { useI18n } from "vue-i18n";
-import { computed, reactive } from "vue";
+import { useCrud, useTable, useUpsert, useSearch } from '@cool-vue/crud';
+import { useCool } from '/@/cool';
+import { useBase } from '/@/modules/base';
+import { useI18n } from 'vue-i18n';
+import { computed, reactive } from 'vue';
 
 const { service } = useCool();
 const { user } = useBase();
@@ -47,13 +47,13 @@ const isTenantAdmin = computed(() => !!user.info?.tenantId);
 // 选项
 const options = reactive({
 	type: [
-		{ label: t("波场"), value: 0 },
-		{ label: t("以太坊"), value: 1 },
+		{ label: t('波场'), value: 0 },
+		{ label: t('以太坊'), value: 1 }
 	],
 	status: [
-		{ label: t("禁用"), value: 0, type: "danger" },
-		{ label: t("启用"), value: 1, type: "success" },
-	],
+		{ label: t('禁用'), value: 0, type: 'danger' },
+		{ label: t('启用'), value: 1, type: 'success' }
+	]
 });
 
 // cl-upsert
@@ -61,88 +61,89 @@ const Upsert = useUpsert({
 	items: [
 		() => {
 			return {
-				label: t("租户"),
-				prop: "tenantId",
+				label: t('租户'),
+				prop: 'tenantId',
 				hidden: isTenantAdmin.value,
 				component: {
-					name: "cl-user-select",
+					name: 'cl-user-select',
 					props: {
-						labelKey: "username",
-						placeholder: t("请选择租户"),
-						immediate: true,
-					},
+						labelKey: 'username',
+						placeholder: t('请选择租户'),
+						immediate: true
+					}
 				},
 				span: 12,
-				required: !isTenantAdmin.value,
+				required: !isTenantAdmin.value
 			};
 		},
 		{
-			label: t("地址"),
-			prop: "address",
-			component: { name: "el-input", props: { clearable: true } },
+			label: t('地址'),
+			prop: 'address',
+			component: { name: 'el-input', props: { clearable: true } },
 			span: 12,
-			required: true,
+			required: true
 		},
 		{
-			label: t("类型"),
-			prop: "type",
-			component: { name: "el-radio-group", options: options.type },
+			label: t('类型'),
+			prop: 'type',
+			component: { name: 'el-radio-group', options: options.type },
 			value: 0,
-			required: true,
+			required: true
 		},
 		{
-			label: t("备注"),
-			prop: "remark",
+			label: t('备注'),
+			prop: 'remark',
 			component: {
-				name: "el-input",
-				props: { type: "textarea", rows: 4 },
-			},
+				name: 'el-input',
+				props: { type: 'textarea', rows: 4 }
+			}
 		},
 		{
-			label: t("状态"),
-			prop: "status",
-			component: { name: "el-radio-group", options: options.status },
+			label: t('状态'),
+			prop: 'status',
+			component: { name: 'el-radio-group', options: options.status },
 			value: 1,
-			required: true,
-		},
-	],
+			required: true
+		}
+	]
 });
 
 // cl-table
 const Table = useTable({
 	columns: [
-		{ type: "selection" },
-		{ label: t("租户"), prop: "tenantName", minWidth: 120 },
-		{ label: t("地址"), prop: "address", minWidth: 140 },
-		{ label: t("类型"), prop: "type", minWidth: 120, dict: options.type },
+		{ type: 'selection' },
+		{ label: t('租户'), prop: 'tenantName', minWidth: 120 },
+		{ label: t('地址'), prop: 'address', minWidth: 140 },
+		{ label: t('类型'), prop: 'type', minWidth: 120, dict: options.type },
 		{
-			label: t("备注"),
-			prop: "remark",
+			label: t('备注'),
+			prop: 'remark',
 			showOverflowTooltip: true,
-			minWidth: 200,
+			minWidth: 200
 		},
 		{
-			label: t("状态"),
-			prop: "status",
+			label: t('状态'),
+			prop: 'status',
 			minWidth: 120,
-			dict: options.status,
+			component: { name: 'cl-switch' },
+			dict: options.status
 		},
 		{
-			label: t("创建时间"),
-			prop: "createTime",
+			label: t('创建时间'),
+			prop: 'createTime',
 			minWidth: 170,
-			sortable: "desc",
-			component: { name: "cl-date-text" },
+			sortable: 'desc',
+			component: { name: 'cl-date-text' }
 		},
 		{
-			label: t("更新时间"),
-			prop: "updateTime",
+			label: t('更新时间'),
+			prop: 'updateTime',
 			minWidth: 170,
-			sortable: "custom",
-			component: { name: "cl-date-text" },
+			sortable: 'custom',
+			component: { name: 'cl-date-text' }
 		},
-		{ type: "op", buttons: ["edit", "delete"] },
-	],
+		{ type: 'op', buttons: ['edit', 'delete'] }
+	]
 });
 
 // cl-search
@@ -151,11 +152,11 @@ const Search = useSearch();
 // cl-crud
 const Crud = useCrud(
 	{
-		service: service.customer.whitelist,
+		service: service.customer.whitelist
 	},
-	(app) => {
+	app => {
 		app.refresh();
-	},
+	}
 );
 
 // 刷新
