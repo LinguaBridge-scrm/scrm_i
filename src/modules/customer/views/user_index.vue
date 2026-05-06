@@ -525,10 +525,11 @@ function formatNumber(value: number) {
 }
 
 function durationText(item: ResourcePackage) {
+	const days = Number(item.durationDays || 0);
 	if (Number(item.resourceType) === 0) {
-		return item.durationDays ? t('{days}天有效', { days: item.durationDays }) : t('长期有效');
+		return days > 0 ? `${days}${t('天有效')}` : t('长期有效');
 	}
-	return item.durationDays ? t('{days}天有效', { days: item.durationDays }) : t('购买后立即到账');
+	return days > 0 ? `${days}${t('天有效')}` : t('购买后立即到账');
 }
 
 function chainLabel(chain: string) {
@@ -702,15 +703,11 @@ async function buyPackage(item: ResourcePackage) {
 	}
 
 	try {
-		await ElMessageBox.confirm(
-			t('确认使用余额购买“{name}”？', { name: item.name }),
-			t('购买确认'),
-			{
-				type: 'warning',
-				confirmButtonText: t('确认购买'),
-				cancelButtonText: t('取消')
-			}
-		);
+		await ElMessageBox.confirm(`${t('确认使用余额购买')}“${item.name}”？`, t('购买确认'), {
+			type: 'warning',
+			confirmButtonText: t('确认购买'),
+			cancelButtonText: t('取消')
+		});
 	} catch {
 		return;
 	}
