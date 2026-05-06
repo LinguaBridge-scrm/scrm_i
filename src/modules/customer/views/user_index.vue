@@ -400,8 +400,9 @@ type DashboardSummary = {
 	balance: number;
 	billingMode: number;
 	billingModeName: string;
+	portUnlimited: boolean;
 	usedPorts: number;
-	availablePorts: number;
+	availablePorts: number | null;
 	availableCharacters: number;
 	portRankings: PortRanking[];
 };
@@ -427,6 +428,7 @@ const summary = reactive<DashboardSummary>({
 	balance: 0,
 	billingMode: 0,
 	billingModeName: t('端口计费'),
+	portUnlimited: false,
 	usedPorts: 0,
 	availablePorts: 0,
 	availableCharacters: 0,
@@ -501,8 +503,8 @@ const cards = computed(() => [
 	{
 		prop: 'availablePorts',
 		label: t('可用端口数'),
-		value: formatNumber(summary.availablePorts),
-		suffix: t('个'),
+		value: summary.portUnlimited ? t('无限制') : formatNumber(summary.availablePorts || 0),
+		suffix: summary.portUnlimited ? '' : t('个'),
 		desc: t('生效端口额度合计'),
 		icon: DataLine
 	},
@@ -743,9 +745,11 @@ async function refresh() {
 		summary.billingMode = Number(data?.billingMode || 0);
 		summary.billingModeName =
 			data?.billingModeName || (summary.billingMode === 1 ? t('字符计费') : t('端口计费'));
+		summary.portUnlimited = !!data?.portUnlimited || summary.billingMode === 1;
 		activePurchaseType.value = summary.billingMode === 1 ? 1 : 0;
 		summary.usedPorts = Number(data?.usedPorts || 0);
-		summary.availablePorts = Number(data?.availablePorts || 0);
+		summary.availablePorts =
+			data?.availablePorts === null ? null : Number(data?.availablePorts || 0);
 		summary.availableCharacters = Number(data?.availableCharacters || 0);
 		summary.portRankings = Array.isArray(data?.portRankings) ? data.portRankings : [];
 	} catch (err: any) {
