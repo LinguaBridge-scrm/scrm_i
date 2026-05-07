@@ -55,6 +55,7 @@ const options = reactive({
 		{ label: t("系统赠送"), value: 0 },
 		{ label: t("Tron"), value: 1 },
 		{ label: t("Eth"), value: 2 },
+		{ label: t("系统购买"), value: 3 },
 	],
 });
 

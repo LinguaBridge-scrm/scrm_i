@@ -2,7 +2,7 @@
 	<cl-crud ref="Crud">
 		<cl-row>
 			<cl-refresh-btn />
-			<el-button type="primary" :loading="scanLoading" @click="scan">
+			<el-button v-if="!isTenantAdmin" type="primary" :loading="scanLoading" @click="scan">
 				{{ t('手动扫描') }}
 			</el-button>
 			<cl-flex1 />
@@ -27,13 +27,16 @@ defineOptions({
 
 import { useCrud, useSearch, useTable } from '@cool-vue/crud';
 import { BaseService } from '/@/cool';
+import { useBase } from '/@/modules/base';
 import { useI18n } from 'vue-i18n';
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 
 const { t } = useI18n();
+const { user } = useBase();
 const orderService = new BaseService('admin/customer/crypto-recharge-order');
 const scanLoading = ref(false);
+const isTenantAdmin = computed(() => !!user.info?.tenantId);
 
 const options = reactive({
 	chain: [
