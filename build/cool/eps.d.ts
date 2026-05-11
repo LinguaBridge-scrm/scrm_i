@@ -2300,6 +2300,118 @@ declare namespace Eps {
 		[key: string]: any;
 	}
 
+	interface CustomerFileResourceEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 组织用户名
+		 */
+		orgUsername?: string;
+
+		/**
+		 * 组织用户ID
+		 */
+		orgUserId?: number;
+
+		/**
+		 * 客户用户ID
+		 */
+		userId?: number;
+
+		/**
+		 * 原始文件名
+		 */
+		originalName?: string;
+
+		/**
+		 * 存储文件名
+		 */
+		fileName?: string;
+
+		/**
+		 * 文件MD5
+		 */
+		fileMd5?: string;
+
+		/**
+		 * 扩展名
+		 */
+		extension?: string;
+
+		/**
+		 * 文件类型
+		 */
+		fileType?: string;
+
+		/**
+		 * MIME类型
+		 */
+		mimeType?: string;
+
+		/**
+		 * 文件大小
+		 */
+		fileSize?: number;
+
+		/**
+		 * 存储模式
+		 */
+		storageMode?: string;
+
+		/**
+		 * 文件存储Key
+		 */
+		fileKey?: string;
+
+		/**
+		 * 直链地址
+		 */
+		url?: string;
+
+		/**
+		 * 上传次数
+		 */
+		uploadCount?: number;
+
+		/**
+		 * 最后上传时间
+		 */
+		lastUploadTime?: Date;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * 原始文件信息
+		 */
+		rawInfo?: any;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 用户名
+		 */
+		customerUsername?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
 	interface DemoGoodsEntity {
 		/**
 		 * ID
@@ -3073,6 +3185,11 @@ declare namespace Eps {
 	interface CustomerWhitelistPageResponse {
 		pagination: PagePagination;
 		list: CustomerWhitelistEntity[];
+	}
+
+	interface CustomerFileResourcePageResponse {
+		pagination: PagePagination;
+		list: CustomerFileResourceEntity[];
 	}
 
 	interface DemoGoodsPageResponse {
@@ -4750,6 +4867,40 @@ declare namespace Eps {
 		request: Request;
 	}
 
+	interface CustomerFileResource {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerFileResourceEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerFileResourceEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerFileResourcePageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { delete: string; info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { delete: boolean; info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
 	interface DemoGoods {
 		/**
 		 * 删除
@@ -5428,6 +5579,7 @@ declare namespace Eps {
 			whatsappConversation: CustomerWhatsappConversation;
 			whatsappMessage: CustomerWhatsappMessage;
 			whitelist: CustomerWhitelist;
+			fileResource: CustomerFileResource;
 		};
 		demo: { goods: DemoGoods; tenant: DemoTenant };
 		dict: { info: DictInfo; type: DictType };

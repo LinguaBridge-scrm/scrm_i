@@ -10,6 +10,13 @@ export default (): ModuleConfig => {
 					label: t('WhatsApp')
 				},
 				component: () => import('./views/whatsapp.vue')
+			},
+			{
+				path: '/customer/file-resource',
+				meta: {
+					label: t('文件资源')
+				},
+				component: () => import('./views/file-resource.vue')
 			}
 		]
 	};
