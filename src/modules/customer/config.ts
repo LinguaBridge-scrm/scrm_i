@@ -7,7 +7,7 @@ export default (): ModuleConfig => {
 			{
 				path: '/customer/whatsapp',
 				meta: {
-					label: t('WhatsApp')
+					label: t('消息记录')
 				},
 				component: () => import('./views/whatsapp.vue')
 			},

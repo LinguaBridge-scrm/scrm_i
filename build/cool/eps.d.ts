@@ -1894,6 +1894,11 @@ declare namespace Eps {
 		userId?: number;
 
 		/**
+		 * 平台
+		 */
+		platform?: string;
+
+		/**
 		 * WhatsApp账号标识
 		 */
 		accountKey?: string;
@@ -1974,6 +1979,11 @@ declare namespace Eps {
 		 * WhatsApp账号ID
 		 */
 		accountId?: number;
+
+		/**
+		 * 平台
+		 */
+		platform?: string;
 
 		/**
 		 * WhatsApp会话标识
@@ -2106,6 +2116,11 @@ declare namespace Eps {
 		 * WhatsApp会话ID
 		 */
 		conversationId?: number;
+
+		/**
+		 * 平台
+		 */
+		platform?: string;
 
 		/**
 		 * WhatsApp消息标识

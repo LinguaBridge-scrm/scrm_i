@@ -4,6 +4,9 @@
 			<cl-row>
 				<cl-refresh-btn />
 				<cl-flex1 />
+				<cl-filter :label="t('平台')">
+					<cl-select :options="platformOptions" prop="platform" :width="130" />
+				</cl-filter>
 				<cl-search-key :placeholder="t('搜索账号、手机号、昵称')" :width="260" />
 				<cl-search ref="Search" />
 			</cl-row>
@@ -20,7 +23,7 @@
 
 		<cl-dialog
 			v-model="chat.visible"
-			:title="chat.account ? accountTitle(chat.account) : t('WhatsApp会话')"
+			:title="chat.account ? accountTitle(chat.account) : t('平台会话')"
 			width="1120px"
 			class="whatsapp-dialog"
 			modal-class="whatsapp-dialog-overlay"
@@ -38,7 +41,12 @@
 								{{ avatarText(chat.account) }}
 							</el-avatar>
 							<div class="account-text">
-								<strong>{{ accountTitle(chat.account) }}</strong>
+								<strong>
+									{{ accountTitle(chat.account) }}
+									<el-tag size="small" effect="plain">
+										{{ platformLabel(chat.account?.platform) }}
+									</el-tag>
+								</strong>
 								<span>{{
 									chat.account?.phone || chat.account?.accountKey || '-'
 								}}</span>
@@ -154,17 +162,13 @@
 											</template>
 
 											<audio
-												v-else-if="
-													item.messageType === 1 && item.mediaUrl
-												"
+												v-else-if="item.messageType === 1 && item.mediaUrl"
 												:src="item.mediaUrl"
 												controls
 											/>
 
 											<el-image
-												v-else-if="
-													item.messageType === 2 && item.mediaUrl
-												"
+												v-else-if="item.messageType === 2 && item.mediaUrl"
 												:src="item.mediaUrl"
 												:preview-src-list="[item.mediaUrl]"
 												fit="cover"
@@ -172,9 +176,7 @@
 											/>
 
 											<video
-												v-else-if="
-													item.messageType === 3 && item.mediaUrl
-												"
+												v-else-if="item.messageType === 3 && item.mediaUrl"
 												:src="item.mediaUrl"
 												:poster="item.thumbnailUrl"
 												controls
@@ -210,9 +212,7 @@
 								</div>
 
 								<el-empty
-									v-if="
-										!chat.loadingMessages && chat.messages.length === 0
-									"
+									v-if="!chat.loadingMessages && chat.messages.length === 0"
 									:description="t('暂无消息')"
 								/>
 							</div>
@@ -258,6 +258,10 @@ const accountStatusOptions: Array<{ label: string; value: number; type: TagType 
 	{ label: t('异常'), value: 2, type: 'danger' }
 ];
 
+const platformOptions: Array<{ label: string; value: string; type: TagType }> = [
+	{ label: 'WhatsApp', value: 'whatsapp', type: 'success' }
+];
+
 const messageTypeOptions = [
 	{ label: t('文本'), value: 0 },
 	{ label: t('语音'), value: 1 },
@@ -288,7 +292,12 @@ const chat = reactive({
 });
 
 function accountTitle(row: any) {
-	return row?.displayName || row?.phone || row?.accountKey || t('WhatsApp账号');
+	return row?.displayName || row?.phone || row?.accountKey || t('平台账号');
+}
+
+function platformLabel(value: any) {
+	const platform = String(value || 'whatsapp').toLowerCase();
+	return platformOptions.find(e => e.value === platform)?.label || platform;
 }
 
 function conversationTitle(row: any) {
@@ -370,6 +379,7 @@ async function loadConversations() {
 		const res = await conversationService.page({
 			page: 1,
 			size: 50,
+			platform: chat.account.platform,
 			accountId: chat.account.id
 		});
 		chat.conversations = pageList(res);
@@ -399,6 +409,7 @@ async function loadMessages(loadOlder = false) {
 		const res = await messageService.page({
 			page,
 			size: chat.messageSize,
+			platform: chat.account.platform,
 			accountId: chat.account.id,
 			conversationId: chat.activeConversation.id
 		});
@@ -417,6 +428,12 @@ async function loadMessages(loadOlder = false) {
 
 const Table = useTable({
 	columns: [
+		{
+			label: t('平台'),
+			prop: 'platform',
+			minWidth: 110,
+			dict: platformOptions
+		},
 		{
 			label: t('账号'),
 			prop: 'displayName',
@@ -455,7 +472,7 @@ const Table = useTable({
 			width: 130,
 			buttons: [
 				{
-					label: t('查看会话'),
+					label: t('查看对话'),
 					type: 'primary',
 					onClick(options: any) {
 						openAccount(opRow(options));
