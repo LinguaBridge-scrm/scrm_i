@@ -8,6 +8,7 @@
 			<!-- 删除按钮 -->
 			<cl-multi-delete-btn />
 			<cl-flex1 />
+			<cl-search-key :placeholder="t('搜索内容、账号、会话、消息ID')" :width="280" />
 			<!-- 条件搜索 -->
 			<cl-search ref="Search" />
 		</cl-row>
@@ -75,11 +76,11 @@ const Upsert = useUpsert({
 					props: {
 						labelKey: 'username',
 						placeholder: t('请选择租户'),
-						immediate: true,
-					},
+						immediate: true
+					}
 				},
 				span: 12,
-				required: !isTenantAdmin.value,
+				required: !isTenantAdmin.value
 			};
 		},
 		{
@@ -87,7 +88,7 @@ const Upsert = useUpsert({
 			prop: 'username',
 			component: {
 				name: 'el-input',
-				props: { type: 'textarea',}
+				props: { type: 'textarea' }
 			},
 			span: 12,
 			required: true
@@ -190,6 +191,25 @@ const Table = useTable({
 			minWidth: 120,
 			dict: options.platform
 		},
+		{ label: t('来源平台'), prop: 'sourcePlatform', minWidth: 120 },
+		{
+			label: t('来源账号'),
+			prop: 'sourceAccountKey',
+			showOverflowTooltip: true,
+			minWidth: 180
+		},
+		{
+			label: t('来源会话'),
+			prop: 'sourceConversationKey',
+			showOverflowTooltip: true,
+			minWidth: 180
+		},
+		{
+			label: t('来源消息ID'),
+			prop: 'sourceMessageKey',
+			showOverflowTooltip: true,
+			minWidth: 220
+		},
 		{
 			label: t('消息类型'),
 			prop: 'messageType',
@@ -230,6 +250,13 @@ const Table = useTable({
 			dict: options.isException
 		},
 		{
+			label: t('消息时间'),
+			prop: 'messageTime',
+			minWidth: 170,
+			sortable: 'desc',
+			component: { name: 'cl-date-text' }
+		},
+		{
 			label: t('创建时间'),
 			prop: 'createTime',
 			minWidth: 170,
@@ -248,7 +275,43 @@ const Table = useTable({
 });
 
 // cl-search
-const Search = useSearch();
+const Search = useSearch({
+	items: [
+		{
+			label: t('平台类型'),
+			prop: 'platform',
+			component: {
+				name: 'cl-select',
+				props: {
+					clearable: true,
+					options: options.platform
+				}
+			}
+		},
+		{
+			label: t('消息类型'),
+			prop: 'messageType',
+			component: {
+				name: 'cl-select',
+				props: {
+					clearable: true,
+					options: options.messageType
+				}
+			}
+		},
+		{
+			label: t('是否异常'),
+			prop: 'isException',
+			component: {
+				name: 'cl-select',
+				props: {
+					clearable: true,
+					options: options.isException
+				}
+			}
+		}
+	]
+});
 
 // cl-crud
 const Crud = useCrud(

@@ -12,6 +12,13 @@ export default (): ModuleConfig => {
 				component: () => import('./views/whatsapp.vue')
 			},
 			{
+				path: '/customer/message',
+				meta: {
+					label: t('消息明细')
+				},
+				component: () => import('./views/message.vue')
+			},
+			{
 				path: '/customer/file-resource',
 				meta: {
 					label: t('文件资源')

@@ -31,9 +31,6 @@
 						{{ sessionStatusLabel(detailData.status) }}
 					</el-tag>
 				</el-descriptions-item>
-				<el-descriptions-item :label="t('传输协议')">
-					{{ detailData.transport || '-' }}
-				</el-descriptions-item>
 				<el-descriptions-item :label="t('心跳间隔')">
 					{{ detailData.heartbeatInterval ? `${detailData.heartbeatInterval}s` : '-' }}
 				</el-descriptions-item>
@@ -58,30 +55,11 @@
 				<el-descriptions-item v-if="detailData.status !== 1" :label="t('离线时间')">
 					{{ detailData.offlineTime || '-' }}
 				</el-descriptions-item>
-				<el-descriptions-item :label="t('活跃页面')" :span="2">
-					<template v-if="detailData.activePageIds?.length">
-						<el-tag
-							v-for="pid in detailData.activePageIds"
-							:key="pid"
-							size="small"
-							class="page-tag"
-						>
-							{{ pid }}
-						</el-tag>
-					</template>
-					<span v-else>-</span>
-				</el-descriptions-item>
 				<el-descriptions-item :label="t('IP')">
 					{{ detailData.ip || '-' }}
 				</el-descriptions-item>
-				<el-descriptions-item :label="t('备注')">
-					{{ detailData.remark || '-' }}
-				</el-descriptions-item>
 				<el-descriptions-item :label="t('客户端信息')" :span="2">
 					{{ detailData.userAgent || '-' }}
-				</el-descriptions-item>
-				<el-descriptions-item v-if="detailData.meta" :label="t('元数据')" :span="2">
-					<pre class="meta-json">{{ formatJson(detailData.meta) }}</pre>
 				</el-descriptions-item>
 			</el-descriptions>
 		</cl-dialog>
@@ -116,25 +94,12 @@ const sessionStatusOptions: SessionStatusOption[] = [
 	{ label: t('心跳超时'), value: 2, type: 'warning' }
 ];
 
-const transportOptions = [
-	{ label: 'HTTP', value: 'http' },
-	{ label: 'WebSocket', value: 'ws' }
-];
-
 function sessionStatusLabel(status: number) {
 	return sessionStatusOptions.find(e => e.value === status)?.label || '-';
 }
 
 function sessionStatusTagType(status: number): TagType {
 	return sessionStatusOptions.find(e => e.value === status)?.type || 'info';
-}
-
-function formatJson(data: any) {
-	try {
-		return JSON.stringify(data, null, 2);
-	} catch {
-		return data;
-	}
 }
 
 const detailVisible = ref(false);
@@ -193,24 +158,10 @@ const Table = useTable({
 			dict: sessionStatusOptions
 		},
 		{
-			label: t('传输协议'),
-			prop: 'transport',
-			minWidth: 100,
-			dict: transportOptions
-		},
-		{
 			label: t('心跳次数'),
 			prop: 'heartbeatCount',
 			minWidth: 100,
 			sortable: 'custom'
-		},
-		{
-			label: t('活跃页面数'),
-			prop: 'activePageIds',
-			minWidth: 110,
-			formatter(row) {
-				return Array.isArray(row.activePageIds) ? row.activePageIds.length : 0;
-			}
 		},
 		{
 			label: t('上线时间'),
@@ -237,12 +188,6 @@ const Table = useTable({
 			label: t('IP'),
 			prop: 'ip',
 			minWidth: 130
-		},
-		{
-			label: t('备注'),
-			prop: 'remark',
-			minWidth: 140,
-			showOverflowTooltip: true
 		},
 		{
 			label: t('创建时间'),
@@ -283,11 +228,6 @@ const Search = useSearch({
 			label: t('状态'),
 			prop: 'status',
 			component: { name: 'el-select', options: sessionStatusOptions }
-		},
-		{
-			label: t('协议'),
-			prop: 'transport',
-			component: { name: 'el-select', options: transportOptions }
 		}
 	]
 });
@@ -305,19 +245,3 @@ function refresh(params?: any) {
 	Crud.value?.refresh(params);
 }
 </script>
-
-<style scoped>
-.meta-json {
-	margin: 0;
-	font-size: 12px;
-	line-height: 1.5;
-	white-space: pre-wrap;
-	word-break: break-all;
-	max-height: 200px;
-	overflow-y: auto;
-}
-
-.page-tag {
-	margin: 2px 4px 2px 0;
-}
-</style>

@@ -1109,6 +1109,36 @@ declare namespace Eps {
 		isException?: number;
 
 		/**
+		 * 来源唯一键
+		 */
+		sourceKey?: string;
+
+		/**
+		 * 来源平台
+		 */
+		sourcePlatform?: string;
+
+		/**
+		 * 来源账号标识
+		 */
+		sourceAccountKey?: string;
+
+		/**
+		 * 来源会话标识
+		 */
+		sourceConversationKey?: string;
+
+		/**
+		 * 来源消息标识
+		 */
+		sourceMessageKey?: string;
+
+		/**
+		 * 消息时间
+		 */
+		messageTime?: Date;
+
+		/**
 		 * 创建时间
 		 */
 		createTime?: string;
@@ -1198,11 +1228,6 @@ declare namespace Eps {
 		pageId?: string;
 
 		/**
-		 * 关联网页ID
-		 */
-		webpageId?: string;
-
-		/**
 		 * 分配槽位
 		 */
 		slotNo?: number;
@@ -1246,11 +1271,6 @@ declare namespace Eps {
 		 * 客户端信息
 		 */
 		userAgent?: string;
-
-		/**
-		 * 附加元数据
-		 */
-		meta?: any;
 
 		/**
 		 * 创建时间
@@ -1526,11 +1546,6 @@ declare namespace Eps {
 		status?: number;
 
 		/**
-		 * 传输协议
-		 */
-		transport?: string;
-
-		/**
 		 * 心跳间隔(秒)
 		 */
 		heartbeatInterval?: number;
@@ -1571,11 +1586,6 @@ declare namespace Eps {
 		expireTime?: Date;
 
 		/**
-		 * 活跃页面ID列表
-		 */
-		activePageIds?: any;
-
-		/**
 		 * IP
 		 */
 		ip?: string;
@@ -1584,16 +1594,6 @@ declare namespace Eps {
 		 * 客户端信息
 		 */
 		userAgent?: string;
-
-		/**
-		 * 备注
-		 */
-		remark?: string;
-
-		/**
-		 * 附加元数据
-		 */
-		meta?: any;
 
 		/**
 		 * 创建时间
