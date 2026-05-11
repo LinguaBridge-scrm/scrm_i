@@ -1872,6 +1872,382 @@ declare namespace Eps {
 		[key: string]: any;
 	}
 
+	interface CustomerWhatsappAccountEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 组织用户名
+		 */
+		orgUsername?: string;
+
+		/**
+		 * 组织用户ID
+		 */
+		orgUserId?: number;
+
+		/**
+		 * 客户用户ID
+		 */
+		userId?: number;
+
+		/**
+		 * WhatsApp账号标识
+		 */
+		accountKey?: string;
+
+		/**
+		 * 手机号
+		 */
+		phone?: string;
+
+		/**
+		 * 显示名称
+		 */
+		displayName?: string;
+
+		/**
+		 * 头像
+		 */
+		avatar?: string;
+
+		/**
+		 * 状态
+		 */
+		status?: number;
+
+		/**
+		 * 最后同步时间
+		 */
+		lastSyncTime?: Date;
+
+		/**
+		 * 最后消息时间
+		 */
+		lastMessageTime?: Date;
+
+		/**
+		 * 原始账号信息
+		 */
+		rawProfile?: any;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 用户名
+		 */
+		customerUsername?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface CustomerWhatsappConversationEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 组织用户名
+		 */
+		orgUsername?: string;
+
+		/**
+		 * 组织用户ID
+		 */
+		orgUserId?: number;
+
+		/**
+		 * WhatsApp账号ID
+		 */
+		accountId?: number;
+
+		/**
+		 * WhatsApp会话标识
+		 */
+		conversationKey?: string;
+
+		/**
+		 * 会话类型
+		 */
+		chatType?: number;
+
+		/**
+		 * 对方标识
+		 */
+		peerKey?: string;
+
+		/**
+		 * 对方手机号
+		 */
+		peerPhone?: string;
+
+		/**
+		 * 对方名称
+		 */
+		peerName?: string;
+
+		/**
+		 * 对方头像
+		 */
+		peerAvatar?: string;
+
+		/**
+		 * 最后消息ID
+		 */
+		lastMessageId?: number;
+
+		/**
+		 * 最后消息标识
+		 */
+		lastMessageKey?: string;
+
+		/**
+		 * 最后消息摘要
+		 */
+		lastMessagePreview?: string;
+
+		/**
+		 * 最后消息类型
+		 */
+		lastMessageType?: number;
+
+		/**
+		 * 最后消息时间
+		 */
+		lastMessageTime?: Date;
+
+		/**
+		 * 未读数
+		 */
+		unreadCount?: number;
+
+		/**
+		 * 是否置顶
+		 */
+		isPinned?: number;
+
+		/**
+		 * 是否归档
+		 */
+		isArchived?: number;
+
+		/**
+		 * 原始会话信息
+		 */
+		rawConversation?: any;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * WhatsApp账号标识
+		 */
+		accountKey?: string;
+
+		/**
+		 * 手机号
+		 */
+		accountPhone?: string;
+
+		/**
+		 * 显示名称
+		 */
+		accountName?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface CustomerWhatsappMessageEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 组织用户名
+		 */
+		orgUsername?: string;
+
+		/**
+		 * 组织用户ID
+		 */
+		orgUserId?: number;
+
+		/**
+		 * WhatsApp账号ID
+		 */
+		accountId?: number;
+
+		/**
+		 * WhatsApp会话ID
+		 */
+		conversationId?: number;
+
+		/**
+		 * WhatsApp消息标识
+		 */
+		messageKey?: string;
+
+		/**
+		 * 消息方向
+		 */
+		direction?: number;
+
+		/**
+		 * 发送者标识
+		 */
+		senderKey?: string;
+
+		/**
+		 * 发送者手机号
+		 */
+		senderPhone?: string;
+
+		/**
+		 * 发送者名称
+		 */
+		senderName?: string;
+
+		/**
+		 * 接收者标识
+		 */
+		receiverKey?: string;
+
+		/**
+		 * 接收者手机号
+		 */
+		receiverPhone?: string;
+
+		/**
+		 * 接收者名称
+		 */
+		receiverName?: string;
+
+		/**
+		 * 消息类型
+		 */
+		messageType?: number;
+
+		/**
+		 * 文本内容
+		 */
+		textContent?: string;
+
+		/**
+		 * 媒体地址
+		 */
+		mediaUrl?: string;
+
+		/**
+		 * 缩略图地址
+		 */
+		thumbnailUrl?: string;
+
+		/**
+		 * MIME类型
+		 */
+		mimeType?: string;
+
+		/**
+		 * 文件名
+		 */
+		fileName?: string;
+
+		/**
+		 * 文件大小
+		 */
+		fileSize?: number;
+
+		/**
+		 * 时长(秒)
+		 */
+		duration?: number;
+
+		/**
+		 * 消息状态
+		 */
+		messageStatus?: number;
+
+		/**
+		 * 发送时间
+		 */
+		sentTime?: Date;
+
+		/**
+		 * 原始消息内容
+		 */
+		rawPayload?: any;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * WhatsApp账号标识
+		 */
+		accountKey?: string;
+
+		/**
+		 * 手机号
+		 */
+		accountPhone?: string;
+
+		/**
+		 * 显示名称
+		 */
+		accountName?: string;
+
+		/**
+		 * WhatsApp会话标识
+		 */
+		conversationKey?: string;
+
+		/**
+		 * 对方名称
+		 */
+		peerName?: string;
+
+		/**
+		 * 对方手机号
+		 */
+		peerPhone?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
 	interface CustomerWhitelistEntity {
 		/**
 		 * ID
@@ -2599,9 +2975,34 @@ declare namespace Eps {
 		list: CustomerCharacterEntity[];
 	}
 
+	interface CustomerCryptoRechargeOrderPageResponse {
+		pagination: PagePagination;
+		list: CustomerCryptoRechargeOrderEntity[];
+	}
+
+	interface CustomerCryptoRechargeTxPageResponse {
+		pagination: PagePagination;
+		list: CustomerCryptoRechargeTxEntity[];
+	}
+
+	interface CustomerCryptoWalletPageResponse {
+		pagination: PagePagination;
+		list: CustomerCryptoWalletEntity[];
+	}
+
 	interface CustomerKeywordPageResponse {
 		pagination: PagePagination;
 		list: CustomerKeywordEntity[];
+	}
+
+	interface CustomerMaterialPageResponse {
+		pagination: PagePagination;
+		list: CustomerMaterialEntity[];
+	}
+
+	interface CustomerMessageDetectionPageResponse {
+		pagination: PagePagination;
+		list: CustomerMessageDetectionEntity[];
 	}
 
 	interface CustomerMessagePageResponse {
@@ -2624,6 +3025,16 @@ declare namespace Eps {
 		list: CustomerPortEntity[];
 	}
 
+	interface CustomerPricePackagePageResponse {
+		pagination: PagePagination;
+		list: CustomerPricePackageEntity[];
+	}
+
+	interface CustomerPurchaseOrderPageResponse {
+		pagination: PagePagination;
+		list: CustomerPurchaseOrderEntity[];
+	}
+
 	interface CustomerRuntimeSessionPageResponse {
 		pagination: PagePagination;
 		list: CustomerRuntimeSessionEntity[];
@@ -2644,44 +3055,24 @@ declare namespace Eps {
 		list: CustomerUserEntity[];
 	}
 
+	interface CustomerWhatsappAccountPageResponse {
+		pagination: PagePagination;
+		list: CustomerWhatsappAccountEntity[];
+	}
+
+	interface CustomerWhatsappConversationPageResponse {
+		pagination: PagePagination;
+		list: CustomerWhatsappConversationEntity[];
+	}
+
+	interface CustomerWhatsappMessagePageResponse {
+		pagination: PagePagination;
+		list: CustomerWhatsappMessageEntity[];
+	}
+
 	interface CustomerWhitelistPageResponse {
 		pagination: PagePagination;
 		list: CustomerWhitelistEntity[];
-	}
-
-	interface CustomerMaterialPageResponse {
-		pagination: PagePagination;
-		list: CustomerMaterialEntity[];
-	}
-
-	interface CustomerMessageDetectionPageResponse {
-		pagination: PagePagination;
-		list: CustomerMessageDetectionEntity[];
-	}
-
-	interface CustomerCryptoRechargeOrderPageResponse {
-		pagination: PagePagination;
-		list: CustomerCryptoRechargeOrderEntity[];
-	}
-
-	interface CustomerCryptoRechargeTxPageResponse {
-		pagination: PagePagination;
-		list: CustomerCryptoRechargeTxEntity[];
-	}
-
-	interface CustomerCryptoWalletPageResponse {
-		pagination: PagePagination;
-		list: CustomerCryptoWalletEntity[];
-	}
-
-	interface CustomerPricePackagePageResponse {
-		pagination: PagePagination;
-		list: CustomerPricePackageEntity[];
-	}
-
-	interface CustomerPurchaseOrderPageResponse {
-		pagination: PagePagination;
-		list: CustomerPurchaseOrderEntity[];
 	}
 
 	interface DemoGoodsPageResponse {
@@ -3336,6 +3727,156 @@ declare namespace Eps {
 		request: Request;
 	}
 
+	interface CustomerCryptoRechargeOrder {
+		/**
+		 * 手动扫描充值订单
+		 */
+		scan(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerCryptoRechargeOrderEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerCryptoRechargeOrderEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerCryptoRechargeOrderPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { scan: string; info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { scan: boolean; info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerCryptoRechargeTx {
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerCryptoRechargeTxEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerCryptoRechargeTxEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerCryptoRechargeTxPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerCryptoRecharge {
+		/**
+		 * 创建租户充值订单
+		 */
+		create(data?: any): Promise<any>;
+
+		/**
+		 * 我的充值订单分页
+		 */
+		myPage(data?: any): Promise<any>;
+
+		/**
+		 * 我的充值订单详情
+		 */
+		myInfo(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { create: string; myPage: string; myInfo: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { create: boolean; myPage: boolean; myInfo: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerCryptoWallet {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerCryptoWalletEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerCryptoWalletEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerCryptoWalletPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
 	interface CustomerDashboard {
 		/**
 		 * 租户资源看板汇总
@@ -3409,6 +3950,98 @@ declare namespace Eps {
 			page: boolean;
 			add: boolean;
 		};
+
+		request: Request;
+	}
+
+	interface CustomerMaterial {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerMaterialEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerMaterialEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerMaterialPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerMessageDetection {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerMessageDetectionEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerMessageDetectionEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerMessageDetectionPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { delete: string; info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { delete: boolean; info: boolean; list: boolean; page: boolean };
 
 		request: Request;
 	}
@@ -3628,6 +4261,127 @@ declare namespace Eps {
 		request: Request;
 	}
 
+	interface CustomerPricePackage {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerPricePackageEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerPricePackageEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerPricePackagePageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerPurchaseOrder {
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerPurchaseOrderEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerPurchaseOrderEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerPurchaseOrderPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerPurchase {
+		/**
+		 * 启用套餐列表
+		 */
+		packages(data?: any): Promise<any>;
+
+		/**
+		 * 余额购买套餐
+		 */
+		create(data?: any): Promise<any>;
+
+		/**
+		 * 我的购买订单分页
+		 */
+		myPage(data?: any): Promise<any>;
+
+		/**
+		 * 我的购买订单详情
+		 */
+		myInfo(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { packages: string; create: string; myPage: string; myInfo: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { packages: boolean; create: boolean; myPage: boolean; myInfo: boolean };
+
+		request: Request;
+	}
+
 	interface CustomerRuntimeSession {
 		/**
 		 * 强制下线会话
@@ -3836,6 +4590,108 @@ declare namespace Eps {
 		request: Request;
 	}
 
+	interface CustomerWhatsappAccount {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerWhatsappAccountEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerWhatsappAccountEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerWhatsappAccountPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { delete: string; info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { delete: boolean; info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerWhatsappConversation {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerWhatsappConversationEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerWhatsappConversationEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerWhatsappConversationPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { delete: string; info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { delete: boolean; info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerWhatsappMessage {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerWhatsappMessageEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerWhatsappMessageEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerWhatsappMessagePageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { delete: string; info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { delete: boolean; info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
 	interface CustomerWhitelist {
 		/**
 		 * 删除
@@ -3890,369 +4746,6 @@ declare namespace Eps {
 			page: boolean;
 			add: boolean;
 		};
-
-		request: Request;
-	}
-
-	interface CustomerMaterial {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerMaterialEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerMaterialEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerMaterialPageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerMessageDetection {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerMessageDetectionEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerMessageDetectionEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerMessageDetectionPageResponse>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { delete: string; info: string; list: string; page: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: { delete: boolean; info: boolean; list: boolean; page: boolean };
-
-		request: Request;
-	}
-
-	interface CustomerCryptoRechargeOrder {
-		/**
-		 * 手动扫描充值订单
-		 */
-		scan(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerCryptoRechargeOrderEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerCryptoRechargeOrderEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerCryptoRechargeOrderPageResponse>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { scan: string; info: string; list: string; page: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: { scan: boolean; info: boolean; list: boolean; page: boolean };
-
-		request: Request;
-	}
-
-	interface CustomerCryptoRechargeTx {
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerCryptoRechargeTxEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerCryptoRechargeTxEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerCryptoRechargeTxPageResponse>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { info: string; list: string; page: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: { info: boolean; list: boolean; page: boolean };
-
-		request: Request;
-	}
-
-	interface CustomerCryptoRecharge {
-		/**
-		 * 创建租户充值订单
-		 */
-		create(data?: any): Promise<any>;
-
-		/**
-		 * 我的充值订单分页
-		 */
-		myPage(data?: any): Promise<any>;
-
-		/**
-		 * 我的充值订单详情
-		 */
-		myInfo(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { create: string; myPage: string; myInfo: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: { create: boolean; myPage: boolean; myInfo: boolean };
-
-		request: Request;
-	}
-
-	interface CustomerCryptoWallet {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerCryptoWalletEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerCryptoWalletEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerCryptoWalletPageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerPricePackage {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerPricePackageEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerPricePackageEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerPricePackagePageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerPurchaseOrder {
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerPurchaseOrderEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerPurchaseOrderEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerPurchaseOrderPageResponse>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { info: string; list: string; page: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: { info: boolean; list: boolean; page: boolean };
-
-		request: Request;
-	}
-
-	interface CustomerPurchase {
-		/**
-		 * 启用套餐列表
-		 */
-		packages(data?: any): Promise<any>;
-
-		/**
-		 * 余额购买套餐
-		 */
-		create(data?: any): Promise<any>;
-
-		/**
-		 * 我的购买订单分页
-		 */
-		myPage(data?: any): Promise<any>;
-
-		/**
-		 * 我的购买订单详情
-		 */
-		myInfo(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { packages: string; create: string; myPage: string; myInfo: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: { packages: boolean; create: boolean; myPage: boolean; myInfo: boolean };
 
 		request: Request;
 	}
@@ -4912,26 +5405,29 @@ declare namespace Eps {
 		customer: {
 			bill: CustomerBill;
 			character: CustomerCharacter;
-			dashboard: CustomerDashboard;
-			keyword: CustomerKeyword;
-			message: CustomerMessage;
-			monitor: CustomerMonitor;
-			portOccupancy: CustomerPortOccupancy;
-			port: CustomerPort;
-			runtimeSession: CustomerRuntimeSession;
-			translateService: CustomerTranslateService;
-			translation: CustomerTranslation;
-			user: CustomerUser;
-			whitelist: CustomerWhitelist;
-			material: CustomerMaterial;
-			messageDetection: CustomerMessageDetection;
 			cryptoRechargeOrder: CustomerCryptoRechargeOrder;
 			cryptoRechargeTx: CustomerCryptoRechargeTx;
 			cryptoRecharge: CustomerCryptoRecharge;
 			cryptoWallet: CustomerCryptoWallet;
+			dashboard: CustomerDashboard;
+			keyword: CustomerKeyword;
+			material: CustomerMaterial;
+			messageDetection: CustomerMessageDetection;
+			message: CustomerMessage;
+			monitor: CustomerMonitor;
+			portOccupancy: CustomerPortOccupancy;
+			port: CustomerPort;
 			pricePackage: CustomerPricePackage;
 			purchaseOrder: CustomerPurchaseOrder;
 			purchase: CustomerPurchase;
+			runtimeSession: CustomerRuntimeSession;
+			translateService: CustomerTranslateService;
+			translation: CustomerTranslation;
+			user: CustomerUser;
+			whatsappAccount: CustomerWhatsappAccount;
+			whatsappConversation: CustomerWhatsappConversation;
+			whatsappMessage: CustomerWhatsappMessage;
+			whitelist: CustomerWhitelist;
 		};
 		demo: { goods: DemoGoods; tenant: DemoTenant };
 		dict: { info: DictInfo; type: DictType };
