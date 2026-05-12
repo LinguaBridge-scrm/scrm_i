@@ -9,7 +9,9 @@
 				<span>{{ app.info.name }}</span>
 			</div>
 
-			<p class="desc">{{ $t('为您提供多平台的实时翻译，聚合，AI接管，客户追踪，内容监控') }}</p>
+			<p class="desc">
+				{{ $t('为您提供多平台的实时翻译，聚合，AI接管，客户追踪，内容监控') }}
+			</p>
 
 			<div class="mode-switch">
 				<button
@@ -82,14 +84,6 @@
 					</template>
 
 					<template v-else>
-						<el-form-item :label="$t('租户名称')">
-							<el-input
-								v-model="register.form.tenantName"
-								:placeholder="$t('请输入租户名称')"
-								maxlength="50"
-							/>
-						</el-form-item>
-
 						<el-form-item :label="$t('登录账号')">
 							<el-input
 								v-model="register.form.username"
@@ -120,6 +114,16 @@
 							/>
 						</el-form-item>
 
+						<el-form-item :label="$t('计费方式')">
+							<el-radio-group
+								v-model="register.form.billingMode"
+								class="billing-mode"
+							>
+								<el-radio-button :value="1">{{ $t('字符计费') }}</el-radio-button>
+								<el-radio-button :value="0">{{ $t('端口计费') }}</el-radio-button>
+							</el-radio-group>
+						</el-form-item>
+
 						<el-form-item :label="$t('验证码')">
 							<el-input
 								v-model="register.form.verifyCode"
@@ -142,10 +146,18 @@
 						</el-form-item>
 
 						<div class="op">
-							<el-button type="primary" :loading="register.saving" @click="submitRegister">
+							<el-button
+								type="primary"
+								:loading="register.saving"
+								@click="submitRegister"
+							>
 								{{ $t('注册') }}
 							</el-button>
-							<el-button link :disabled="register.saving" @click="switchMode('login')">
+							<el-button
+								link
+								:disabled="register.saving"
+								@click="switchMode('login')"
+							>
 								{{ $t('已有账号？返回登录') }}
 							</el-button>
 						</div>
@@ -158,7 +170,7 @@
 			<cl-svg name="bg"></cl-svg>
 		</div>
 
-<!--		<a href="https://cool-js.com" class="copyright"> Copyright © COOL </a>-->
+		<!--		<a href="https://cool-js.com" class="copyright"> Copyright © COOL </a>-->
 	</div>
 </template>
 
@@ -194,10 +206,10 @@ const form = reactive({
 const register = reactive({
 	saving: false,
 	form: {
-		tenantName: '',
 		username: '',
 		password: '',
 		confirmPassword: '',
+		billingMode: 1,
 		captchaId: '',
 		verifyCode: ''
 	}
@@ -268,22 +280,18 @@ async function switchMode(mode: 'login' | 'register') {
 }
 
 function resetRegisterForm() {
-	register.form.tenantName = '';
 	register.form.username = '';
 	register.form.password = '';
 	register.form.confirmPassword = '';
+	register.form.billingMode = 1;
 	register.form.captchaId = '';
 	register.form.verifyCode = '';
 }
 
 function validateRegisterForm() {
-	register.form.tenantName = register.form.tenantName.trim();
 	register.form.username = register.form.username.trim();
 	register.form.verifyCode = register.form.verifyCode.trim();
 
-	if (!register.form.tenantName) {
-		return t('租户名称不能为空');
-	}
 	if (!/^[A-Za-z0-9_]{4,30}$/.test(register.form.username)) {
 		return t('登录账号需为4-30位字母、数字或下划线');
 	}
@@ -292,6 +300,9 @@ function validateRegisterForm() {
 	}
 	if (register.form.password !== register.form.confirmPassword) {
 		return t('两次输入的密码不一致');
+	}
+	if (![0, 1].includes(register.form.billingMode)) {
+		return t('计费方式不正确');
 	}
 	if (!register.form.verifyCode) {
 		return t('图片验证码不能为空');
@@ -310,7 +321,10 @@ async function submitRegister() {
 		await service.base.open.request({
 			url: '/tenant/register',
 			method: 'POST',
-			data: register.form
+			data: {
+				...register.form,
+				tenantName: register.form.username
+			}
 		});
 		form.username = register.form.username;
 		authMode.value = 'login';
@@ -421,7 +435,9 @@ $color: #2c3142;
 		.mode-switch {
 			display: grid;
 			grid-template-columns: 1fr 1fr;
-			width: 300px;
+			width: 340px;
+			max-width: calc(100vw - 48px);
+			box-sizing: border-box;
 			padding: 4px;
 			margin-bottom: 24px;
 			border-radius: 8px;
@@ -435,6 +451,7 @@ $color: #2c3142;
 				color: var(--el-text-color-secondary);
 				cursor: pointer;
 				font-size: 14px;
+				white-space: nowrap;
 
 				&.active {
 					background-color: #fff;
@@ -446,7 +463,8 @@ $color: #2c3142;
 		}
 
 		.form {
-			width: 300px;
+			width: 340px;
+			max-width: calc(100vw - 48px);
 
 			:deep(.el-form) {
 				.el-form-item {
@@ -484,6 +502,21 @@ $color: #2c3142;
 						box-shadow: 0 0 0 1000px #f8f8f8 inset;
 					}
 				}
+
+				.billing-mode {
+					width: 100%;
+
+					.el-radio-button {
+						width: 50%;
+
+						&__inner {
+							width: 100%;
+							height: 42px;
+							line-height: 40px;
+							padding: 0;
+						}
+					}
+				}
 			}
 
 			:deep(.pic-captcha) {
@@ -517,11 +550,6 @@ $color: #2c3142;
 		}
 
 		&.is-register {
-			.form,
-			.mode-switch {
-				width: 340px;
-			}
-
 			.op {
 				margin-top: 24px;
 			}
