@@ -1899,7 +1899,7 @@ declare namespace Eps {
 		platform?: string;
 
 		/**
-		 * WhatsApp账号标识
+		 * 平台账号标识
 		 */
 		accountKey?: string;
 
@@ -1976,7 +1976,7 @@ declare namespace Eps {
 		orgUserId?: number;
 
 		/**
-		 * WhatsApp账号ID
+		 * 平台账号记录ID
 		 */
 		accountId?: number;
 
@@ -1986,7 +1986,7 @@ declare namespace Eps {
 		platform?: string;
 
 		/**
-		 * WhatsApp会话标识
+		 * 平台会话标识
 		 */
 		conversationKey?: string;
 
@@ -2071,7 +2071,7 @@ declare namespace Eps {
 		updateTime?: string;
 
 		/**
-		 * WhatsApp账号标识
+		 * 平台账号标识
 		 */
 		accountKey?: string;
 
@@ -2108,12 +2108,12 @@ declare namespace Eps {
 		orgUserId?: number;
 
 		/**
-		 * WhatsApp账号ID
+		 * 平台账号记录ID
 		 */
 		accountId?: number;
 
 		/**
-		 * WhatsApp会话ID
+		 * 平台会话记录ID
 		 */
 		conversationId?: number;
 
@@ -2123,7 +2123,7 @@ declare namespace Eps {
 		platform?: string;
 
 		/**
-		 * WhatsApp消息标识
+		 * 平台消息标识
 		 */
 		messageKey?: string;
 
@@ -2228,7 +2228,7 @@ declare namespace Eps {
 		updateTime?: string;
 
 		/**
-		 * WhatsApp账号标识
+		 * 平台账号标识
 		 */
 		accountKey?: string;
 
@@ -2243,7 +2243,7 @@ declare namespace Eps {
 		accountName?: string;
 
 		/**
-		 * WhatsApp会话标识
+		 * 平台会话标识
 		 */
 		conversationKey?: string;
 

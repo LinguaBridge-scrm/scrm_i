@@ -5,7 +5,14 @@
 				<cl-refresh-btn />
 				<cl-flex1 />
 				<cl-filter :label="t('平台')">
-					<cl-select :options="platformOptions" prop="platform" :width="130" />
+					<cl-select
+						:options="platformOptions"
+						prop="platform"
+						:width="150"
+						clearable
+						filterable
+						allow-create
+					/>
 				</cl-filter>
 				<cl-search-key :placeholder="t('搜索账号、手机号、昵称')" :width="260" />
 				<cl-search ref="Search" />
@@ -48,7 +55,7 @@
 									</el-tag>
 								</strong>
 								<span>{{
-									chat.account?.phone || chat.account?.accountKey || '-'
+									chat.account?.phone || platformAccountId(chat.account) || '-'
 								}}</span>
 							</div>
 						</div>
@@ -107,7 +114,7 @@
 										{{
 											chat.activeConversation.peerPhone ||
 											chat.activeConversation.peerKey ||
-											chat.activeConversation.conversationKey
+											platformConversationId(chat.activeConversation)
 										}}
 									</span>
 								</div>
@@ -259,7 +266,9 @@ const accountStatusOptions: Array<{ label: string; value: number; type: TagType 
 ];
 
 const platformOptions: Array<{ label: string; value: string; type: TagType }> = [
-	{ label: 'WhatsApp', value: 'whatsapp', type: 'success' }
+	{ label: 'WhatsApp', value: 'whatsapp', type: 'success' },
+	{ label: 'Telegram', value: 'telegram', type: 'info' },
+	{ label: t('其他'), value: 'other', type: 'warning' }
 ];
 
 const messageTypeOptions = [
@@ -292,7 +301,7 @@ const chat = reactive({
 });
 
 function accountTitle(row: any) {
-	return row?.displayName || row?.phone || row?.accountKey || t('平台账号');
+	return row?.displayName || row?.phone || platformAccountId(row) || t('平台账号');
 }
 
 function platformLabel(value: any) {
@@ -302,14 +311,26 @@ function platformLabel(value: any) {
 
 function conversationTitle(row: any) {
 	return (
-		row?.peerName || row?.peerPhone || row?.peerKey || row?.conversationKey || t('未命名会话')
+		row?.peerName ||
+		row?.peerPhone ||
+		row?.peerKey ||
+		platformConversationId(row) ||
+		t('未命名会话')
 	);
 }
 
 function avatarText(row: any, key = 'displayName') {
-	return String(row?.[key] || row?.phone || row?.accountKey || 'W')
+	return String(row?.[key] || row?.phone || platformAccountId(row) || 'P')
 		.slice(0, 1)
 		.toUpperCase();
+}
+
+function platformAccountId(row: any) {
+	return row?.platformAccountId || row?.accountKey || row?.accountId;
+}
+
+function platformConversationId(row: any) {
+	return row?.platformConversationId || row?.conversationKey || row?.conversationId;
 }
 
 function shortTime(value: any) {
@@ -444,7 +465,15 @@ const Table = useTable({
 			}
 		},
 		{ label: t('手机号'), prop: 'phone', minWidth: 140, showOverflowTooltip: true },
-		{ label: t('账号标识'), prop: 'accountKey', minWidth: 220, showOverflowTooltip: true },
+		{
+			label: t('平台账号标识'),
+			prop: 'platformAccountId',
+			minWidth: 220,
+			showOverflowTooltip: true,
+			formatter(row) {
+				return platformAccountId(row);
+			}
+		},
 		{ label: t('租户'), prop: 'tenantName', minWidth: 120 },
 		{ label: t('客户用户'), prop: 'customerUsername', minWidth: 120 },
 		{
