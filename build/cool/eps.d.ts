@@ -3348,6 +3348,11 @@ declare namespace Eps {
 
 	interface BaseOpen {
 		/**
+		 * 租户注册
+		 */
+		register(data?: any): Promise<any>;
+
+		/**
 		 * 刷新token
 		 */
 		refreshToken(data?: any): Promise<any>;
@@ -3376,6 +3381,7 @@ declare namespace Eps {
 		 * 权限标识
 		 */
 		permission: {
+			register: string;
 			refreshToken: string;
 			captcha: string;
 			login: string;
@@ -3387,6 +3393,7 @@ declare namespace Eps {
 		 * 权限状态
 		 */
 		_permission: {
+			register: boolean;
 			refreshToken: boolean;
 			captcha: boolean;
 			login: boolean;

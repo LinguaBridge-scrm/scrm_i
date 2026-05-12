@@ -1,6 +1,6 @@
 <template>
 	<div class="page-login">
-		<div class="box">
+		<div class="box" :class="{ 'is-register': authMode === 'register' }">
 			<div class="logo">
 				<div class="icon">
 					<img src="/logo.png" alt="Logo" />
@@ -11,53 +11,145 @@
 
 			<p class="desc">{{ $t('为您提供多平台的实时翻译，聚合，AI接管，客户追踪，内容监控') }}</p>
 
+			<div class="mode-switch">
+				<button
+					type="button"
+					:class="{ active: authMode === 'login' }"
+					@click="switchMode('login')"
+				>
+					{{ $t('登录') }}
+				</button>
+				<button
+					type="button"
+					:class="{ active: authMode === 'register' }"
+					@click="switchMode('register')"
+				>
+					{{ $t('租户注册') }}
+				</button>
+			</div>
+
 			<div class="form">
-				<el-form label-position="top" class="form" :disabled="saving">
-					<el-form-item :label="$t('用户名')">
-						<el-input
-							v-model="form.username"
-							:placeholder="$t('请输入用户名')"
-							maxlength="20"
-						/>
-					</el-form-item>
+				<el-form label-position="top" class="form" :disabled="saving || register.saving">
+					<template v-if="authMode === 'login'">
+						<el-form-item :label="$t('用户名')">
+							<el-input
+								v-model="form.username"
+								:placeholder="$t('请输入用户名')"
+								maxlength="20"
+							/>
+						</el-form-item>
 
-					<el-form-item :label="$t('密码')">
-						<el-input
-							v-model="form.password"
-							type="password"
-							:placeholder="$t('请输入密码')"
-							maxlength="20"
-							show-password
-							autocomplete="new-password"
-						/>
-					</el-form-item>
+						<el-form-item :label="$t('密码')">
+							<el-input
+								v-model="form.password"
+								type="password"
+								:placeholder="$t('请输入密码')"
+								maxlength="20"
+								show-password
+								autocomplete="new-password"
+							/>
+						</el-form-item>
 
-					<el-form-item :label="$t('验证码')">
-						<el-input
-							v-model="form.verifyCode"
-							:placeholder="$t('验证码')"
-							maxlength="4"
-							@keyup.enter="toLogin"
-						>
-							<template #suffix>
-								<pic-captcha
-									:ref="setRefs('picCaptcha')"
-									v-model="form.captchaId"
-									@change="
-										() => {
-											form.verifyCode = '';
-										}
-									"
-								/>
-							</template>
-						</el-input>
-					</el-form-item>
+						<el-form-item :label="$t('验证码')">
+							<el-input
+								v-model="form.verifyCode"
+								:placeholder="$t('验证码')"
+								maxlength="4"
+								@keyup.enter="toLogin"
+							>
+								<template #suffix>
+									<pic-captcha
+										:ref="setRefs('picCaptcha')"
+										v-model="form.captchaId"
+										@change="
+											() => {
+												form.verifyCode = '';
+											}
+										"
+									/>
+								</template>
+							</el-input>
+						</el-form-item>
 
-					<div class="op">
-						<el-button type="primary" :loading="saving" @click="toLogin">
-							{{ $t('登录') }}
-						</el-button>
-					</div>
+						<div class="op">
+							<el-button type="primary" :loading="saving" @click="toLogin">
+								{{ $t('登录') }}
+							</el-button>
+							<el-button link :disabled="saving" @click="switchMode('register')">
+								{{ $t('没有租户账号？立即注册') }}
+							</el-button>
+						</div>
+					</template>
+
+					<template v-else>
+						<el-form-item :label="$t('租户名称')">
+							<el-input
+								v-model="register.form.tenantName"
+								:placeholder="$t('请输入租户名称')"
+								maxlength="50"
+							/>
+						</el-form-item>
+
+						<el-form-item :label="$t('登录账号')">
+							<el-input
+								v-model="register.form.username"
+								:placeholder="$t('请输入4-30位字母、数字或下划线')"
+								maxlength="30"
+							/>
+						</el-form-item>
+
+						<el-form-item :label="$t('登录密码')">
+							<el-input
+								v-model="register.form.password"
+								type="password"
+								:placeholder="$t('请输入6-20位密码')"
+								maxlength="20"
+								show-password
+								autocomplete="new-password"
+							/>
+						</el-form-item>
+
+						<el-form-item :label="$t('确认密码')">
+							<el-input
+								v-model="register.form.confirmPassword"
+								type="password"
+								:placeholder="$t('请再次输入密码')"
+								maxlength="20"
+								show-password
+								autocomplete="new-password"
+							/>
+						</el-form-item>
+
+						<el-form-item :label="$t('验证码')">
+							<el-input
+								v-model="register.form.verifyCode"
+								:placeholder="$t('验证码')"
+								maxlength="4"
+								@keyup.enter="submitRegister"
+							>
+								<template #suffix>
+									<pic-captcha
+										:ref="setRefs('registerPicCaptcha')"
+										v-model="register.form.captchaId"
+										@change="
+											() => {
+												register.form.verifyCode = '';
+											}
+										"
+									/>
+								</template>
+							</el-input>
+						</el-form-item>
+
+						<div class="op">
+							<el-button type="primary" :loading="register.saving" @click="submitRegister">
+								{{ $t('注册') }}
+							</el-button>
+							<el-button link :disabled="register.saving" @click="switchMode('login')">
+								{{ $t('已有账号？返回登录') }}
+							</el-button>
+						</div>
+					</template>
 				</el-form>
 			</div>
 		</div>
@@ -75,7 +167,7 @@ defineOptions({
 	name: 'login'
 });
 
-import { reactive, ref } from 'vue';
+import { nextTick, reactive, ref } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { useCool } from '/@/cool';
 import { useBase } from '/$/base';
@@ -89,6 +181,7 @@ const { t } = useI18n();
 
 // 状态
 const saving = ref(false);
+const authMode = ref<'login' | 'register'>('login');
 
 // 表单数据
 const form = reactive({
@@ -96,6 +189,18 @@ const form = reactive({
 	password: '',
 	captchaId: '',
 	verifyCode: ''
+});
+
+const register = reactive({
+	saving: false,
+	form: {
+		tenantName: '',
+		username: '',
+		password: '',
+		confirmPassword: '',
+		captchaId: '',
+		verifyCode: ''
+	}
 });
 
 // 演示模式
@@ -145,6 +250,83 @@ async function toLogin() {
 
 	saving.value = false;
 }
+
+async function switchMode(mode: 'login' | 'register') {
+	if (authMode.value === mode) {
+		return;
+	}
+	authMode.value = mode;
+	if (mode === 'register') {
+		resetRegisterForm();
+	}
+	await nextTick();
+	if (mode === 'register') {
+		refs.registerPicCaptcha?.refresh?.();
+	} else {
+		refs.picCaptcha?.refresh?.();
+	}
+}
+
+function resetRegisterForm() {
+	register.form.tenantName = '';
+	register.form.username = '';
+	register.form.password = '';
+	register.form.confirmPassword = '';
+	register.form.captchaId = '';
+	register.form.verifyCode = '';
+}
+
+function validateRegisterForm() {
+	register.form.tenantName = register.form.tenantName.trim();
+	register.form.username = register.form.username.trim();
+	register.form.verifyCode = register.form.verifyCode.trim();
+
+	if (!register.form.tenantName) {
+		return t('租户名称不能为空');
+	}
+	if (!/^[A-Za-z0-9_]{4,30}$/.test(register.form.username)) {
+		return t('登录账号需为4-30位字母、数字或下划线');
+	}
+	if (register.form.password.length < 6 || register.form.password.length > 20) {
+		return t('密码长度在6到20位之间');
+	}
+	if (register.form.password !== register.form.confirmPassword) {
+		return t('两次输入的密码不一致');
+	}
+	if (!register.form.verifyCode) {
+		return t('图片验证码不能为空');
+	}
+	return '';
+}
+
+async function submitRegister() {
+	const message = validateRegisterForm();
+	if (message) {
+		return ElMessage.error(message);
+	}
+
+	register.saving = true;
+	try {
+		await service.base.open.request({
+			url: '/tenant/register',
+			method: 'POST',
+			data: register.form
+		});
+		form.username = register.form.username;
+		authMode.value = 'login';
+		await nextTick();
+		ElMessage.success(t('注册成功，请使用账号登录'));
+		refs.picCaptcha?.refresh?.();
+	} catch (err) {
+		refs.registerPicCaptcha?.refresh?.();
+		ElMessageBox.alert((err as Error).message, {
+			title: t('提示'),
+			type: 'error'
+		});
+	} finally {
+		register.saving = false;
+	}
+}
 </script>
 
 <style lang="scss" scoped>
@@ -189,7 +371,7 @@ $color: #2c3142;
 	.box {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
+		justify-content: flex-start;
 		align-items: center;
 		height: 100%;
 		width: 50%;
@@ -197,6 +379,9 @@ $color: #2c3142;
 		right: 0;
 		top: 0;
 		z-index: 9;
+		box-sizing: border-box;
+		padding: clamp(44px, 11vh, 110px) 0 36px;
+		overflow-y: auto;
 
 		.logo {
 			height: 50px;
@@ -231,6 +416,33 @@ $color: #2c3142;
 			user-select: none;
 			max-width: 80%;
 			text-align: center;
+		}
+
+		.mode-switch {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			width: 300px;
+			padding: 4px;
+			margin-bottom: 24px;
+			border-radius: 8px;
+			background-color: #f1f3f7;
+
+			button {
+				height: 36px;
+				border: 0;
+				border-radius: 6px;
+				background-color: transparent;
+				color: var(--el-text-color-secondary);
+				cursor: pointer;
+				font-size: 14px;
+
+				&.active {
+					background-color: #fff;
+					color: $color;
+					font-weight: 600;
+					box-shadow: 0 2px 8px rgb(44 49 66 / 8%);
+				}
+			}
 		}
 
 		.form {
@@ -283,6 +495,8 @@ $color: #2c3142;
 
 		.op {
 			display: flex;
+			flex-direction: column;
+			gap: 12px;
 			justify-content: center;
 			margin-top: 40px;
 
@@ -292,6 +506,24 @@ $color: #2c3142;
 				font-size: 16px;
 				border-radius: 8px;
 				letter-spacing: 1px;
+				margin-left: 0;
+			}
+
+			:deep(.el-button.is-link) {
+				height: auto;
+				font-size: 14px;
+				letter-spacing: 0;
+			}
+		}
+
+		&.is-register {
+			.form,
+			.mode-switch {
+				width: 340px;
+			}
+
+			.op {
+				margin-top: 24px;
 			}
 		}
 	}
