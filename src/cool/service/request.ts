@@ -142,21 +142,15 @@ request.interceptors.response.use(
 
 			if (status == 401) {
 				user.logout(); // 未授权，登出用户
-			} else {
-				if (!isDev) {
-					switch (status) {
-						case 403:
-							router.push('/403'); // 禁止访问
-							break;
+			} else if (!isDev) {
+				switch (status) {
+					case 500:
+						router.push('/500'); // 服务器错误
+						break;
 
-						case 500:
-							router.push('/500'); // 服务器错误
-							break;
-
-						case 502:
-							router.push('/502'); // 网关错误
-							break;
-					}
+					case 502:
+						router.push('/502'); // 网关错误
+						break;
 				}
 			}
 		}
