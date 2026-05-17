@@ -1705,6 +1705,21 @@ declare namespace Eps {
 		translateServiceId?: number;
 
 		/**
+		 * 翻译库ID
+		 */
+		memoryId?: number;
+
+		/**
+		 * 原文Hash
+		 */
+		originalHash?: string;
+
+		/**
+		 * 是否复用翻译库 0-否 1-是
+		 */
+		cacheHit?: number;
+
+		/**
 		 * 原文
 		 */
 		originalText?: string;
@@ -2420,6 +2435,78 @@ declare namespace Eps {
 		 * 用户名
 		 */
 		customerUsername?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface CustomerTranslationMemoryEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 翻译服务类型
+		 */
+		serviceType?: string;
+
+		/**
+		 * 源语言
+		 */
+		sourceLang?: string;
+
+		/**
+		 * 目标语言
+		 */
+		targetLang?: string;
+
+		/**
+		 * 原文Hash
+		 */
+		originalHash?: string;
+
+		/**
+		 * 原文
+		 */
+		originalText?: string;
+
+		/**
+		 * 译文
+		 */
+		translatedText?: string;
+
+		/**
+		 * 命中次数
+		 */
+		hitCount?: number;
+
+		/**
+		 * 最后命中时间
+		 */
+		lastUsedTime?: Date;
+
+		/**
+		 * 来源翻译记录ID
+		 */
+		sourceRecordId?: number;
+
+		/**
+		 * 状态 0-禁用 1-启用
+		 */
+		status?: number;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
 
 		/**
 		 * 任意键值
@@ -3205,6 +3292,11 @@ declare namespace Eps {
 	interface CustomerFileResourcePageResponse {
 		pagination: PagePagination;
 		list: CustomerFileResourceEntity[];
+	}
+
+	interface CustomerTranslationMemoryPageResponse {
+		pagination: PagePagination;
+		list: CustomerTranslationMemoryEntity[];
 	}
 
 	interface DemoGoodsPageResponse {
@@ -4018,6 +4110,11 @@ declare namespace Eps {
 
 	interface CustomerDashboard {
 		/**
+		 * 全站翻译运营汇总
+		 */
+		globalSummary(data?: any): Promise<any>;
+
+		/**
 		 * 租户资源看板汇总
 		 */
 		summary(data?: any): Promise<any>;
@@ -4025,12 +4122,12 @@ declare namespace Eps {
 		/**
 		 * 权限标识
 		 */
-		permission: { summary: string };
+		permission: { globalSummary: string; summary: string };
 
 		/**
 		 * 权限状态
 		 */
-		_permission: { summary: boolean };
+		_permission: { globalSummary: boolean; summary: boolean };
 
 		request: Request;
 	}
@@ -4923,6 +5020,64 @@ declare namespace Eps {
 		request: Request;
 	}
 
+	interface CustomerTranslationMemory {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerTranslationMemoryEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerTranslationMemoryEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerTranslationMemoryPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
 	interface DemoGoods {
 		/**
 		 * 删除
@@ -5602,6 +5757,7 @@ declare namespace Eps {
 			whatsappMessage: CustomerWhatsappMessage;
 			whitelist: CustomerWhitelist;
 			fileResource: CustomerFileResource;
+			translationMemory: CustomerTranslationMemory;
 		};
 		demo: { goods: DemoGoods; tenant: DemoTenant };
 		dict: { info: DictInfo; type: DictType };
