@@ -7,7 +7,7 @@
 				<p class="intro__lead">
 					{{
 						$t(
-							'面向跨境团队的多平台 SCRM，支持 AI 翻译、多平台消息聚合、指纹运行态管理与实时消息监控。'
+							'为您提供多平台的实时翻译，聚合，AI接管，客户追踪，内容监控'
 						)
 					}}
 				</p>
@@ -66,9 +66,6 @@
 			<div class="login-panel">
 				<div class="login-visual" aria-hidden="true">
 					<img :src="LoginAiVisual" alt="" />
-					<span class="login-visual__chip login-visual__chip--one">{{
-						$t('AI翻译在线')
-					}}</span>
 					<span class="login-visual__chip login-visual__chip--two">{{
 						$t('多平台同步')
 					}}</span>
@@ -81,10 +78,6 @@
 
 					<span>{{ app.info.name }}</span>
 				</div>
-
-				<p class="desc">
-					{{ $t('为您提供多平台的实时翻译，聚合，AI接管，客户追踪，内容监控') }}
-				</p>
 
 				<div class="mode-switch">
 					<button
@@ -870,12 +863,6 @@ $color: #2c3142;
 					box-shadow: 0 0 0 5px rgb(24 169 153 / 12%);
 				}
 
-				&--one {
-					left: 38px;
-					top: 128px;
-					animation: login-chip-float 4.8s ease-in-out infinite;
-				}
-
 				&--two {
 					right: 26px;
 					top: 198px;
@@ -892,7 +879,6 @@ $color: #2c3142;
 		}
 
 		.logo,
-		.desc,
 		.mode-switch,
 		.form {
 			position: relative;
@@ -923,17 +909,6 @@ $color: #2c3142;
 				line-height: 1;
 				letter-spacing: 3px;
 			}
-		}
-
-		.desc {
-			font-size: 15px;
-			letter-spacing: 1px;
-			margin-bottom: 34px;
-			user-select: none;
-			max-width: 80%;
-			text-align: center;
-			color: #596477;
-			line-height: 1.8;
 		}
 
 		.mode-switch {
@@ -1120,10 +1095,6 @@ $color: #2c3142;
 				opacity: 0.52;
 			}
 
-			.desc {
-				margin-bottom: 24px;
-			}
-
 			.op {
 				margin-top: 24px;
 			}
@@ -1174,12 +1145,6 @@ $color: #2c3142;
 				}
 			}
 
-			.desc {
-				max-width: min(280px, calc(100vw - 48px));
-				font-size: 14px;
-				line-height: 1.7;
-			}
-
 			.mode-switch,
 			.form {
 				width: 100%;
@@ -1206,11 +1171,6 @@ $color: #2c3142;
 				span {
 					font-size: 26px;
 				}
-			}
-
-			.desc {
-				max-width: 280px;
-				margin-bottom: 34px;
 			}
 
 			.mode-switch,
