@@ -168,7 +168,7 @@ const chartOption = computed(() => {
 		grid: {
 			left: 24,
 			right: 24,
-			top: 36,
+			top: 64,
 			bottom: 30,
 			containLabel: true
 		},
@@ -176,8 +176,9 @@ const chartOption = computed(() => {
 			trigger: 'axis'
 		},
 		legend: {
-			top: 0,
+			top: 2,
 			right: 0,
+			itemGap: 28,
 			textStyle: {
 				color: axisColor
 			}
