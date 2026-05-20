@@ -475,6 +475,78 @@ declare namespace Eps {
 		[key: string]: any;
 	}
 
+	interface CustomerClientUpdateEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 版本号
+		 */
+		version?: string;
+
+		/**
+		 * 客户端文件名
+		 */
+		fileName?: string;
+
+		/**
+		 * 文件存储Key
+		 */
+		fileKey?: string;
+
+		/**
+		 * 下载地址
+		 */
+		downloadUrl?: string;
+
+		/**
+		 * 是否强制更新 0-否 1-是
+		 */
+		forceUpdate?: number;
+
+		/**
+		 * 状态 0-禁用 1-启用
+		 */
+		status?: number;
+
+		/**
+		 * 更新内容-简体中文
+		 */
+		updateContentZhCn?: string;
+
+		/**
+		 * 更新内容-繁体中文
+		 */
+		updateContentZhTw?: string;
+
+		/**
+		 * 更新内容-英文
+		 */
+		updateContentEn?: string;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
 	interface CustomerCryptoRechargeOrderEntity {
 		/**
 		 * ID
@@ -744,6 +816,118 @@ declare namespace Eps {
 		 * 更新时间
 		 */
 		updateTime?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface CustomerFileResourceEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 组织用户名
+		 */
+		orgUsername?: string;
+
+		/**
+		 * 组织用户ID
+		 */
+		orgUserId?: number;
+
+		/**
+		 * 客户用户ID
+		 */
+		userId?: number;
+
+		/**
+		 * 原始文件名
+		 */
+		originalName?: string;
+
+		/**
+		 * 存储文件名
+		 */
+		fileName?: string;
+
+		/**
+		 * 文件MD5
+		 */
+		fileMd5?: string;
+
+		/**
+		 * 扩展名
+		 */
+		extension?: string;
+
+		/**
+		 * 文件类型
+		 */
+		fileType?: string;
+
+		/**
+		 * MIME类型
+		 */
+		mimeType?: string;
+
+		/**
+		 * 文件大小
+		 */
+		fileSize?: number;
+
+		/**
+		 * 存储模式
+		 */
+		storageMode?: string;
+
+		/**
+		 * 文件存储Key
+		 */
+		fileKey?: string;
+
+		/**
+		 * 直链地址
+		 */
+		url?: string;
+
+		/**
+		 * 上传次数
+		 */
+		uploadCount?: number;
+
+		/**
+		 * 最后上传时间
+		 */
+		lastUploadTime?: Date;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * 原始文件信息
+		 */
+		rawInfo?: any;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 用户名
+		 */
+		customerUsername?: string;
 
 		/**
 		 * 任意键值
@@ -1182,6 +1366,202 @@ declare namespace Eps {
 
 		/**
 		 * 状态
+		 */
+		status?: number;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface CustomerPlatformScriptPlatformEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 平台Key
+		 */
+		platformKey?: string;
+
+		/**
+		 * 平台名称
+		 */
+		name?: string;
+
+		/**
+		 * 平台脚本版本
+		 */
+		version?: string;
+
+		/**
+		 * 排序
+		 */
+		sortNum?: number;
+
+		/**
+		 * 状态 0-禁用 1-启用
+		 */
+		status?: number;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface CustomerPlatformScriptReleaseEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 脚本包版本
+		 */
+		packageVersion?: string;
+
+		/**
+		 * 最低客户端版本
+		 */
+		minClientVersion?: string;
+
+		/**
+		 * 发布包JSON快照
+		 */
+		payloadJson?: longtext;
+
+		/**
+		 * 发布包SHA256
+		 */
+		payloadHash?: string;
+
+		/**
+		 * 状态 0-历史 1-当前
+		 */
+		status?: number;
+
+		/**
+		 * 发布时间
+		 */
+		publishTime?: string;
+
+		/**
+		 * 发布人ID
+		 */
+		publisherId?: number;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface CustomerPlatformScriptEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 平台Key
+		 */
+		platformKey?: string;
+
+		/**
+		 * 脚本名称
+		 */
+		name?: string;
+
+		/**
+		 * 脚本版本
+		 */
+		version?: string;
+
+		/**
+		 * 注入顺序
+		 */
+		injectOrder?: number;
+
+		/**
+		 * 脚本来源 0-文本 1-文件
+		 */
+		sourceType?: number;
+
+		/**
+		 * 脚本内容
+		 */
+		content?: longtext;
+
+		/**
+		 * 上传文件Key
+		 */
+		fileKey?: string;
+
+		/**
+		 * 上传文件名
+		 */
+		fileName?: string;
+
+		/**
+		 * 脚本下载地址
+		 */
+		downloadUrl?: string;
+
+		/**
+		 * 脚本内容SHA256
+		 */
+		sha256?: string;
+
+		/**
+		 * 状态 0-禁用 1-启用
 		 */
 		status?: number;
 
@@ -1654,6 +2034,78 @@ declare namespace Eps {
 
 		/**
 		 * 启用状态
+		 */
+		status?: number;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface CustomerTranslationMemoryEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 翻译服务类型
+		 */
+		serviceType?: string;
+
+		/**
+		 * 源语言
+		 */
+		sourceLang?: string;
+
+		/**
+		 * 目标语言
+		 */
+		targetLang?: string;
+
+		/**
+		 * 原文Hash
+		 */
+		originalHash?: string;
+
+		/**
+		 * 原文
+		 */
+		originalText?: string;
+
+		/**
+		 * 译文
+		 */
+		translatedText?: string;
+
+		/**
+		 * 命中次数
+		 */
+		hitCount?: number;
+
+		/**
+		 * 最后命中时间
+		 */
+		lastUsedTime?: Date;
+
+		/**
+		 * 来源翻译记录ID
+		 */
+		sourceRecordId?: number;
+
+		/**
+		 * 状态 0-禁用 1-启用
 		 */
 		status?: number;
 
@@ -2311,190 +2763,6 @@ declare namespace Eps {
 
 		/**
 		 * 状态
-		 */
-		status?: number;
-
-		/**
-		 * 创建时间
-		 */
-		createTime?: string;
-
-		/**
-		 * 更新时间
-		 */
-		updateTime?: string;
-
-		/**
-		 * 任意键值
-		 */
-		[key: string]: any;
-	}
-
-	interface CustomerFileResourceEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-
-		/**
-		 * 组织用户名
-		 */
-		orgUsername?: string;
-
-		/**
-		 * 组织用户ID
-		 */
-		orgUserId?: number;
-
-		/**
-		 * 客户用户ID
-		 */
-		userId?: number;
-
-		/**
-		 * 原始文件名
-		 */
-		originalName?: string;
-
-		/**
-		 * 存储文件名
-		 */
-		fileName?: string;
-
-		/**
-		 * 文件MD5
-		 */
-		fileMd5?: string;
-
-		/**
-		 * 扩展名
-		 */
-		extension?: string;
-
-		/**
-		 * 文件类型
-		 */
-		fileType?: string;
-
-		/**
-		 * MIME类型
-		 */
-		mimeType?: string;
-
-		/**
-		 * 文件大小
-		 */
-		fileSize?: number;
-
-		/**
-		 * 存储模式
-		 */
-		storageMode?: string;
-
-		/**
-		 * 文件存储Key
-		 */
-		fileKey?: string;
-
-		/**
-		 * 直链地址
-		 */
-		url?: string;
-
-		/**
-		 * 上传次数
-		 */
-		uploadCount?: number;
-
-		/**
-		 * 最后上传时间
-		 */
-		lastUploadTime?: Date;
-
-		/**
-		 * 备注
-		 */
-		remark?: string;
-
-		/**
-		 * 原始文件信息
-		 */
-		rawInfo?: any;
-
-		/**
-		 * 创建时间
-		 */
-		createTime?: string;
-
-		/**
-		 * 更新时间
-		 */
-		updateTime?: string;
-
-		/**
-		 * 用户名
-		 */
-		customerUsername?: string;
-
-		/**
-		 * 任意键值
-		 */
-		[key: string]: any;
-	}
-
-	interface CustomerTranslationMemoryEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-
-		/**
-		 * 翻译服务类型
-		 */
-		serviceType?: string;
-
-		/**
-		 * 源语言
-		 */
-		sourceLang?: string;
-
-		/**
-		 * 目标语言
-		 */
-		targetLang?: string;
-
-		/**
-		 * 原文Hash
-		 */
-		originalHash?: string;
-
-		/**
-		 * 原文
-		 */
-		originalText?: string;
-
-		/**
-		 * 译文
-		 */
-		translatedText?: string;
-
-		/**
-		 * 命中次数
-		 */
-		hitCount?: number;
-
-		/**
-		 * 最后命中时间
-		 */
-		lastUsedTime?: Date;
-
-		/**
-		 * 来源翻译记录ID
-		 */
-		sourceRecordId?: number;
-
-		/**
-		 * 状态 0-禁用 1-启用
 		 */
 		status?: number;
 
@@ -3189,6 +3457,11 @@ declare namespace Eps {
 		list: CustomerCharacterEntity[];
 	}
 
+	interface CustomerClientUpdatePageResponse {
+		pagination: PagePagination;
+		list: CustomerClientUpdateEntity[];
+	}
+
 	interface CustomerCryptoRechargeOrderPageResponse {
 		pagination: PagePagination;
 		list: CustomerCryptoRechargeOrderEntity[];
@@ -3202,6 +3475,11 @@ declare namespace Eps {
 	interface CustomerCryptoWalletPageResponse {
 		pagination: PagePagination;
 		list: CustomerCryptoWalletEntity[];
+	}
+
+	interface CustomerFileResourcePageResponse {
+		pagination: PagePagination;
+		list: CustomerFileResourceEntity[];
 	}
 
 	interface CustomerKeywordPageResponse {
@@ -3227,6 +3505,21 @@ declare namespace Eps {
 	interface CustomerMonitorPageResponse {
 		pagination: PagePagination;
 		list: CustomerMonitorEntity[];
+	}
+
+	interface CustomerPlatformScriptPlatformPageResponse {
+		pagination: PagePagination;
+		list: CustomerPlatformScriptPlatformEntity[];
+	}
+
+	interface CustomerPlatformScriptReleasePageResponse {
+		pagination: PagePagination;
+		list: CustomerPlatformScriptReleaseEntity[];
+	}
+
+	interface CustomerPlatformScriptPageResponse {
+		pagination: PagePagination;
+		list: CustomerPlatformScriptEntity[];
 	}
 
 	interface CustomerPortOccupancyPageResponse {
@@ -3259,6 +3552,11 @@ declare namespace Eps {
 		list: CustomerTranslateServiceEntity[];
 	}
 
+	interface CustomerTranslationMemoryPageResponse {
+		pagination: PagePagination;
+		list: CustomerTranslationMemoryEntity[];
+	}
+
 	interface CustomerTranslationPageResponse {
 		pagination: PagePagination;
 		list: CustomerTranslationEntity[];
@@ -3287,16 +3585,6 @@ declare namespace Eps {
 	interface CustomerWhitelistPageResponse {
 		pagination: PagePagination;
 		list: CustomerWhitelistEntity[];
-	}
-
-	interface CustomerFileResourcePageResponse {
-		pagination: PagePagination;
-		list: CustomerFileResourceEntity[];
-	}
-
-	interface CustomerTranslationMemoryPageResponse {
-		pagination: PagePagination;
-		list: CustomerTranslationMemoryEntity[];
 	}
 
 	interface DemoGoodsPageResponse {
@@ -3958,6 +4246,64 @@ declare namespace Eps {
 		request: Request;
 	}
 
+	interface CustomerClientUpdate {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerClientUpdateEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerClientUpdateEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerClientUpdatePageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
 	interface CustomerCryptoRechargeOrder {
 		/**
 		 * 手动扫描充值订单
@@ -4128,6 +4474,40 @@ declare namespace Eps {
 		 * 权限状态
 		 */
 		_permission: { globalSummary: boolean; summary: boolean };
+
+		request: Request;
+	}
+
+	interface CustomerFileResource {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerFileResourceEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerFileResourceEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerFileResourcePageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { delete: string; info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { delete: boolean; info: boolean; list: boolean; page: boolean };
 
 		request: Request;
 	}
@@ -4394,6 +4774,167 @@ declare namespace Eps {
 		 */
 		_permission: {
 			testsend: boolean;
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerPlatformScriptPlatform {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerPlatformScriptPlatformEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerPlatformScriptPlatformEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerPlatformScriptPlatformPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerPlatformScriptRelease {
+		/**
+		 * 当前发布版本
+		 */
+		current(data?: any): Promise<any>;
+
+		/**
+		 * 发布脚本包
+		 */
+		publish(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerPlatformScriptReleaseEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerPlatformScriptReleaseEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerPlatformScriptReleasePageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { current: string; publish: string; info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			current: boolean;
+			publish: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+		};
+
+		request: Request;
+	}
+
+	interface CustomerPlatformScript {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerPlatformScriptEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerPlatformScriptEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerPlatformScriptPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
 			delete: boolean;
 			update: boolean;
 			info: boolean;
@@ -4710,6 +5251,64 @@ declare namespace Eps {
 		request: Request;
 	}
 
+	interface CustomerTranslationMemory {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerTranslationMemoryEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerTranslationMemoryEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerTranslationMemoryPageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
 	interface CustomerTranslation {
 		/**
 		 * 删除
@@ -4953,98 +5552,6 @@ declare namespace Eps {
 		 * 分页查询
 		 */
 		page(data?: any): Promise<CustomerWhitelistPageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerFileResource {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerFileResourceEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerFileResourceEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerFileResourcePageResponse>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { delete: string; info: string; list: string; page: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: { delete: boolean; info: boolean; list: boolean; page: boolean };
-
-		request: Request;
-	}
-
-	interface CustomerTranslationMemory {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerTranslationMemoryEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerTranslationMemoryEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerTranslationMemoryPageResponse>;
 
 		/**
 		 * 新增
@@ -5733,16 +6240,21 @@ declare namespace Eps {
 		customer: {
 			bill: CustomerBill;
 			character: CustomerCharacter;
+			clientUpdate: CustomerClientUpdate;
 			cryptoRechargeOrder: CustomerCryptoRechargeOrder;
 			cryptoRechargeTx: CustomerCryptoRechargeTx;
 			cryptoRecharge: CustomerCryptoRecharge;
 			cryptoWallet: CustomerCryptoWallet;
 			dashboard: CustomerDashboard;
+			fileResource: CustomerFileResource;
 			keyword: CustomerKeyword;
 			material: CustomerMaterial;
 			messageDetection: CustomerMessageDetection;
 			message: CustomerMessage;
 			monitor: CustomerMonitor;
+			platformScriptPlatform: CustomerPlatformScriptPlatform;
+			platformScriptRelease: CustomerPlatformScriptRelease;
+			platformScript: CustomerPlatformScript;
 			portOccupancy: CustomerPortOccupancy;
 			port: CustomerPort;
 			pricePackage: CustomerPricePackage;
@@ -5750,14 +6262,13 @@ declare namespace Eps {
 			purchase: CustomerPurchase;
 			runtimeSession: CustomerRuntimeSession;
 			translateService: CustomerTranslateService;
+			translationMemory: CustomerTranslationMemory;
 			translation: CustomerTranslation;
 			user: CustomerUser;
 			whatsappAccount: CustomerWhatsappAccount;
 			whatsappConversation: CustomerWhatsappConversation;
 			whatsappMessage: CustomerWhatsappMessage;
 			whitelist: CustomerWhitelist;
-			fileResource: CustomerFileResource;
-			translationMemory: CustomerTranslationMemory;
 		};
 		demo: { goods: DemoGoods; tenant: DemoTenant };
 		dict: { info: DictInfo; type: DictType };

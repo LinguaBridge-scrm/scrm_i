@@ -24,6 +24,20 @@ export default (): ModuleConfig => {
 					label: t('文件资源')
 				},
 				component: () => import('./views/file-resource.vue')
+			},
+			{
+				path: '/customer/client-update',
+				meta: {
+					label: t('客户端更新')
+				},
+				component: () => import('./views/client-update.vue')
+			},
+			{
+				path: '/customer/platform-script',
+				meta: {
+					label: t('平台脚本更新')
+				},
+				component: () => import('./views/platform-script.vue')
 			}
 		]
 	};
