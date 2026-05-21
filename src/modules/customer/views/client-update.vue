@@ -24,7 +24,30 @@
 			<cl-pagination />
 		</cl-row>
 
-		<cl-upsert ref="Upsert" />
+		<cl-upsert ref="Upsert">
+			<template #slot-downloadUrl="{ scope }">
+				<div class="client-package-field">
+					<el-input
+						v-model="scope.downloadUrl"
+						:placeholder="$t('粘贴 https://... 下载直连地址')"
+						clearable
+					>
+						<template #prepend>{{ $t('直连地址') }}</template>
+					</el-input>
+
+					<div class="client-package-field__upload">
+						<cl-upload
+							v-model="scope.downloadUrl"
+							type="file"
+							:limit="1"
+							:limit-size="clientPackageMaxSizeMb"
+							accept=".zip,.exe,.msi,.dmg,.pkg,.apk,.appimage"
+							:text="$t('选择文件上传（最大 1GB）')"
+						/>
+					</div>
+				</div>
+			</template>
+		</cl-upsert>
 	</cl-crud>
 </template>
 
@@ -71,18 +94,9 @@ const Upsert = useUpsert({
 			required: true
 		},
 		{
-			label: t('客户端文件'),
+			label: t('客户端包'),
 			prop: 'downloadUrl',
-			component: {
-				name: 'cl-upload',
-				props: {
-						type: 'file',
-						limit: 1,
-						limitSize: clientPackageMaxSizeMb,
-						accept: '.zip,.exe,.msi,.dmg,.pkg,.apk,.appimage',
-						text: t('上传客户端（最大 1GB）')
-					}
-				},
+			component: { name: 'slot-downloadUrl' },
 			required: true
 		},
 		{
@@ -204,3 +218,16 @@ const Crud = useCrud(
 	}
 );
 </script>
+
+<style lang="scss" scoped>
+.client-package-field {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+
+	&__upload {
+		width: 100%;
+	}
+}
+</style>
