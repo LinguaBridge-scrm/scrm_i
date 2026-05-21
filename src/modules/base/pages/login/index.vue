@@ -467,6 +467,8 @@ $color: #2c3142;
 		width: 90%;
 		pointer-events: none;
 		transform: rotate(180deg) scaleY(-1);
+		contain: strict;
+		will-change: transform;
 
 		.cl-svg {
 			height: 100%;
@@ -530,6 +532,7 @@ $color: #2c3142;
 		width: min(560px, 100%);
 		height: 230px;
 		margin: 34px 0 26px;
+		contain: layout paint;
 
 		&__panel {
 			position: absolute;
@@ -545,6 +548,7 @@ $color: #2c3142;
 			background-color: rgb(255 255 255 / 84%);
 			box-shadow: 0 26px 60px rgb(35 52 75 / 12%);
 			animation: panel-float 5.5s ease-in-out infinite;
+			will-change: transform;
 		}
 
 		&__head {
@@ -604,12 +608,14 @@ $color: #2c3142;
 			&--one {
 				top: 0;
 				animation: rail-drift 4.2s ease-in-out infinite;
+				will-change: transform;
 			}
 
 			&--two {
 				bottom: 12px;
 				border-color: rgb(239 111 108 / 18%);
 				animation: rail-drift 4.8s ease-in-out infinite reverse;
+				will-change: transform;
 			}
 		}
 
@@ -676,6 +682,7 @@ $color: #2c3142;
 			background-color: rgb(24 169 153 / 42%);
 			box-shadow: 0 0 16px rgb(24 169 153 / 35%);
 			animation: scan 3.4s ease-in-out infinite;
+			will-change: transform, opacity;
 		}
 	}
 
@@ -791,11 +798,13 @@ $color: #2c3142;
 				inset 0 1px 0 rgb(255 255 255 / 80%);
 			backdrop-filter: blur(18px);
 			animation: login-panel-in 0.68s ease-out both;
+			contain: layout paint;
+			transform: translateZ(0);
 
 			&::before {
 				content: '';
 				position: absolute;
-				left: -40%;
+				left: 0;
 				top: 0;
 				z-index: 1;
 				width: 45%;
@@ -806,8 +815,9 @@ $color: #2c3142;
 					rgb(255 255 255 / 44%),
 					transparent
 				);
-				transform: skewX(-16deg);
+				transform: translate3d(-89%, 0, 0) skewX(-16deg);
 				animation: panel-sheen 5.2s ease-in-out infinite;
+				will-change: transform, opacity;
 			}
 
 			&::after {
@@ -830,6 +840,7 @@ $color: #2c3142;
 			z-index: 1;
 			width: 390px;
 			pointer-events: none;
+			contain: layout paint;
 
 			img {
 				display: block;
@@ -837,6 +848,7 @@ $color: #2c3142;
 				opacity: 0.72;
 				filter: drop-shadow(0 22px 42px rgb(36 50 78 / 16%));
 				animation: login-art-float 6.2s ease-in-out infinite;
+				will-change: transform;
 			}
 
 			&__chip {
@@ -869,6 +881,7 @@ $color: #2c3142;
 					color: #355bdb;
 					border-color: rgb(53 91 219 / 16%);
 					animation: login-chip-float 5.2s ease-in-out infinite reverse;
+					will-change: transform;
 
 					&::before {
 						background-color: #355bdb;
@@ -1058,7 +1071,7 @@ $color: #2c3142;
 				&::before {
 					content: '';
 					position: absolute;
-					left: -38%;
+					left: 0;
 					top: 0;
 					width: 28%;
 					height: 100%;
@@ -1068,8 +1081,9 @@ $color: #2c3142;
 						rgb(255 255 255 / 48%),
 						transparent
 					);
-					transform: skewX(-16deg);
+					transform: translate3d(-136%, 0, 0) skewX(-16deg);
 					animation: button-shine 3.8s ease-in-out infinite;
+					will-change: transform, opacity;
 				}
 
 				&:hover {
@@ -1225,7 +1239,7 @@ $color: #2c3142;
 @keyframes panel-sheen {
 	0%,
 	48% {
-		left: -46%;
+		transform: translate3d(-102%, 0, 0) skewX(-16deg);
 		opacity: 0;
 	}
 
@@ -1235,7 +1249,7 @@ $color: #2c3142;
 
 	76%,
 	100% {
-		left: 118%;
+		transform: translate3d(262%, 0, 0) skewX(-16deg);
 		opacity: 0;
 	}
 }
@@ -1265,7 +1279,7 @@ $color: #2c3142;
 @keyframes button-shine {
 	0%,
 	52% {
-		left: -40%;
+		transform: translate3d(-136%, 0, 0) skewX(-16deg);
 		opacity: 0;
 	}
 
@@ -1275,7 +1289,7 @@ $color: #2c3142;
 
 	86%,
 	100% {
-		left: 118%;
+		transform: translate3d(421%, 0, 0) skewX(-16deg);
 		opacity: 0;
 	}
 }

@@ -1,7 +1,14 @@
 import { usePlugin } from './hooks';
+import { isDev } from '/@/config';
 import { type ModuleConfig } from '/@/cool';
 
 export default (): ModuleConfig => {
+	if (!isDev) {
+		return {
+			enable: false
+		};
+	}
+
 	return {
 		options: {
 			index: 'https://cool-js.com',
