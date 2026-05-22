@@ -517,7 +517,7 @@ const Search = useSearch({
 		{
 			label: t('状态'),
 			prop: 'status',
-			component: { name: 'el-select', options: accountStatusOptions }
+			component: { name: 'el-select', options: accountStatusOptions, props: { clearable: true } }
 		}
 	]
 });

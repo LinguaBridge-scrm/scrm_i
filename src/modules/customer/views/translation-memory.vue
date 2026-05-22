@@ -159,7 +159,7 @@ const Search = useSearch({
 		{
 			label: t('服务类型'),
 			prop: 'serviceType',
-			component: { name: 'el-select', options: options.serviceType }
+			component: { name: 'el-select', options: options.serviceType, props: { clearable: true } }
 		},
 		{
 			label: t('源语言'),
@@ -174,7 +174,7 @@ const Search = useSearch({
 		{
 			label: t('状态'),
 			prop: 'status',
-			component: { name: 'el-select', options: options.status }
+			component: { name: 'el-select', options: options.status, props: { clearable: true } }
 		}
 	]
 });

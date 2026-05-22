@@ -124,7 +124,7 @@ const Search = useSearch({
 		{
 			label: t('状态'),
 			prop: 'status',
-			component: { name: 'el-select', options: options.status }
+			component: { name: 'el-select', options: options.status, props: { clearable: true } }
 		}
 	]
 });

@@ -110,7 +110,7 @@ const Search = useSearch({
 		{
 			label: t('文件类型'),
 			prop: 'fileType',
-			component: { name: 'el-select', options: fileTypeOptions }
+			component: { name: 'el-select', options: fileTypeOptions, props: { clearable: true } }
 		}
 	]
 });

@@ -188,12 +188,12 @@ const Search = useSearch({
 		{
 			label: t('素材类型'),
 			prop: 'type',
-			component: { name: 'el-select', options: options.type }
+			component: { name: 'el-select', options: options.type, props: { clearable: true } }
 		},
 		{
 			label: t('启用状态'),
 			prop: 'status',
-			component: { name: 'el-select', options: options.status }
+			component: { name: 'el-select', options: options.status, props: { clearable: true } }
 		}
 	]
 });

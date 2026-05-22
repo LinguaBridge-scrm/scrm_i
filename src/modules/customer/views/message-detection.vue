@@ -305,22 +305,22 @@ const Search = useSearch({
 		{
 			label: t('是否匹配'),
 			prop: 'matched',
-			component: { name: 'el-select', options: yesNoOptions }
+			component: { name: 'el-select', options: yesNoOptions, props: { clearable: true } }
 		},
 		{
 			label: t('是否拦截'),
 			prop: 'intercepted',
-			component: { name: 'el-select', options: interceptOptions }
+			component: { name: 'el-select', options: interceptOptions, props: { clearable: true } }
 		},
 		{
 			label: t('钱包命中'),
 			prop: 'walletMatched',
-			component: { name: 'el-select', options: yesNoOptions }
+			component: { name: 'el-select', options: yesNoOptions, props: { clearable: true } }
 		},
 		{
 			label: t('关键词命中'),
 			prop: 'keywordMatched',
-			component: { name: 'el-select', options: yesNoOptions }
+			component: { name: 'el-select', options: yesNoOptions, props: { clearable: true } }
 		}
 	]
 });

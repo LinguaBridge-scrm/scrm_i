@@ -25,6 +25,88 @@
 
 		<!-- 新增、编辑 -->
 		<cl-upsert ref="Upsert" />
+
+		<cl-dialog
+			v-model="accountDialog.visible"
+			:title="accountDialog.user ? `${accountDialog.user.username} - ${t('登陆平台账号')}` : t('登陆平台账号')"
+			width="980px"
+			:scrollbar="false"
+		>
+			<el-table
+				v-loading="accountDialog.loading"
+				:data="accountDialog.list"
+				border
+				height="520"
+				:empty-text="t('暂无平台账号')"
+			>
+				<el-table-column :label="t('头像')" width="86" align="center">
+					<template #default="{ row }">
+						<el-avatar :src="row.avatar" :size="36">
+							{{ avatarText(row) }}
+						</el-avatar>
+					</template>
+				</el-table-column>
+
+				<el-table-column :label="t('平台')" prop="platform" width="110">
+					<template #default="{ row }">
+						<el-tag size="small" effect="plain">{{ platformLabel(row.platform) }}</el-tag>
+					</template>
+				</el-table-column>
+
+				<el-table-column
+					:label="t('账号')"
+					prop="displayName"
+					min-width="160"
+					show-overflow-tooltip
+				>
+					<template #default="{ row }">
+						{{ accountTitle(row) }}
+					</template>
+				</el-table-column>
+
+				<el-table-column
+					:label="t('手机号')"
+					prop="phone"
+					min-width="130"
+					show-overflow-tooltip
+				/>
+
+				<el-table-column :label="t('在线状态')" prop="status" width="110">
+					<template #default="{ row }">
+						<el-tag :type="accountStatusType(row.status)" size="small">
+							{{ accountStatusLabel(row.status) }}
+						</el-tag>
+					</template>
+				</el-table-column>
+
+				<el-table-column
+					:label="t('最后消息')"
+					prop="lastMessageTime"
+					min-width="160"
+				>
+					<template #default="{ row }">
+						{{ formatDateText(row.lastMessageTime) }}
+					</template>
+				</el-table-column>
+
+				<el-table-column
+					:label="t('最后同步')"
+					prop="lastSyncTime"
+					min-width="160"
+				>
+					<template #default="{ row }">
+						{{ formatDateText(row.lastSyncTime) }}
+					</template>
+				</el-table-column>
+
+				<el-table-column
+					:label="t('平台账号标识')"
+					prop="accountKey"
+					min-width="220"
+					show-overflow-tooltip
+				/>
+			</el-table>
+		</cl-dialog>
 	</cl-crud>
 </template>
 
@@ -73,8 +155,71 @@ const options = reactive({
 	]
 });
 
+const accountStatusOptions: Array<{ label: string; value: number; type: 'success' | 'info' | 'danger' }> = [
+	{ label: t('离线'), value: 0, type: 'info' },
+	{ label: t('在线'), value: 1, type: 'success' },
+	{ label: t('异常'), value: 2, type: 'danger' }
+];
+
+const platformOptions = [
+	{ label: 'WhatsApp', value: 'whatsapp' },
+	{ label: 'Telegram', value: 'telegram' },
+	{ label: t('其他'), value: 'other' }
+];
+
+const accountDialog = reactive({
+	visible: false,
+	loading: false,
+	user: null as Eps.CustomerUserEntity | null,
+	list: [] as Eps.CustomerWhatsappAccountEntity[]
+});
+
 function getCurrentDateTime() {
 	return dayjs().format('YYYY-MM-DD HH:mm:ss');
+}
+
+function platformLabel(value: any) {
+	const platform = String(value || 'whatsapp').toLowerCase();
+	return platformOptions.find(e => e.value === platform)?.label || platform;
+}
+
+function accountTitle(row: Eps.CustomerWhatsappAccountEntity) {
+	return row.displayName || row.phone || row.accountKey || t('平台账号');
+}
+
+function avatarText(row: Eps.CustomerWhatsappAccountEntity) {
+	return String(accountTitle(row)).slice(0, 1).toUpperCase();
+}
+
+function accountStatusLabel(value: any) {
+	return accountStatusOptions.find(e => e.value === Number(value))?.label || t('未知');
+}
+
+function accountStatusType(value: any) {
+	return accountStatusOptions.find(e => e.value === Number(value))?.type || 'warning';
+}
+
+function formatDateText(value: any) {
+	return value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-';
+}
+
+async function openPlatformAccounts(row: Eps.CustomerUserEntity) {
+	if (!row?.id) {
+		return;
+	}
+
+	accountDialog.user = row;
+	accountDialog.visible = true;
+	accountDialog.loading = true;
+	accountDialog.list = [];
+
+	try {
+		accountDialog.list = await service.customer.whatsappAccount.list({
+			userId: row.id
+		});
+	} finally {
+		accountDialog.loading = false;
+	}
 }
 
 // cl-upsert
@@ -228,6 +373,16 @@ const Upsert = useUpsert({
 
 // cl-table
 const Table = useTable({
+	on: {
+		onRowDblclick(row: Eps.CustomerUserEntity) {
+			openPlatformAccounts(row);
+		}
+	},
+	props: {
+		rowStyle: {
+			cursor: 'pointer'
+		}
+	},
 	columns: [
 		{ type: 'selection' },
 		{ label: t('租户'), prop: 'tenantName', minWidth: 120 },

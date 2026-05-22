@@ -79,7 +79,7 @@ const Search = useSearch({
 		{
 			label: t('发布状态'),
 			prop: 'status',
-			component: { name: 'el-select', options: options.releaseStatus }
+			component: { name: 'el-select', options: options.releaseStatus, props: { clearable: true } }
 		}
 	]
 });

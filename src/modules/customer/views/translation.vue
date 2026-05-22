@@ -198,12 +198,12 @@ const Search = useSearch({
 		{
 			label: t('服务类型'),
 			prop: 'serviceType',
-			component: { name: 'el-select', options: options.serviceType }
+			component: { name: 'el-select', options: options.serviceType, props: { clearable: true } }
 		},
 		{
 			label: t('调用来源'),
 			prop: 'cacheHit',
-			component: { name: 'el-select', options: options.cacheHit }
+			component: { name: 'el-select', options: options.cacheHit, props: { clearable: true } }
 		}
 	]
 });

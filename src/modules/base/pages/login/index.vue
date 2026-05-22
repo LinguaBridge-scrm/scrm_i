@@ -238,6 +238,40 @@
 						</template>
 					</el-form>
 				</div>
+
+				<div class="client-download">
+					<div class="client-download__icon">
+						<el-icon><download /></el-icon>
+					</div>
+
+					<div class="client-download__body">
+						<div class="client-download__title">
+							<span>{{ $t('客户端下载') }}</span>
+							<em v-if="clientDownload.loading">{{ $t('获取中') }}</em>
+							<em v-else-if="clientDownload.version">
+								{{ $t('最新版本') }} {{ clientDownload.version }}
+							</em>
+							<em v-else>{{ $t('暂无版本') }}</em>
+						</div>
+						<div
+							class="client-download__url"
+							:title="clientDownload.downloadUrl || $t('暂无下载地址')"
+						>
+							{{ clientDownload.downloadUrl || $t('暂无下载地址') }}
+						</div>
+					</div>
+
+					<el-tooltip :content="$t('立即下载')" placement="top">
+						<el-button
+							circle
+							:disabled="!clientDownload.downloadUrl || clientDownload.loading"
+							:loading="clientDownload.loading"
+							@click="downloadClient"
+						>
+							<el-icon><download /></el-icon>
+						</el-button>
+					</el-tooltip>
+				</div>
 			</div>
 		</div>
 
@@ -254,9 +288,17 @@ defineOptions({
 	name: 'login'
 });
 
-import { nextTick, reactive, ref } from 'vue';
+import { nextTick, onMounted, reactive, ref } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { Aim, ChatDotRound, Connection, Cpu, Lock, Monitor } from '@element-plus/icons-vue';
+import {
+	Aim,
+	ChatDotRound,
+	Connection,
+	Cpu,
+	Download,
+	Lock,
+	Monitor
+} from '@element-plus/icons-vue';
 import { useCool } from '/@/cool';
 import { useBase } from '/$/base';
 import { storage } from '/@/cool/utils';
@@ -266,7 +308,7 @@ import LoginAiVisual from './static/login-ai-visual.png';
 
 const { refs, setRefs, router, service } = useCool();
 const { user, app } = useBase();
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 // 状态
 const saving = ref(false);
@@ -313,6 +355,12 @@ const register = reactive({
 		captchaId: '',
 		verifyCode: ''
 	}
+});
+
+const clientDownload = reactive({
+	loading: false,
+	version: '',
+	downloadUrl: ''
 });
 
 // 演示模式
@@ -441,6 +489,42 @@ async function submitRegister() {
 		register.saving = false;
 	}
 }
+
+async function loadClientDownload() {
+	clientDownload.loading = true;
+
+	try {
+		const data = await service.request({
+			url: 'app/customer/client-update/latest',
+			method: 'GET',
+			params: {
+				lang: locale.value
+			},
+			NProgress: false
+		});
+
+		clientDownload.version = data?.version || '';
+		clientDownload.downloadUrl = data?.downloadUrl || '';
+	} catch {
+		clientDownload.version = '';
+		clientDownload.downloadUrl = '';
+	} finally {
+		clientDownload.loading = false;
+	}
+}
+
+function downloadClient() {
+	if (!clientDownload.downloadUrl) {
+		ElMessage.warning(t('暂无可下载客户端'));
+		return;
+	}
+
+	window.open(clientDownload.downloadUrl, '_blank', 'noopener,noreferrer');
+}
+
+onMounted(() => {
+	loadClientDownload();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -784,9 +868,10 @@ $color: #2c3142;
 
 		.login-panel {
 			position: relative;
+			flex: 0 0 auto;
 			width: min(430px, 100%);
 			box-sizing: border-box;
-			padding: 54px 44px 42px;
+			padding: 38px 44px 28px;
 			overflow: hidden;
 			border: 1px solid rgb(255 255 255 / 78%);
 			border-radius: 8px;
@@ -893,7 +978,8 @@ $color: #2c3142;
 
 		.logo,
 		.mode-switch,
-		.form {
+		.form,
+		.client-download {
 			position: relative;
 			z-index: 2;
 		}
@@ -1047,7 +1133,7 @@ $color: #2c3142;
 			flex-direction: column;
 			gap: 12px;
 			justify-content: center;
-			margin-top: 40px;
+			margin-top: 28px;
 
 			:deep(.el-button) {
 				height: 45px;
@@ -1099,6 +1185,97 @@ $color: #2c3142;
 			}
 		}
 
+		.client-download {
+			display: grid;
+			grid-template-columns: 38px minmax(0, 1fr) 34px;
+			align-items: center;
+			gap: 12px;
+			width: 340px;
+			max-width: calc(100vw - 48px);
+			box-sizing: border-box;
+			margin-top: 14px;
+			padding: 10px 12px;
+			border: 1px solid rgb(53 91 219 / 10%);
+			border-radius: 8px;
+			background-color: rgb(255 255 255 / 72%);
+			box-shadow: inset 0 1px 0 rgb(255 255 255 / 78%);
+
+			&__icon {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 38px;
+				height: 38px;
+				border-radius: 8px;
+				background-color: #202634;
+				color: #fff;
+
+				.el-icon {
+					font-size: 18px;
+				}
+			}
+
+			&__body {
+				min-width: 0;
+			}
+
+			&__title {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 10px;
+				min-width: 0;
+
+				span {
+					color: #202634;
+					font-size: 14px;
+					font-weight: 700;
+					white-space: nowrap;
+				}
+
+				em {
+					overflow: hidden;
+					color: #1c7b71;
+					font-size: 12px;
+					font-style: normal;
+					font-weight: 700;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+			}
+
+			&__url {
+				overflow: hidden;
+				margin-top: 6px;
+				color: #6b7585;
+				font-size: 12px;
+				line-height: 1.4;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			:deep(.el-button) {
+				width: 34px;
+				height: 34px;
+				border: 0;
+				background-color: #18a999;
+				color: #fff;
+				box-shadow: 0 10px 22px rgb(24 169 153 / 20%);
+
+				&:hover,
+				&:focus {
+					background-color: #159a8c;
+					color: #fff;
+				}
+
+				&.is-disabled {
+					background-color: #d8dee8;
+					box-shadow: none;
+					color: #fff;
+				}
+			}
+		}
+
 		&.is-register {
 			.login-panel {
 				padding-top: 42px;
@@ -1111,6 +1288,10 @@ $color: #2c3142;
 
 			.op {
 				margin-top: 24px;
+			}
+
+			.client-download {
+				margin-top: 14px;
 			}
 		}
 	}
@@ -1160,7 +1341,8 @@ $color: #2c3142;
 			}
 
 			.mode-switch,
-			.form {
+			.form,
+			.client-download {
 				width: 100%;
 				max-width: 280px;
 			}
@@ -1188,7 +1370,8 @@ $color: #2c3142;
 			}
 
 			.mode-switch,
-			.form {
+			.form,
+			.client-download {
 				width: 100%;
 				max-width: 280px;
 			}

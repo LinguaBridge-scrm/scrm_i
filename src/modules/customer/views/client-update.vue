@@ -199,12 +199,12 @@ const Search = useSearch({
 		{
 			label: t('是否强制更新'),
 			prop: 'forceUpdate',
-			component: { name: 'el-select', options: options.bool }
+			component: { name: 'el-select', options: options.bool, props: { clearable: true } }
 		},
 		{
 			label: t('启用状态'),
 			prop: 'status',
-			component: { name: 'el-select', options: options.status }
+			component: { name: 'el-select', options: options.status, props: { clearable: true } }
 		}
 	]
 });

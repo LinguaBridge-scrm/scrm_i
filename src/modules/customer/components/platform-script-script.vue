@@ -244,18 +244,18 @@ const Search = useSearch({
 			component: {
 				name: 'el-select',
 				options: platformOptions,
-				props: { filterable: true }
+				props: { clearable: true, filterable: true }
 			}
 		},
 		{
 			label: t('脚本来源'),
 			prop: 'sourceType',
-			component: { name: 'el-select', options: options.sourceType }
+			component: { name: 'el-select', options: options.sourceType, props: { clearable: true } }
 		},
 		{
 			label: t('状态'),
 			prop: 'status',
-			component: { name: 'el-select', options: options.status }
+			component: { name: 'el-select', options: options.status, props: { clearable: true } }
 		}
 	]
 });
