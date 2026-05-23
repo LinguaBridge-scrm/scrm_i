@@ -119,12 +119,41 @@
 									</span>
 								</div>
 							</div>
-							<el-tag
-								size="small"
-								:type="chat.activeConversation.chatType === 1 ? 'success' : 'info'"
-							>
-								{{ chat.activeConversation.chatType === 1 ? t('群聊') : t('私聊') }}
-							</el-tag>
+							<div class="chat-head-actions">
+								<div class="translate-control">
+									<span>{{ t('翻译') }}</span>
+									<el-switch
+										v-model="translation.enabled"
+										:loading="translation.loading"
+										@change="onTranslationToggle"
+									/>
+								</div>
+								<el-select
+									v-model="translation.targetLang"
+									class="translate-lang"
+									size="small"
+									:disabled="!translation.enabled"
+									:placeholder="t('译文语言')"
+									@change="onTranslationTargetChange"
+								>
+									<el-option
+										v-for="item in translationLanguageOptions"
+										:key="item.value"
+										:label="item.label"
+										:value="item.value"
+									/>
+								</el-select>
+								<el-tag
+									size="small"
+									:type="chat.activeConversation.chatType === 1 ? 'success' : 'info'"
+								>
+									{{
+										chat.activeConversation.chatType === 1
+											? t('群聊')
+											: t('私聊')
+									}}
+								</el-tag>
+							</div>
 						</header>
 
 						<el-scrollbar
@@ -165,7 +194,25 @@
 
 										<div class="message-content">
 											<template v-if="item.messageType === 0">
-												{{ item.textContent || '-' }}
+												<div>{{ item.textContent || '-' }}</div>
+												<div
+													v-if="translation.enabled"
+													class="message-translation"
+													:class="{ 'is-error': item.translationError }"
+												>
+													<span class="translation-label">
+														{{ translationLabel(item) }}
+													</span>
+													<span>
+														{{
+															item.translationLoading
+																? t('翻译中...')
+																: item.translationError ||
+																	item.translatedText ||
+																	t('暂无译文')
+														}}
+													</span>
+												</div>
 											</template>
 
 											<audio
@@ -287,6 +334,23 @@ const messageStatusOptions = [
 	{ label: t('失败'), value: 4 }
 ];
 
+const translationLanguageOptions = [
+	{ label: t('中文'), value: 'zh-CN' },
+	{ label: 'English', value: 'en' },
+	{ label: 'Tiếng Việt', value: 'vi' },
+	{ label: 'ไทย', value: 'th' },
+	{ label: 'Bahasa Indonesia', value: 'id' },
+	{ label: 'Español', value: 'es' },
+	{ label: 'Português', value: 'pt' },
+	{ label: 'العربية', value: 'ar' },
+	{ label: 'हिन्दी', value: 'hi' },
+	{ label: '日本語', value: 'ja' },
+	{ label: '한국어', value: 'ko' },
+	{ label: 'Русский', value: 'ru' },
+	{ label: 'Français', value: 'fr' },
+	{ label: 'Deutsch', value: 'de' }
+];
+
 const chat = reactive({
 	visible: false,
 	account: null as any,
@@ -298,6 +362,12 @@ const chat = reactive({
 	messageFinished: false,
 	loadingConversations: false,
 	loadingMessages: false
+});
+
+const translation = reactive({
+	enabled: false,
+	targetLang: 'zh-CN',
+	loading: false
 });
 
 function accountTitle(row: any) {
@@ -349,6 +419,12 @@ function messageStatusLabel(value: number) {
 	return messageStatusOptions.find(e => e.value === Number(value))?.label || t('未知');
 }
 
+function translationLabel(item: any) {
+	const lang = item.translationTargetLang || translation.targetLang;
+	const option = translationLanguageOptions.find(e => e.value === lang);
+	return option ? option.label : lang;
+}
+
 function messageIcon(type: number) {
 	if (type === 1) {
 		return Microphone;
@@ -381,6 +457,86 @@ function opRow(options: any) {
 function scrollMessageToBottom() {
 	const wrap = MessageBody.value?.wrapRef;
 	MessageBody.value?.setScrollTop(wrap?.scrollHeight || 0);
+}
+
+function isTranslatableMessage(item: any) {
+	return Number(item?.messageType) === 0 && !!item?.id && !!String(item?.textContent || '').trim();
+}
+
+function onTranslationToggle(value: string | number | boolean) {
+	if (value) {
+		translateMessages(chat.messages);
+	}
+}
+
+function onTranslationTargetChange() {
+	if (translation.enabled) {
+		translateMessages(chat.messages, true);
+	}
+}
+
+async function translateMessages(messages: any[] = chat.messages, force = false) {
+	if (!translation.enabled) {
+		return;
+	}
+
+	const targetLang = translation.targetLang;
+	const pending = messages.filter(item => {
+		if (!isTranslatableMessage(item) || item.translationLoading) {
+			return false;
+		}
+		return (
+			force ||
+			item.translationTargetLang !== targetLang ||
+			(!item.translatedText && !item.translationError)
+		);
+	});
+
+	if (pending.length === 0) {
+		return;
+	}
+
+	translation.loading = true;
+	pending.forEach(item => {
+		item.translationLoading = true;
+		item.translationError = '';
+	});
+
+	try {
+		const res = await messageService.request({
+			url: '/translate',
+			method: 'POST',
+			data: {
+				ids: pending.map(item => item.id),
+				sourceLang: 'auto',
+				targetLang
+			}
+		});
+		const data: any = res;
+		const resultMap = new Map((data?.items || []).map((item: any) => [item.id, item]));
+
+		pending.forEach(item => {
+			const result: any = resultMap.get(item.id);
+			item.translationLoading = false;
+			item.translationTargetLang = targetLang;
+			if (result?.translatedText) {
+				item.translatedText = result.translatedText;
+				item.translationError = '';
+			} else {
+				item.translatedText = '';
+				item.translationError = result?.error || t('暂无译文');
+			}
+		});
+	} catch (err: any) {
+		pending.forEach(item => {
+			item.translationLoading = false;
+			item.translationTargetLang = targetLang;
+			item.translatedText = '';
+			item.translationError = err?.message || t('翻译失败');
+		});
+	} finally {
+		translation.loading = false;
+	}
 }
 
 async function openAccount(row: any) {
@@ -438,6 +594,9 @@ async function loadMessages(loadOlder = false) {
 		chat.messageFinished = list.length < chat.messageSize;
 		chat.messagePage = page;
 		chat.messages = loadOlder ? [...list, ...chat.messages] : list;
+		if (translation.enabled) {
+			translateMessages(list);
+		}
 		if (!loadOlder) {
 			await nextTick();
 			scrollMessageToBottom();
@@ -598,6 +757,33 @@ const Crud = useCrud(
 	padding: 0 14px;
 	border-bottom: 1px solid var(--el-border-color-light);
 	background: var(--el-bg-color);
+}
+
+.chat-head {
+	height: auto;
+	min-height: 64px;
+	gap: 12px;
+}
+
+.chat-head-actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.translate-control {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--el-text-color-secondary);
+	font-size: 12px;
+	white-space: nowrap;
+}
+
+.translate-lang {
+	width: 132px;
 }
 
 .account-brief,
@@ -778,6 +964,26 @@ const Crud = useCrud(
 	word-break: break-word;
 }
 
+.message-translation {
+	margin-top: 8px;
+	padding-top: 8px;
+	border-top: 1px dashed var(--el-border-color);
+	color: var(--el-text-color-regular);
+	font-size: 13px;
+	line-height: 1.55;
+}
+
+.message-translation.is-error {
+	color: var(--el-color-danger);
+}
+
+.translation-label {
+	display: inline-block;
+	margin-right: 6px;
+	color: var(--el-text-color-secondary);
+	font-size: 12px;
+}
+
 .message-content audio {
 	width: min(280px, 56vw);
 }
@@ -852,6 +1058,17 @@ const Crud = useCrud(
 
 	.message-bubble {
 		max-width: 86%;
+	}
+
+	.chat-head {
+		align-items: flex-start;
+		flex-direction: column;
+		padding: 10px 14px;
+	}
+
+	.chat-head-actions {
+		width: 100%;
+		justify-content: flex-start;
 	}
 }
 </style>
