@@ -196,6 +196,11 @@ const Table = useTable({
 const Search = useSearch({
 	items: [
 		{
+			label: t('用户名'),
+			prop: 'username',
+			component: { name: 'el-input', props: { clearable: true } }
+		},
+		{
 			label: t('服务类型'),
 			prop: 'serviceType',
 			component: { name: 'el-select', options: options.serviceType, props: { clearable: true } }
