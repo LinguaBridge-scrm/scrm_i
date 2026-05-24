@@ -360,7 +360,8 @@ const register = reactive({
 const clientDownload = reactive({
 	loading: false,
 	version: '',
-	downloadUrl: ''
+	downloadUrl: '',
+	fileName: ''
 });
 
 // 演示模式
@@ -504,13 +505,25 @@ async function loadClientDownload() {
 		});
 
 		clientDownload.version = data?.version || '';
-		clientDownload.downloadUrl = data?.downloadUrl || '';
+		clientDownload.downloadUrl = normalizeClientDownloadUrl(data?.downloadUrl || '');
+		clientDownload.fileName = data?.fileName || '';
 	} catch {
 		clientDownload.version = '';
 		clientDownload.downloadUrl = '';
+		clientDownload.fileName = '';
 	} finally {
 		clientDownload.loading = false;
 	}
+}
+
+function normalizeClientDownloadUrl(url: string) {
+	const value = String(url || '').trim();
+
+	if (window.location.protocol === 'https:' && /^http:\/\//i.test(value)) {
+		return value.replace(/^http:\/\//i, 'https://');
+	}
+
+	return value;
 }
 
 function downloadClient() {
@@ -519,7 +532,14 @@ function downloadClient() {
 		return;
 	}
 
-	window.open(clientDownload.downloadUrl, '_blank', 'noopener,noreferrer');
+	const link = document.createElement('a');
+	link.href = clientDownload.downloadUrl;
+	link.download = clientDownload.fileName || '';
+	link.rel = 'noopener noreferrer';
+	link.style.display = 'none';
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
 }
 
 onMounted(() => {
