@@ -275,6 +275,21 @@
 			</div>
 		</div>
 
+		<a
+			class="telegram-contact"
+			:href="telegramContact.url"
+			target="_blank"
+			rel="noopener noreferrer"
+			:title="`${$t('TG客服')} ${telegramContact.account}`"
+			:aria-label="`${$t('TG客服')} ${telegramContact.account}`"
+		>
+			<span class="telegram-contact__icon">
+				<el-icon><promotion /></el-icon>
+			</span>
+			<span class="telegram-contact__label">{{ $t('TG客服') }}</span>
+			<span class="telegram-contact__account">{{ telegramContact.account }}</span>
+		</a>
+
 		<div class="bg">
 			<cl-svg name="bg"></cl-svg>
 		</div>
@@ -297,7 +312,8 @@ import {
 	Cpu,
 	Download,
 	Lock,
-	Monitor
+	Monitor,
+	Promotion
 } from '@element-plus/icons-vue';
 import { useCool } from '/@/cool';
 import { useBase } from '/$/base';
@@ -363,6 +379,11 @@ const clientDownload = reactive({
 	downloadUrl: '',
 	fileName: ''
 });
+
+const telegramContact = {
+	account: '@zhonghe785',
+	url: 'https://t.me/zhonghe785'
+};
 
 // 演示模式
 if (import.meta.env.MODE == 'demo') {
@@ -871,6 +892,78 @@ $color: #2c3142;
 		user-select: none;
 	}
 
+	.telegram-contact {
+		position: fixed;
+		right: 18px;
+		top: 50%;
+		z-index: 20;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 54px;
+		height: 164px;
+		box-sizing: border-box;
+		padding: 10px 7px 14px;
+		border: 1px solid rgb(255 255 255 / 44%);
+		border-right: 0;
+		border-radius: 8px 0 0 8px;
+		background: linear-gradient(180deg, #202634, #1c7b71);
+		box-shadow: 0 18px 38px rgb(24 38 52 / 18%);
+		color: #fff;
+		text-decoration: none;
+		transform: translateY(-50%);
+		transition:
+			box-shadow 0.2s,
+			transform 0.2s;
+
+		&:hover,
+		&:focus {
+			color: #fff;
+			box-shadow: 0 20px 42px rgb(24 169 153 / 28%);
+			transform: translateY(-50%) translateX(-3px);
+		}
+
+		&__icon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 34px;
+			height: 34px;
+			border-radius: 8px;
+			background-color: rgb(255 255 255 / 16%);
+			box-shadow: inset 0 1px 0 rgb(255 255 255 / 28%);
+
+			.el-icon {
+				font-size: 18px;
+			}
+		}
+
+		&__label {
+			margin-top: 8px;
+			font-size: 12px;
+			font-weight: 700;
+			line-height: 1.25;
+			text-align: center;
+			white-space: nowrap;
+		}
+
+		&__account {
+			position: absolute;
+			left: 50%;
+			top: 108px;
+			width: 108px;
+			color: rgb(255 255 255 / 86%);
+			font-size: 12px;
+			font-style: normal;
+			line-height: 1;
+			letter-spacing: 0;
+			text-align: center;
+			transform: translateX(-50%) rotate(90deg);
+			transform-origin: center;
+			white-space: nowrap;
+		}
+	}
+
 	.box {
 		display: flex;
 		flex-direction: column;
@@ -1365,6 +1458,44 @@ $color: #2c3142;
 			.client-download {
 				width: 100%;
 				max-width: 280px;
+			}
+		}
+
+		.telegram-contact {
+			top: auto;
+			right: 16px;
+			bottom: 16px;
+			flex-direction: row;
+			gap: 8px;
+			width: auto;
+			height: 44px;
+			padding: 8px 12px;
+			border-right: 1px solid rgb(255 255 255 / 44%);
+			border-radius: 8px;
+			transform: none;
+
+			&:hover,
+			&:focus {
+				transform: translateY(-2px);
+			}
+
+			&__icon {
+				width: 28px;
+				height: 28px;
+
+				.el-icon {
+					font-size: 16px;
+				}
+			}
+
+			&__label {
+				margin-top: 0;
+			}
+
+			&__account {
+				position: static;
+				width: auto;
+				transform: none;
 			}
 		}
 	}
