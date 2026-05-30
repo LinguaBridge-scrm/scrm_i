@@ -163,6 +163,7 @@
 	"监控命中": "Monitor Hit",
 	"确认密码": "Confirm Password",
 	"租户注册": "Tenant Registration",
+	"赠送": "Gift",
 	"TG客服": "TG Support",
 	"客户端下载": "Client Download",
 	"获取中": "Loading",
@@ -177,5 +178,16 @@
 	"面向跨境团队的多平台 SCRM，支持 AI 翻译、多平台消息聚合、指纹运行态管理与实时消息监控。": "A multi-platform SCRM for cross-border teams, supporting AI translation, multi-platform message aggregation, fingerprint runtime management, and real-time message monitoring.",
 	"租户ID": "Tenant ID",
 	"余额": "Balance",
-	"计费模式": "Billing Mode"
+	"计费模式": "Billing Mode",
+	"新租户注册礼": "New Tenant Gift",
+	"注册即领：字符计费送10万字符（无时间限制），端口计费送5个端口（一月）": "Register now: character billing gets 100K characters (no time limit), port billing gets 5 ports (1 month)",
+	"搜索注册IP、租户用户名": "Search registration IP or tenant username",
+	"注册IP": "Registration IP",
+	"租户用户名": "Tenant Username",
+	"端口赠送": "Port Gift",
+	"字符赠送": "Character Gift",
+	"赠送类型": "Gift Type",
+	"赠送数量": "Gift Count",
+	"赠送记录ID": "Gift Record ID",
+	"赠送时间": "Gift Time"
 }

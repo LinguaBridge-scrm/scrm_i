@@ -92,7 +92,10 @@
 						:class="{ active: authMode === 'register' }"
 						@click="switchMode('register')"
 					>
-						{{ $t('租户注册') }}
+						<span class="mode-switch__register">
+							{{ $t('租户注册') }}
+							<span class="mode-switch__badge">{{ $t('赠送') }}</span>
+						</span>
 					</button>
 				</div>
 
@@ -154,6 +157,21 @@
 						</template>
 
 						<template v-else>
+							<div class="register-gift">
+								<div class="register-gift__badge">
+									<span>🎁</span>
+									{{ $t('新租户注册礼') }}
+								</div>
+								<div class="register-gift__title">
+									✨
+									{{
+										$t(
+											'注册即领：字符计费送10万字符（无时间限制），端口计费送5个端口（一月）'
+										)
+									}}
+								</div>
+							</div>
+
 							<el-form-item :label="$t('登录账号')">
 								<el-input
 									v-model="register.form.username"
@@ -239,7 +257,7 @@
 					</el-form>
 				</div>
 
-				<div class="client-download">
+				<div v-if="authMode === 'login'" class="client-download">
 					<div class="client-download__icon">
 						<el-icon><download /></el-icon>
 					</div>
@@ -1136,6 +1154,10 @@ $color: #2c3142;
 			box-shadow: inset 0 1px 0 rgb(255 255 255 / 82%);
 
 			button {
+				position: relative;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
 				height: 36px;
 				border: 0;
 				border-radius: 6px;
@@ -1157,6 +1179,31 @@ $color: #2c3142;
 					box-shadow: 0 2px 8px rgb(44 49 66 / 8%);
 					transform: translateY(-1px);
 				}
+			}
+
+			&__register {
+				position: relative;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				line-height: 1;
+			}
+
+			&__badge {
+				position: absolute;
+				top: -15px;
+				right: -24px;
+				padding: 1px 5px;
+				border-radius: 999px;
+				background: linear-gradient(135deg, #ff6b35 0%, #ff3d71 100%);
+				color: #fff;
+				font-size: 10px;
+				font-weight: 700;
+				line-height: 15px;
+				box-shadow: 0 3px 8px rgb(255 92 74 / 28%);
+				pointer-events: none;
+				transform: scale(0.9);
+				transform-origin: right bottom;
 			}
 		}
 
@@ -1238,6 +1285,47 @@ $color: #2c3142;
 				position: absolute;
 				right: -5px;
 				top: 0;
+			}
+
+			.register-gift {
+				box-sizing: border-box;
+				margin-bottom: 18px;
+				padding: 13px 14px;
+				border: 1px solid rgb(24 169 153 / 24%);
+				border-radius: 8px;
+				background:
+					linear-gradient(135deg, rgb(24 169 153 / 14%), rgb(53 91 219 / 10%)),
+					rgb(255 255 255 / 78%);
+				box-shadow:
+					0 14px 28px rgb(24 169 153 / 10%),
+					inset 0 1px 0 rgb(255 255 255 / 86%);
+
+				&__badge {
+					display: inline-flex;
+					align-items: center;
+					height: 24px;
+					padding: 0 9px;
+					border-radius: 8px;
+					background-color: #202634;
+					color: #fff;
+					font-size: 12px;
+					font-weight: 700;
+					line-height: 24px;
+					white-space: nowrap;
+
+					span {
+						margin-right: 5px;
+					}
+				}
+
+				&__title {
+					margin-top: 9px;
+					color: #202634;
+					font-size: 14px;
+					font-weight: 800;
+					line-height: 1.45;
+					word-break: break-word;
+				}
 			}
 		}
 
