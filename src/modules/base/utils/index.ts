@@ -6,4 +6,5 @@ export function revisePath(path: string) {
 	return path.startsWith('/') ? path : `/${path}`;
 }
 
+export * from './client-download';
 export * from './permission';

@@ -3504,14 +3504,14 @@ declare namespace Eps {
 		list: BaseSysRoleEntity[];
 	}
 
-	interface BaseSysUserPageResponse {
-		pagination: PagePagination;
-		list: BaseSysUserEntity[];
-	}
-
 	interface BaseSysTenantRegisterGiftPageResponse {
 		pagination: PagePagination;
 		list: BaseSysTenantRegisterGiftEntity[];
+	}
+
+	interface BaseSysUserPageResponse {
+		pagination: PagePagination;
+		list: BaseSysUserEntity[];
 	}
 
 	interface CustomerBillPageResponse {
@@ -4132,6 +4132,35 @@ declare namespace Eps {
 		request: Request;
 	}
 
+	interface BaseSysTenantRegisterGift {
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<BaseSysTenantRegisterGiftEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<BaseSysTenantRegisterGiftEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<BaseSysTenantRegisterGiftPageResponse>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { info: string; list: string; page: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { info: boolean; list: boolean; page: boolean };
+
+		request: Request;
+	}
+
 	interface BaseSysUser {
 		/**
 		 * 删除
@@ -4193,35 +4222,6 @@ declare namespace Eps {
 			page: boolean;
 			add: boolean;
 		};
-
-		request: Request;
-	}
-
-	interface BaseSysTenantRegisterGift {
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<BaseSysTenantRegisterGiftEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<BaseSysTenantRegisterGiftEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<BaseSysTenantRegisterGiftPageResponse>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { info: string; list: string; page: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: { info: boolean; list: boolean; page: boolean };
 
 		request: Request;
 	}
@@ -6341,8 +6341,8 @@ declare namespace Eps {
 				menu: BaseSysMenu;
 				param: BaseSysParam;
 				role: BaseSysRole;
-				user: BaseSysUser;
 				tenantRegisterGift: BaseSysTenantRegisterGift;
+				user: BaseSysUser;
 			};
 		};
 		customer: {

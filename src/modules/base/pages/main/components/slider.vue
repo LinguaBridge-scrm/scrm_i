@@ -28,6 +28,46 @@
 				<b-menu :keyWord="keyWord" />
 			</el-scrollbar>
 		</div>
+
+		<div class="app-slider__download">
+			<el-tooltip
+				:content="$t('下载最新客户端')"
+				placement="right"
+				:disabled="!app.isFold || browser.isMini"
+			>
+				<button
+					class="client-download-entry"
+					type="button"
+					:disabled="!clientDownload.downloadUrl || clientDownload.loading"
+					:aria-label="$t('下载最新客户端')"
+					@click="downloadClient"
+				>
+					<span class="client-download-entry__icon">
+						<el-icon><download /></el-icon>
+					</span>
+
+					<span class="client-download-entry__body">
+						<span class="client-download-entry__title">
+							<span>{{ $t('客户端下载') }}</span>
+							<em class="client-download-entry__tag">
+								{{
+									clientDownload.loading
+										? $t('获取中')
+										: clientDownload.version || $t('暂无版本')
+								}}
+							</em>
+						</span>
+						<span class="client-download-entry__desc">
+							{{
+								clientDownload.downloadUrl
+									? $t('点击下载最新客户端')
+									: $t('暂无下载地址')
+							}}
+						</span>
+					</span>
+				</button>
+			</el-tooltip>
+		</div>
 	</div>
 </template>
 
@@ -36,15 +76,21 @@ defineOptions({
 	name: 'app-slider'
 });
 
-import { useBase } from '/$/base';
+import { Download } from '@element-plus/icons-vue';
+import { useBase, useClientDownload } from '/$/base';
 import { useBrowser } from '/@/cool';
 import BMenu from './bmenu';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const { browser } = useBrowser();
 const { app } = useBase();
+const { clientDownload, loadClientDownload, downloadClient } = useClientDownload();
 
 const keyWord = ref('');
+
+onMounted(() => {
+	loadClientDownload();
+});
 </script>
 
 <style lang="scss">
@@ -53,6 +99,8 @@ const keyWord = ref('');
 	--slider-bg-color: #2c3147;
 	--slider-text-color: #e5eaf3;
 
+	display: flex;
+	flex-direction: column;
 	height: 100%;
 	background-color: var(--slider-bg-color);
 	border-right: 1px solid var(--el-border-color-extra-light);
@@ -97,7 +145,13 @@ const keyWord = ref('');
 	}
 
 	&__container {
-		height: calc(100% - 112px);
+		flex: 1;
+		min-height: 0;
+	}
+
+	&__download {
+		flex-shrink: 0;
+		padding: 12px;
 	}
 
 	&__menu {
@@ -176,12 +230,135 @@ const keyWord = ref('');
 			}
 		}
 
+		.app-slider__download {
+			padding: 10px;
+		}
+
 		.app-slider__menu {
 			.el-sub-menu {
 				&.is-active {
 					background-color: rgba(0, 0, 0, 0.25);
 				}
 			}
+		}
+
+		.client-download-entry {
+			justify-content: center;
+			min-height: 44px;
+			padding: 0;
+
+			&__icon {
+				width: 40px;
+				height: 40px;
+			}
+
+			&__body {
+				display: none;
+			}
+		}
+	}
+}
+
+.client-download-entry {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	min-height: 68px;
+	padding: 12px;
+	border: 0;
+	border-radius: 8px;
+	background: linear-gradient(135deg, #4f6ff2 0%, #18a999 100%);
+	color: #fff;
+	cursor: pointer;
+	text-align: left;
+	box-shadow: inset 0 1px 0 rgb(255 255 255 / 24%);
+	transition:
+		filter 0.18s ease,
+		transform 0.18s ease;
+
+	&:hover:not(:disabled) {
+		filter: brightness(1.05);
+		transform: translateY(-1px);
+	}
+
+	&:active:not(:disabled) {
+		transform: translateY(0);
+	}
+
+	&:focus-visible {
+		outline: 2px solid rgb(255 255 255 / 92%);
+		outline-offset: 2px;
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.72;
+		filter: grayscale(0.1);
+	}
+
+	&__icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 36px;
+		height: 36px;
+		margin-right: 10px;
+		border-radius: 8px;
+		background-color: rgb(255 255 255 / 18%);
+		font-size: 20px;
+	}
+
+	&__body {
+		flex: 1;
+		min-width: 0;
+	}
+
+	&__title {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		font-size: 14px;
+		font-weight: 700;
+		line-height: 1.25;
+	}
+
+	&__tag {
+		flex-shrink: 0;
+		max-width: 82px;
+		height: 20px;
+		padding: 0 6px;
+		overflow: hidden;
+		border-radius: 5px;
+		background-color: rgb(255 255 255 / 18%);
+		color: rgb(255 255 255 / 94%);
+		font-size: 11px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 20px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&__desc {
+		display: block;
+		margin-top: 6px;
+		overflow: hidden;
+		color: rgb(255 255 255 / 86%);
+		font-size: 12px;
+		line-height: 1.45;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.client-download-entry {
+		transition: none;
+
+		&:hover:not(:disabled) {
+			transform: none;
 		}
 	}
 }

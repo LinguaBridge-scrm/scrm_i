@@ -334,7 +334,7 @@ import {
 	Promotion
 } from '@element-plus/icons-vue';
 import { useCool } from '/@/cool';
-import { useBase } from '/$/base';
+import { useBase, useClientDownload } from '/$/base';
 import { storage } from '/@/cool/utils';
 import { useI18n } from 'vue-i18n';
 import PicCaptcha from './components/pic-captcha.vue';
@@ -342,7 +342,8 @@ import LoginAiVisual from './static/login-ai-visual.png';
 
 const { refs, setRefs, router, service } = useCool();
 const { user, app } = useBase();
-const { t, locale } = useI18n();
+const { t } = useI18n();
+const { clientDownload, loadClientDownload, downloadClient } = useClientDownload();
 
 // 状态
 const saving = ref(false);
@@ -389,13 +390,6 @@ const register = reactive({
 		captchaId: '',
 		verifyCode: ''
 	}
-});
-
-const clientDownload = reactive({
-	loading: false,
-	version: '',
-	downloadUrl: '',
-	fileName: ''
 });
 
 const telegramContact = {
@@ -528,57 +522,6 @@ async function submitRegister() {
 	} finally {
 		register.saving = false;
 	}
-}
-
-async function loadClientDownload() {
-	clientDownload.loading = true;
-
-	try {
-		const data = await service.request({
-			url: 'app/customer/client-update/latest',
-			method: 'GET',
-			params: {
-				lang: locale.value
-			},
-			NProgress: false
-		});
-
-		clientDownload.version = data?.version || '';
-		clientDownload.downloadUrl = normalizeClientDownloadUrl(data?.downloadUrl || '');
-		clientDownload.fileName = data?.fileName || '';
-	} catch {
-		clientDownload.version = '';
-		clientDownload.downloadUrl = '';
-		clientDownload.fileName = '';
-	} finally {
-		clientDownload.loading = false;
-	}
-}
-
-function normalizeClientDownloadUrl(url: string) {
-	const value = String(url || '').trim();
-
-	if (window.location.protocol === 'https:' && /^http:\/\//i.test(value)) {
-		return value.replace(/^http:\/\//i, 'https://');
-	}
-
-	return value;
-}
-
-function downloadClient() {
-	if (!clientDownload.downloadUrl) {
-		ElMessage.warning(t('暂无可下载客户端'));
-		return;
-	}
-
-	const link = document.createElement('a');
-	link.href = clientDownload.downloadUrl;
-	link.download = clientDownload.fileName || '';
-	link.rel = 'noopener noreferrer';
-	link.style.display = 'none';
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
 }
 
 onMounted(() => {
