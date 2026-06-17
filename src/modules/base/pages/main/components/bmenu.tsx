@@ -1,6 +1,7 @@
 import { defineComponent, h, watch } from 'vue';
 import { useBase } from '/$/base';
 import { useCool } from '/@/cool';
+import { useI18n } from 'vue-i18n';
 import { debounce } from 'lodash-es';
 
 export default defineComponent({
@@ -13,6 +14,13 @@ export default defineComponent({
 	setup(props) {
 		const { router, route, browser, refs, setRefs } = useCool();
 		const { menu, app } = useBase();
+		const { t, te } = useI18n();
+
+		function menuLabel(item: Menu.Item) {
+			const label = String(item.meta?.label || item.name || '');
+
+			return label && te(label) ? t(label) : label;
+		}
 
 		// 页面跳转
 		function onSelect(url: string) {
@@ -38,7 +46,10 @@ export default defineComponent({
 						return true;
 					}
 
-					if (item.meta?.label?.toLowerCase().includes(keyWord)) return true;
+					const label = menuLabel(item).toLowerCase();
+					const rawLabel = String(item.meta?.label || item.name || '').toLowerCase();
+
+					if (label.includes(keyWord) || rawLabel.includes(keyWord)) return true;
 
 					if (item.children) {
 						return item.children.some(filterMenu);
@@ -48,7 +59,10 @@ export default defineComponent({
 				}
 
 				return list.filter(filterMenu).map(e => {
-					if (e.meta?.label?.toLowerCase().includes(keyWord)) {
+					const label = menuLabel(e);
+					const rawLabel = String(e.meta?.label || e.name || '').toLowerCase();
+
+					if (label.toLowerCase().includes(keyWord) || rawLabel.includes(keyWord)) {
 						show = true;
 					}
 
@@ -56,7 +70,7 @@ export default defineComponent({
 						const arr = [
 							<cl-svg name={e.icon} size={18} />,
 							<span class="ml-4 tracking-wider text-[14px] mr-auto text-ellipsis overflow-hidden whitespace-nowrap">
-								{e.meta?.label}
+								{menuLabel(e)}
 							</span>
 						];
 
