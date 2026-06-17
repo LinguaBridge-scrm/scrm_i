@@ -37,9 +37,7 @@
 						<div class="card__header">
 							<div class="purchase-card__title">
 								<span class="label">{{ t('资源套餐购买') }}</span>
-								<el-tag size="small" effect="plain">{{
-									summary.billingModeName
-								}}</el-tag>
+								<el-tag size="small" effect="plain">{{ billingModeLabel }}</el-tag>
 							</div>
 							<el-button
 								type="primary"
@@ -427,7 +425,7 @@ const activePurchaseType = ref<0 | 1>(0);
 const summary = reactive<DashboardSummary>({
 	balance: 0,
 	billingMode: 0,
-	billingModeName: t('端口计费'),
+	billingModeName: '端口计费',
 	portUnlimited: false,
 	usedPorts: 0,
 	availablePorts: 0,
@@ -469,6 +467,7 @@ const chainOptions = [
 	}
 ];
 const currentChainLabel = computed(() => chainLabel(recharge.form.chain));
+const billingModeLabel = computed(() => t(summary.billingModeName || ''));
 const orderStep = computed(() => {
 	const status = Number(recharge.currentOrder?.status);
 	if (!recharge.currentOrder) {
@@ -535,7 +534,7 @@ function durationText(item: ResourcePackage) {
 }
 
 function chainLabel(chain: string) {
-	return chain === 'eth' ? '💠 以太坊 USDT' : '⚡ 波场 USDT';
+	return chain === 'eth' ? `💠 ${t('以太坊 USDT')}` : `⚡ ${t('波场 USDT')}`;
 }
 
 function orderStatusLabel(status: number) {
@@ -744,7 +743,7 @@ async function refresh() {
 		summary.balance = Number(data?.balance || 0);
 		summary.billingMode = Number(data?.billingMode || 0);
 		summary.billingModeName =
-			data?.billingModeName || (summary.billingMode === 1 ? t('字符计费') : t('端口计费'));
+			data?.billingModeName || (summary.billingMode === 1 ? '字符计费' : '端口计费');
 		summary.portUnlimited = !!data?.portUnlimited || summary.billingMode === 1;
 		activePurchaseType.value = summary.billingMode === 1 ? 1 : 0;
 		summary.usedPorts = Number(data?.usedPorts || 0);

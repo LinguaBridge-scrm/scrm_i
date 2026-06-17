@@ -10,7 +10,9 @@
 			@click="select(index)"
 		>
 			<cl-svg class="mr-3" :name="item.icon" :size="16" v-if="item.icon" />
-			<span class="text-[12px] tracking-wider whitespace-nowrap">{{ item.meta?.label }}</span>
+			<span class="text-[12px] tracking-wider whitespace-nowrap">
+				{{ getI18nLabel(item, t, te) }}
+			</span>
 		</div>
 	</div>
 </template>
@@ -24,11 +26,12 @@ import { computed, ref, watch } from 'vue';
 import { useBase } from '/$/base';
 import { useCool } from '/@/cool';
 import { ElMessage } from 'element-plus';
+import { getI18nLabel } from '/$/base/utils';
 import { useI18n } from 'vue-i18n';
 
 const { router, route } = useCool();
 const { menu } = useBase();
-const { t } = useI18n();
+const { t, te } = useI18n();
 
 // 选中标识
 const active = ref(0);
@@ -57,7 +60,7 @@ function select(index: number) {
 		// 跳转
 		router.push(url);
 	} else {
-		ElMessage.warning(t('{label} 没有子菜单，请先添加', { label: item.meta?.label }));
+		ElMessage.warning(t('{label} 没有子菜单，请先添加', { label: getI18nLabel(item, t, te) }));
 	}
 }
 

@@ -1,6 +1,7 @@
 import { defineComponent, h, watch } from 'vue';
 import { useBase } from '/$/base';
 import { useCool } from '/@/cool';
+import { getI18nLabel } from '/$/base/utils';
 import { useI18n } from 'vue-i18n';
 import { debounce } from 'lodash-es';
 
@@ -17,9 +18,7 @@ export default defineComponent({
 		const { t, te } = useI18n();
 
 		function menuLabel(item: Menu.Item) {
-			const label = String(item.meta?.label || item.name || '');
-
-			return label && te(label) ? t(label) : label;
+			return getI18nLabel(item, t, te);
 		}
 
 		// 页面跳转

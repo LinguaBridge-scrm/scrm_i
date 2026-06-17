@@ -7,4 +7,5 @@ export function revisePath(path: string) {
 }
 
 export * from './client-download';
+export * from './i18n-label';
 export * from './permission';

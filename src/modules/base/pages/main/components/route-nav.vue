@@ -7,7 +7,7 @@
 		<template v-else>
 			<el-breadcrumb :separator-icon="ArrowRightBold">
 				<el-breadcrumb-item v-for="(item, index) in list" :key="index">
-					<span class="text-[14px]">{{ item.meta?.label || item.name }}</span>
+					<span class="text-[14px]">{{ getI18nLabel(item, t, te) }}</span>
 				</el-breadcrumb-item>
 			</el-breadcrumb>
 		</template>
@@ -24,9 +24,12 @@ import { flattenDeep, last } from 'lodash-es';
 import { ArrowRightBold } from '@element-plus/icons-vue';
 import { useCool } from '/@/cool';
 import { useBase } from '/$/base';
+import { getI18nLabel } from '/$/base/utils';
+import { useI18n } from 'vue-i18n';
 
 const { route, browser } = useCool();
 const { menu } = useBase();
+const { t, te } = useI18n();
 
 // 数据列表
 const list = computed(() => {
@@ -56,7 +59,11 @@ const list = computed(() => {
 });
 
 // 最后一个节点名称
-const lastName = computed(() => last(list.value)?.meta?.label);
+const lastName = computed(() => {
+	const item = last(list.value);
+
+	return item ? getI18nLabel(item, t, te) : '';
+});
 </script>
 
 <style lang="scss" scoped>

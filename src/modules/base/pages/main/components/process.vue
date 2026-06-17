@@ -26,7 +26,7 @@
 						@contextmenu.stop.prevent="openCM($event, item)"
 					>
 						<span class="label tracking-wider">
-							{{ item.meta.label || item.name || item.path }}
+							{{ getI18nLabel(item, t, te) }}
 						</span>
 
 						<cl-svg class="close" name="close" @mousedown.stop="onDel(Number(index))" />
@@ -54,11 +54,12 @@ import { last } from 'lodash-es';
 import { useCool } from '/@/cool';
 import { ContextMenu } from '@cool-vue/crud';
 import { useBase } from '/$/base';
+import { getI18nLabel } from '/$/base/utils';
 import { useI18n } from 'vue-i18n';
 
 const { refs, setRefs, route, router, mitt } = useCool();
 const { process, app } = useBase();
-const { t } = useI18n();
+const { t, te } = useI18n();
 
 // 刷新当前路由
 function toRefresh() {
