@@ -5589,6 +5589,25 @@ declare namespace Eps {
 		request: Request;
 	}
 
+	interface CustomerWhatsappFans {
+		/**
+		 * WhatsApp每日进粉统计
+		 */
+		daily(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { daily: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { daily: boolean };
+
+		request: Request;
+	}
+
 	interface CustomerWhatsappMessage {
 		/**
 		 * 批量翻译平台消息
@@ -6375,6 +6394,7 @@ declare namespace Eps {
 			user: CustomerUser;
 			whatsappAccount: CustomerWhatsappAccount;
 			whatsappConversation: CustomerWhatsappConversation;
+			whatsappFans: CustomerWhatsappFans;
 			whatsappMessage: CustomerWhatsappMessage;
 			whitelist: CustomerWhitelist;
 		};

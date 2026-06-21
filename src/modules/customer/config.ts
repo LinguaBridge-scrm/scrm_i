@@ -19,6 +19,13 @@ export default (): ModuleConfig => {
 				component: () => import('./views/message.vue')
 			},
 			{
+				path: '/customer/whatsapp-fans',
+				meta: {
+					label: t('每日进粉统计')
+				},
+				component: () => import('./views/whatsapp-fans.vue')
+			},
+			{
 				path: '/customer/file-resource',
 				meta: {
 					label: t('文件资源')
