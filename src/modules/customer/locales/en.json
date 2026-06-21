@@ -133,6 +133,8 @@
 	"客户端ID": "Client ID",
 	"客户端信息": "Client Info",
 	"密码": "Password",
+	"显示密码": "Show Password",
+	"隐藏密码": "Hide Password",
 	"对方": "Peer",
 	"对象ID": "Target ID",
 	"对象手机号": "Target Phone",

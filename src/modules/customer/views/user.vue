@@ -14,7 +14,24 @@
 
 		<cl-row>
 			<!-- 数据表格 -->
-			<cl-table ref="Table" />
+			<cl-table ref="Table">
+				<template #column-password="{ scope }">
+					<div class="password-cell">
+						<span class="password-cell__text">
+							{{ isPasswordVisible(scope.row) ? passwordText(scope.row.password) : passwordMask(scope.row.password) }}
+						</span>
+						<el-button
+							link
+							type="primary"
+							size="small"
+							:icon="isPasswordVisible(scope.row) ? Hide : View"
+							:title="isPasswordVisible(scope.row) ? t('隐藏密码') : t('显示密码')"
+							@click.stop="togglePassword(scope.row)"
+							@dblclick.stop
+						/>
+					</div>
+				</template>
+			</cl-table>
 		</cl-row>
 
 		<cl-row>
@@ -121,6 +138,7 @@ import { useBase } from '/@/modules/base';
 import { useI18n } from 'vue-i18n';
 import { computed, reactive } from 'vue';
 import dayjs from 'dayjs';
+import { Hide, View } from '@element-plus/icons-vue';
 
 const { service } = useCool();
 const { user } = useBase();
@@ -201,6 +219,32 @@ function accountStatusType(value: any) {
 
 function formatDateText(value: any) {
 	return value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-';
+}
+
+const visiblePasswordRows = reactive<Record<string, boolean>>({});
+
+function passwordRowKey(row: Eps.CustomerUserEntity) {
+	return String(row?.id || row?.username || '');
+}
+
+function isPasswordVisible(row: Eps.CustomerUserEntity) {
+	const key = passwordRowKey(row);
+	return !!key && !!visiblePasswordRows[key];
+}
+
+function togglePassword(row: Eps.CustomerUserEntity) {
+	const key = passwordRowKey(row);
+	if (key) {
+		visiblePasswordRows[key] = !visiblePasswordRows[key];
+	}
+}
+
+function passwordText(value: any) {
+	return value ? String(value) : '-';
+}
+
+function passwordMask(value: any) {
+	return value ? '••••••••' : '-';
 }
 
 async function openPlatformAccounts(row: Eps.CustomerUserEntity) {
@@ -496,3 +540,20 @@ function refresh(params?: any) {
 	Crud.value?.refresh(params);
 }
 </script>
+
+<style lang="scss" scoped>
+.password-cell {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-width: 0;
+
+	&__text {
+		flex: 1;
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
+</style>
