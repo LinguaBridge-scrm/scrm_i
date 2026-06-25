@@ -2063,6 +2063,78 @@ declare namespace Eps {
 		[key: string]: any;
 	}
 
+	interface CustomerSiteMessageEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+
+		/**
+		 * 组织用户名
+		 */
+		orgUsername?: string;
+
+		/**
+		 * 组织用户ID
+		 */
+		orgUserId?: number;
+
+		/**
+		 * 站内信标题
+		 */
+		title?: string;
+
+		/**
+		 * 站内信内容
+		 */
+		content?: string;
+
+		/**
+		 * 接收范围
+		 */
+		targetType?: number;
+
+		/**
+		 * 指定员工ID列表
+		 */
+		userIds?: any;
+
+		/**
+		 * 优先级
+		 */
+		priority?: number;
+
+		/**
+		 * 状态
+		 */
+		status?: number;
+
+		/**
+		 * 发布时间
+		 */
+		publishTime?: Date;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * 创建时间
+		 */
+		createTime?: string;
+
+		/**
+		 * 更新时间
+		 */
+		updateTime?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
 	interface CustomerTranslateServiceEntity {
 		/**
 		 * ID
@@ -3652,6 +3724,11 @@ declare namespace Eps {
 	interface CustomerWhitelistPageResponse {
 		pagination: PagePagination;
 		list: CustomerWhitelistEntity[];
+	}
+
+	interface CustomerSiteMessagePageResponse {
+		pagination: PagePagination;
+		list: CustomerSiteMessageEntity[];
 	}
 
 	interface DemoGoodsPageResponse {
@@ -5711,6 +5788,64 @@ declare namespace Eps {
 		request: Request;
 	}
 
+	interface CustomerSiteMessage {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerSiteMessageEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerSiteMessageEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerSiteMessagePageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
 	interface DemoGoods {
 		/**
 		 * 删除
@@ -6397,6 +6532,7 @@ declare namespace Eps {
 			whatsappFans: CustomerWhatsappFans;
 			whatsappMessage: CustomerWhatsappMessage;
 			whitelist: CustomerWhitelist;
+			siteMessage: CustomerSiteMessage;
 		};
 		demo: { goods: DemoGoods; tenant: DemoTenant };
 		dict: { info: DictInfo; type: DictType };

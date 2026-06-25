@@ -359,8 +359,6 @@
 	"平台Key": "Platform Key",
 	"平台名称": "Platform Name",
 	"平台版本": "Platform Version",
-	"平台": "Platform",
-	"排序": "Sort",
 	"脚本名称": "Script Name",
 	"脚本版本": "Script Version",
 	"注入顺序": "Injection Order",
@@ -405,5 +403,16 @@
 	"进粉明细": "New Fan Details",
 	"获取每日进粉统计失败": "Failed to load daily new fan stats",
 	"发布成功": "Published",
-	"发布失败": "Publish Failed"
+	"发布失败": "Publish Failed",
+	"站内信": "Site Messages",
+	"站内信标题": "Site Message Title",
+	"站内信内容": "Site Message Content",
+	"接收范围": "Recipient Scope",
+	"全部员工": "All Employees",
+	"指定员工": "Selected Employees",
+	"指定员工数": "Selected Employee Count",
+	"优先级": "Priority",
+	"普通": "Normal",
+	"重要": "Important",
+	"搜索标题、内容、备注": "Search title, content, or remarks"
 }
