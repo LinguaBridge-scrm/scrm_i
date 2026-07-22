@@ -15,7 +15,68 @@
 
 		<cl-row>
 			<!-- 数据表格 -->
-			<cl-table ref="Table" />
+			<cl-table ref="Table">
+				<template #column-content="{ scope }">
+					<div class="message-content-cell">
+						<div
+							v-if="scope.row.attribute || scope.row.action"
+							class="message-content-cell__meta"
+						>
+							<el-tag
+								v-if="scope.row.attribute"
+								size="small"
+								type="info"
+								effect="plain"
+							>
+								{{ scope.row.attribute }}
+							</el-tag>
+							<el-tag
+								v-if="scope.row.action"
+								size="small"
+								type="primary"
+								effect="plain"
+							>
+								{{ scope.row.action }}
+							</el-tag>
+						</div>
+
+						<div
+							v-if="displayMessageText(scope.row)"
+							class="message-content-cell__text"
+							:title="displayMessageText(scope.row)"
+						>
+							{{ displayMessageText(scope.row) }}
+						</div>
+
+						<div
+							v-if="scope.row.image || scope.row.video"
+							class="message-content-cell__media"
+						>
+							<el-image
+								v-if="scope.row.image"
+								:src="scope.row.image"
+								:preview-src-list="[scope.row.image]"
+								preview-teleported
+								fit="cover"
+								class="message-content-cell__image"
+							/>
+							<el-link
+								v-if="scope.row.video"
+								:href="scope.row.video"
+								target="_blank"
+								type="primary"
+								:underline="false"
+							>
+								{{ t('视频') }}
+							</el-link>
+						</div>
+
+						<span v-if="!hasMessageContent(scope.row)" class="message-content-cell__empty">
+							-
+						</span>
+					</div>
+				</template>
+			</cl-table>
 		</cl-row>
 
 		<cl-row>
@@ -62,6 +123,32 @@ const options = reactive({
 		{ label: t('是'), value: 1, type: 'success' }
 	]
 });
+
+const userPickerColumns = [
+	{ label: t('用户名'), prop: 'username', minWidth: 180 },
+	{ label: t('租户'), prop: 'tenantName', minWidth: 140 }
+];
+
+function displayMessageText(row: Eps.CustomerMessageEntity) {
+	const content = String(row?.content || '').trim();
+	const attribute = String(row?.attribute || '').trim();
+
+	if ((row?.image || row?.video) && attribute && content === attribute) {
+		return '';
+	}
+
+	return content;
+}
+
+function hasMessageContent(row: Eps.CustomerMessageEntity) {
+	return Boolean(
+		row?.attribute ||
+			row?.action ||
+			displayMessageText(row) ||
+			row?.image ||
+			row?.video
+	);
+}
 
 // cl-upsert
 const Upsert = useUpsert({
@@ -216,26 +303,7 @@ const Table = useTable({
 			minWidth: 120,
 			dict: options.messageType
 		},
-		{ label: t('消息属性'), prop: 'attribute', minWidth: 140 },
-		{ label: t('消息行为'), prop: 'action', minWidth: 140 },
-		{
-			label: t('文本内容'),
-			prop: 'content',
-			showOverflowTooltip: true,
-			minWidth: 200
-		},
-		{
-			label: t('图片'),
-			prop: 'image',
-			minWidth: 100,
-			component: { name: 'cl-image', props: { size: 60 } }
-		},
-		{
-			label: t('视频'),
-			prop: 'video',
-			minWidth: 120,
-			component: { name: 'cl-link' }
-		},
+		{ label: t('内容'), prop: 'content', minWidth: 320 },
 		{ label: t('对象昵称'), prop: 'targetNickName', minWidth: 140 },
 		{ label: t('对象ID'), prop: 'targetId', minWidth: 140 },
 		{ label: t('对象手机号'), prop: 'targetPhone', minWidth: 140 },
@@ -277,6 +345,36 @@ const Table = useTable({
 // cl-search
 const Search = useSearch({
 	items: [
+		{
+			label: t('文本内容'),
+			prop: 'content',
+			component: {
+				name: 'el-input',
+				props: {
+					clearable: true,
+					placeholder: t('文本内容')
+				}
+			}
+		},
+		{
+			label: t('用户名'),
+			prop: 'username',
+			component: {
+				name: 'cl-select-table',
+				props: {
+					title: t('选择用户'),
+					placeholder: t('选择用户'),
+					service: service.customer.user,
+					columns: userPickerColumns,
+					multiple: false,
+					dict: {
+						id: 'username',
+						text: 'username'
+					},
+					pickerType: 'text'
+				}
+			}
+		},
 		{
 			label: t('平台类型'),
 			prop: 'platform',
@@ -328,3 +426,44 @@ function refresh(params?: any) {
 	Crud.value?.refresh(params);
 }
 </script>
+
+<style lang="scss" scoped>
+.message-content-cell {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
+	min-width: 0;
+	gap: 6px;
+	padding: 4px 0;
+
+	&__meta,
+	&__media {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+
+	&__text {
+		display: -webkit-box;
+		width: 100%;
+		overflow: hidden;
+		line-height: 1.5;
+		white-space: pre-wrap;
+		word-break: break-word;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+	}
+
+	&__image {
+		width: 56px;
+		height: 56px;
+		border-radius: 6px;
+	}
+
+	&__empty {
+		color: var(--el-text-color-placeholder);
+	}
+}
+</style>
