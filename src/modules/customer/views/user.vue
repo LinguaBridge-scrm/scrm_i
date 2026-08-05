@@ -458,11 +458,25 @@ const Table = useTable({
 			dict: options.walletMonitorStatus
 		},
 		{
+			label: t('钱包监控触发次数'),
+			prop: 'walletMonitorTriggerCount',
+			minWidth: 160,
+			align: 'center',
+			sortable: 'custom'
+		},
+		{
 			label: t('关键词监控'),
 			prop: 'keywordMonitorStatus',
 			minWidth: 100,
 			component: { name: 'cl-switch' },
 			dict: options.keywordMonitorStatus
+		},
+		{
+			label: t('关键词监控触发次数'),
+			prop: 'keywordMonitorTriggerCount',
+			minWidth: 170,
+			align: 'center',
+			sortable: 'custom'
 		},
 		{
 			label: t('全局开关'),

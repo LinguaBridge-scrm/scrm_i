@@ -2403,9 +2403,19 @@ declare namespace Eps {
 		walletMonitorStatus?: number;
 
 		/**
+		 * 钱包监控触发次数
+		 */
+		walletMonitorTriggerCount?: number;
+
+		/**
 		 * 关键词监控开关
 		 */
 		keywordMonitorStatus?: number;
+
+		/**
+		 * 关键词监控触发次数
+		 */
+		keywordMonitorTriggerCount?: number;
 
 		/**
 		 * 全局开关
@@ -3686,6 +3696,11 @@ declare namespace Eps {
 		list: CustomerRuntimeSessionEntity[];
 	}
 
+	interface CustomerSiteMessagePageResponse {
+		pagination: PagePagination;
+		list: CustomerSiteMessageEntity[];
+	}
+
 	interface CustomerTranslateServicePageResponse {
 		pagination: PagePagination;
 		list: CustomerTranslateServiceEntity[];
@@ -3724,11 +3739,6 @@ declare namespace Eps {
 	interface CustomerWhitelistPageResponse {
 		pagination: PagePagination;
 		list: CustomerWhitelistEntity[];
-	}
-
-	interface CustomerSiteMessagePageResponse {
-		pagination: PagePagination;
-		list: CustomerSiteMessageEntity[];
 	}
 
 	interface DemoGoodsPageResponse {
@@ -5366,6 +5376,64 @@ declare namespace Eps {
 		request: Request;
 	}
 
+	interface CustomerSiteMessage {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<CustomerSiteMessageEntity>;
+
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<CustomerSiteMessageEntity[]>;
+
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<CustomerSiteMessagePageResponse>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+
+		request: Request;
+	}
+
 	interface CustomerTranslateService {
 		/**
 		 * 删除
@@ -5755,64 +5823,6 @@ declare namespace Eps {
 		 * 分页查询
 		 */
 		page(data?: any): Promise<CustomerWhitelistPageResponse>;
-
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-
-		request: Request;
-	}
-
-	interface CustomerSiteMessage {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<CustomerSiteMessageEntity>;
-
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<CustomerSiteMessageEntity[]>;
-
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<CustomerSiteMessagePageResponse>;
 
 		/**
 		 * 新增
@@ -6523,6 +6533,7 @@ declare namespace Eps {
 			purchaseOrder: CustomerPurchaseOrder;
 			purchase: CustomerPurchase;
 			runtimeSession: CustomerRuntimeSession;
+			siteMessage: CustomerSiteMessage;
 			translateService: CustomerTranslateService;
 			translationMemory: CustomerTranslationMemory;
 			translation: CustomerTranslation;
@@ -6532,7 +6543,6 @@ declare namespace Eps {
 			whatsappFans: CustomerWhatsappFans;
 			whatsappMessage: CustomerWhatsappMessage;
 			whitelist: CustomerWhitelist;
-			siteMessage: CustomerSiteMessage;
 		};
 		demo: { goods: DemoGoods; tenant: DemoTenant };
 		dict: { info: DictInfo; type: DictType };
