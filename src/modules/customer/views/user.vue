@@ -376,10 +376,6 @@ const accountDialog = reactive({
 	list: [] as Eps.CustomerWhatsappAccountEntity[]
 });
 
-function getCurrentDateTime() {
-	return dayjs().format('YYYY-MM-DD HH:mm:ss');
-}
-
 function platformLabel(value: any) {
 	const platform = String(value || 'whatsapp').toLowerCase();
 	return platformOptions.find(e => e.value === platform)?.label || platform;
@@ -630,7 +626,6 @@ const Upsert = useUpsert({
 		{
 			label: t('最后登录时间'),
 			prop: 'lastLoginTime',
-			value: getCurrentDateTime(),
 			component: {
 				name: 'el-date-picker',
 				props: {
@@ -647,7 +642,6 @@ const Upsert = useUpsert({
 		if (Upsert.value?.mode == 'add') {
 			data.consumedCharacters = 0;
 			data.occupiedPorts = 0;
-			data.lastLoginTime = data.lastLoginTime || getCurrentDateTime();
 		}
 	}
 });
